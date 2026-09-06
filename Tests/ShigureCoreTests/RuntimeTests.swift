@@ -121,6 +121,26 @@ struct StateAndPixelTests {
         #expect(decoded.rowData[83] == 0)
     }
 
+    @Test("像素解码：红色结束块停止本行扫描")
+    func pixelDecoderEndMarker() {
+        // 自适应块数：数据块 1..3，随后红色 (255,0,0) 结束块；
+        // 结束块之后的可解码像素（模拟游戏画面泄漏）必须被忽略。
+        var top: [(UInt8, UInt8, UInt8)] = []
+        top += Array(repeating: (0, 1, 1), count: 4)     // step 1
+        top += Array(repeating: (0, 2, 5), count: 4)     // step 2
+        top += Array(repeating: (0, 3, 8), count: 4)     // step 3
+        top += [(128, 1, 4)]                             // 数据块与结束块之间的混色像素
+        top += Array(repeating: (255, 0, 0), count: 4)   // 红色结束块
+        top += Array(repeating: (0, 7, 99), count: 4)    // 结束块之后的伪数据
+        top += Array(repeating: (0, 0, 0), count: 8)
+        let rows = [top, Array(repeating: (0, 0, 0) as (UInt8, UInt8, UInt8), count: top.count)]
+        let decoded = PixelDecoder.decode(PixelBuffer.make(rows: rows))
+        #expect(decoded.rowData[1] == 1)
+        #expect(decoded.rowData[2] == 5)
+        #expect(decoded.rowData[3] == 8)
+        #expect(decoded.rowData[7] == nil, "结束块之后不再读取")
+    }
+
     @Test("像素解码失败路径")
     func pixelFailures() {
         let empty = PixelBuffer.make(rows: [Array(repeating: (0, 0, 0), count: 10), Array(repeating: (0, 0, 0), count: 10)])

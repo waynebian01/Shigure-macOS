@@ -220,6 +220,19 @@ function Fuyutsui:LoadPlayerBlocks(specIndex)
     end
 
     self.blocks = blocks
+
+    -- 自适应主色条：按本专精实际占用的最大块索引收缩块数，让每个块尽可能宽，
+    -- 末端画红色结束块（见 block.lua UpdateBlockLayout）。
+    -- 队伍区按团队上限 40 人预留（与 group.lua GROUP_MAX_MEMBERS 一致）。
+    local maxStep = index - 1
+    if blocks.groups then
+        maxStep = blocks.groups.start + 40 * blocks.groups.num
+    end
+    if self.UpdateBlockLayout then
+        self:UpdateBlockLayout(maxStep)
+    end
+
+    -- 重布局后块宽变化，已创建的 AuraContainer 按钮锚点/尺寸失效，必须全部释放重建
     if self.ReleaseUnitAuraContainers then
         self:ReleaseUnitAuraContainers()
     elseif self.ReleasePlayerAuraContainers then

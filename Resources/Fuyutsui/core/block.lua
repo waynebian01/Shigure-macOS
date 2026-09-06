@@ -63,7 +63,7 @@ local HEAL_ABSORB_SLOT_UNITS = 1 + HEAL_ABSORB_BAR_UNITS + 1 -- 前锚点 + 条�
 local HEAL_ABSORB_ROWS = HEAL_ABSORB_MAX_SLOTS / HEAL_ABSORB_COLS
 local HEAL_ABSORB_UNIT_WIDTH = BAR_CONFIG.width * HEAL_ABSORB_WIDTH_SCALE
 
-local AURA_BLOCK_W = BLOCK_FIX_CONFIG.blockWidth
+-- 光环块宽度跟随主色条动态布局，实时读取 BLOCK_FIX_CONFIG.blockWidth（勿快照）
 local AURA_BLOCK_H = AURA_BLOCK_HEIGHT
 
 --- 索引 1..255 → r=0, g=i/255；256..510 → r=1/255, g=(i-255)/255
@@ -125,6 +125,38 @@ end
 
 for i = 1, BLOCK_FIX_CONFIG.blockCount do
     Fuyutsui:CreateTexture(i, 0)
+end
+
+-- 主色条末端结束块：纯红 (255,0,0)，Shigure 扫描到即停止本行。
+-- 红色不会与数据块混淆：数据块 r 只会是 0 或 1/255。
+local endMarkerTexture
+
+--- 按本专精实际占用的最大块索引自适应布局主色条：
+--- 只显示 usedCount 个数据块 + 1 个红色结束块，块宽 = screenWidth/(usedCount+1)。
+--- 索引编码不变（颜色即索引），因此 Shigure 端配置无需感知块宽变化。
+--- 调用后必须释放并重建全部 AuraContainer（按钮锚点/尺寸按旧宽创建）。
+function Fuyutsui:UpdateBlockLayout(usedCount)
+    local count = math.min(math.max(usedCount or BLOCK_FIX_COUNT, 1), BLOCK_FIX_COUNT)
+    BLOCK_FIX_CONFIG.blockWidth = screenWidth / (count + 1)
+    for i = 1, BLOCK_FIX_CONFIG.blockCount do
+        local tex = pixelTextures[i]
+        if tex then
+            tex:SetSize(BLOCK_FIX_CONFIG.blockWidth, BLOCK_FIX_CONFIG.blockHeight)
+            tex:ClearAllPoints()
+            tex:SetPoint("TOPLEFT", colorBars, "TOPLEFT",
+                         GetXOffset(i - 1, BLOCK_FIX_CONFIG.blockWidth, BLOCK_FIX_CONFIG.blockSpacing), 0)
+            tex:SetShown(i <= count)
+        end
+    end
+    if not endMarkerTexture then
+        endMarkerTexture = colorBars:CreateTexture(nil, "OVERLAY")
+        endMarkerTexture:SetColorTexture(1, 0, 0, 1)
+    end
+    endMarkerTexture:SetSize(BLOCK_FIX_CONFIG.blockWidth, BLOCK_FIX_CONFIG.blockHeight)
+    endMarkerTexture:ClearAllPoints()
+    endMarkerTexture:SetPoint("TOPLEFT", colorBars, "TOPLEFT",
+                              GetXOffset(count, BLOCK_FIX_CONFIG.blockWidth, BLOCK_FIX_CONFIG.blockSpacing), 0)
+    endMarkerTexture:Show()
 end
 
 --[[============================================================================
@@ -582,7 +614,7 @@ local function ConfigureAuraButtonMouse(button)
 end
 
 local function AnchorAuraPixelButton(button, index)
-    button:SetSize(AURA_BLOCK_W, AURA_BLOCK_H)
+    button:SetSize(BLOCK_FIX_CONFIG.blockWidth, AURA_BLOCK_H)
     button:SetClipsChildren(true)
     ConfigureAuraButtonMouse(button)
     button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", AuraBlockXOffset(index), 0)
@@ -814,7 +846,7 @@ local function MakeDispelColorMap(index)
 end
 
 local function SetupDispelTypePixel(button, index, showWhenHarmful, showWhenHelpful)
-    button:SetSize(AURA_BLOCK_W, AURA_BLOCK_H)
+    button:SetSize(BLOCK_FIX_CONFIG.blockWidth, AURA_BLOCK_H)
     button:SetClipsChildren(true)
     ConfigureAuraButtonMouse(button)
     button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", AuraBlockXOffset(index), 0)

@@ -144,7 +144,13 @@ public enum PixelDecoder {
             if runStep == topRowBlockCount { reachedEnd = true }
         }
         for x in startX..<buffer.width {
-            if let decoded = decodeTopRowBlock(buffer.rgb(x: x, y: y)) {
+            let px = buffer.rgb(x: x, y: y)
+            if isTopRowEndMarker(px) {
+                // 插件按字段数自适应块数时在末端画红色结束块；读到即停止本行
+                commitRun()
+                return rowData
+            }
+            if let decoded = decodeTopRowBlock(px) {
                 if decoded.step != runStep {
                     commitRun()
                     if reachedEnd { return rowData }
@@ -163,6 +169,8 @@ public enum PixelDecoder {
         return rowData
     }
 
+    /// 顶行末端结束块：纯红 (255,0,0)。数据块 r 只会是 0/1，不会冲突。
+    @inline(__always) static func isTopRowEndMarker(_ c: (r: UInt8, g: UInt8, b: UInt8)) -> Bool { c.r == 255 && c.g == 0 && c.b == 0 }
     @inline(__always) static func isRedMarker(_ c: (r: UInt8, g: UInt8, b: UInt8)) -> Bool { c.r == 1 && c.g == 0 && c.b == 0 }
     @inline(__always) static func isRedGreenMarker(_ c: (r: UInt8, g: UInt8, b: UInt8)) -> Bool { c.r == 1 && c.g == 1 && c.b == 0 }
     @inline(__always) static func isWhite(_ c: (r: UInt8, g: UInt8, b: UInt8)) -> Bool { c.r == 255 && c.g == 255 && c.b == 255 }
