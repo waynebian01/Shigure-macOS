@@ -20,4 +20,16 @@ case "${1:-}" in
   --test)
     swift test
     ;;
+  --install)
+    # Release 构建并安装到 /Applications，之后可从启动台/聚焦直接打开。
+    # 必须先退出正在运行的实例，否则替换正在使用的 bundle 会留下损坏的副本。
+    xcodebuild -project Shigure.xcodeproj -scheme Shigure -configuration Release -derivedDataPath "$DD" build | tail -1
+    pkill -x Shigure 2>/dev/null || true
+    sleep 1
+    rm -rf /Applications/Shigure.app
+    ditto "$DD/Build/Products/Release/Shigure.app" /Applications/Shigure.app
+    xattr -cr /Applications/Shigure.app 2>/dev/null || true
+    codesign --verify --strict /Applications/Shigure.app
+    echo "已安装: /Applications/Shigure.app"
+    ;;
 esac

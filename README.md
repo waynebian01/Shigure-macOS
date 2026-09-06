@@ -25,9 +25,18 @@ sudo xcode-select -s /Applications/Xcode.app
 scripts/bootstrap.sh --build   # 生成 Xcode 工程并编译
 scripts/bootstrap.sh --run     # 编译并启动
 scripts/bootstrap.sh --test    # 只跑核心逻辑测试（swift test）
+scripts/bootstrap.sh --install # Release 构建并安装到 /Applications
 ```
 
+日常使用装一次 `--install` 即可，之后从启动台或聚焦打开 `Shigure`。
+`--build` / `--run` 产出的是 Debug 构建，放在 `$TMPDIR` 里会被系统定期清理，只适合开发时用。
+注意：屏幕录制与辅助功能权限按 App 的路径 + 签名授予，先装到 `/Applications` 再授权，
+否则换位置后可能需要重新授权。
+
 `Shigure.xcodeproj` 由 `project.yml` 生成，不纳入版本控制。
+`Sources/ShigureApp/` 只属于这个 Xcode 工程、不在 `Package.swift` 里，
+所以用只认 SwiftPM 的编辑器打开时，那些文件的 `import ShigureCore` 会被误标为错误；
+编辑应用层代码请用 Xcode 打开 `Shigure.xcodeproj`。
 仓库位于 iCloud Drive 时 DerivedData 必须放在 iCloud 之外（脚本默认放 `$TMPDIR`），
 否则 iCloud 写入的扩展属性会让 `codesign` 失败。
 
