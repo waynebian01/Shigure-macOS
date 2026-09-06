@@ -602,6 +602,9 @@ end
 --- 永久光环槽：整格底层 b=1（无 DurationText）
 local function SetupPermanentAuraPixel(button, index)
     AnchorAuraPixelButton(button, index)
+    -- AuraContainer 的候选槽可能在同一个 auraInstance 上都命中。
+    -- 永久槽只负责 b=1 的兜底显示，必须位于限时槽下方，不能覆盖剩余时间色块。
+    button:SetFrameLevel(math.max(0, (button:GetFrameLevel() or 0) - 1))
     local bg = button:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints(button)
     local r, g = EncodeBlockChannels(index)
@@ -1312,7 +1315,9 @@ function Fuyutsui:RefreshGroupAuraContainers()
                     groupAuraContainers[memberIndex] = container
                 end
                 container.fuyutsuiUnit = unit
-                container:SetUnit(unit)
+                -- SetUnit 可能重置 AuraContainer 的候选槽；必须在绑定单位后重新应用
+                -- spellId、限时/永久及友方过滤，否则同一光环会在不同成员上匹配不一致。
+                RebindContainerSpellFilters(container, unit)
                 container:SetEnabled(true)
                 container:Show()
             end

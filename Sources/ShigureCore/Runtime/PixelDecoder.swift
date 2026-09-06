@@ -66,13 +66,29 @@ public enum PixelDecoder {
         }
         // 1. 顶行：从截图左上角向下寻找第一个主色块（step==1）作为锚点。
         //    截图行是物理像素，窗口装饰和 Retina 缩放可能让主色条出现在更靠下的位置。
+        var anchorX = -1
         for y in 0..<buffer.height {
-            let row = scanTopRow(buffer, y: y)
-            if !row.isEmpty {
-                result.rowData = row
+            if let x = findAnchorX(buffer, y: y) {
                 result.anchorRow = y
+                anchorX = x
                 break
             }
+        }
+        guard let anchorY = result.anchorRow else {
+            result.failureReason = "未找到有效的状态像素起始标记"
+            return result
+        }
+        // 光环块的剩余时间来自居中绘制的 "█" 字形，色条最顶/最底的物理行可能落在字形
+        // 上下边缘之外；取色条（锚点块连续可解码的行区间）的垂直中间行采样。
+        var lastBarY = anchorY
+        while lastBarY + 1 < buffer.height,
+              let decoded = decodeTopRowBlock(buffer.rgb(x: anchorX, y: lastBarY + 1)),
+              decoded.step == 1 {
+            lastBarY += 1
+        }
+        result.rowData = scanTopRow(buffer, y: (anchorY + lastBarY) / 2)
+        if result.rowData.isEmpty {
+            result.rowData = scanTopRow(buffer, y: anchorY)
         }
         if result.rowData.isEmpty {
             result.failureReason = "未找到有效的状态像素起始标记"
@@ -103,22 +119,47 @@ public enum PixelDecoder {
         return (step, Int(px.b))
     }
 
-    public static func scanTopRow(_ buffer: PixelBuffer, y: Int) -> [Int: Int] {
-        var rowData: [Int: Int] = [:]
-        var startX = -1
+    /// 顶行首个 step==1 像素的 x 坐标（锚点列）。
+    static func findAnchorX(_ buffer: PixelBuffer, y: Int) -> Int? {
         for x in 0..<min(topRowBlockCount * 2, buffer.width) {
             if let decoded = decodeTopRowBlock(buffer.rgb(x: x, y: y)), decoded.step == 1 {
-                startX = x
-                break
+                return x
             }
         }
-        if startX < 0 { return rowData }
+        return nil
+    }
+
+    /// 逐像素解码顶行。块宽是 screenWidth/blockCount（非整数物理像素），光环块又是
+    /// "底色 b=0 + 居中 █ 字形" 两层结构，块左右边缘可能露出底色或混入邻块颜色；
+    /// 因此对同一 step 的连续像素段取中间像素的值，而不是让最后一个像素覆盖。
+    public static func scanTopRow(_ buffer: PixelBuffer, y: Int) -> [Int: Int] {
+        var rowData: [Int: Int] = [:]
+        guard let startX = findAnchorX(buffer, y: y) else { return rowData }
+        var runStep = 0
+        var runValues: [Int] = []
+        var reachedEnd = false
+        func commitRun() {
+            guard runStep >= 1, !runValues.isEmpty else { return }
+            rowData[runStep] = runValues[runValues.count / 2]
+            if runStep == topRowBlockCount { reachedEnd = true }
+        }
         for x in startX..<buffer.width {
             if let decoded = decodeTopRowBlock(buffer.rgb(x: x, y: y)) {
-                rowData[decoded.step] = decoded.value
-                if decoded.step == topRowBlockCount { break }
+                if decoded.step != runStep {
+                    commitRun()
+                    if reachedEnd { return rowData }
+                    runStep = decoded.step
+                    runValues.removeAll(keepingCapacity: true)
+                }
+                runValues.append(decoded.value)
+            } else {
+                commitRun()
+                if reachedEnd { return rowData }
+                runStep = 0
+                runValues.removeAll(keepingCapacity: true)
             }
         }
+        commitRun()
         return rowData
     }
 

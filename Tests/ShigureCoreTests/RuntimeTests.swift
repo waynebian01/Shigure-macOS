@@ -90,6 +90,37 @@ struct StateAndPixelTests {
         }
     }
 
+    @Test("像素解码：光环块边缘露底色时取段中值与色条中间行")
+    func pixelDecoderAuraGlyphEdges() {
+        // 模拟真实渲染：块宽 5 物理像素；step 82 为限时光环块，底色 b=0，
+        // █ 字形只覆盖中间 3 像素（b=8），左右边缘露出底色。
+        // 字形垂直居中：色条共 5 行，仅中间 3 行有字形颜色，最顶/最底行全是底色。
+        func barRow(glyph: Bool) -> [(UInt8, UInt8, UInt8)] {
+            var row: [(UInt8, UInt8, UInt8)] = []
+            row += Array(repeating: (0, 1, 1), count: 5)                    // step 1 锚点
+            row += Array(repeating: (0, 81, 3), count: 5)                   // 纯色块
+            if glyph {
+                row += [(0, 82, 0)] + Array(repeating: (0, 82, 8), count: 3) + [(0, 82, 0)]
+            } else {
+                row += Array(repeating: (0, 82, 0), count: 5)
+            }
+            row += Array(repeating: (0, 83, 0), count: 5)                   // 无光环块
+            row += Array(repeating: (0, 0, 0), count: 10)
+            return row
+        }
+        var rows: [[(UInt8, UInt8, UInt8)]] = []
+        rows.append(barRow(glyph: false))
+        for _ in 0..<3 { rows.append(barRow(glyph: true)) }
+        rows.append(barRow(glyph: false))
+        rows.append(Array(repeating: (0, 0, 0), count: 30))
+        let decoded = PixelDecoder.decode(PixelBuffer.make(rows: rows))
+        #expect(decoded.anchorRow == 0)
+        #expect(decoded.rowData[1] == 1)
+        #expect(decoded.rowData[81] == 3)
+        #expect(decoded.rowData[82] == 8, "边缘底色不应覆盖字形中心的剩余时间值")
+        #expect(decoded.rowData[83] == 0)
+    }
+
     @Test("像素解码失败路径")
     func pixelFailures() {
         let empty = PixelBuffer.make(rows: [Array(repeating: (0, 0, 0), count: 10), Array(repeating: (0, 0, 0), count: 10)])
