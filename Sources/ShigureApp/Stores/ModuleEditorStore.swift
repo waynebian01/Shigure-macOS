@@ -60,6 +60,8 @@ final class ModuleEditorStore {
     }
 
     private func load(_ module: ModuleDefinition) {
+        // 撤销栈里的规则快照属于上一个模块，切换后必须作废。
+        undoManager?.removeAllActions(withTarget: self)
         draft = module
         original = module
         hasSelection = true
@@ -239,37 +241,68 @@ final class ModuleEditorStore {
     }
 
     func addRule() {
-        var rule = ModuleRule()
-        rule.macroCondition = ""
-        draft.rules.append(rule)
+        mutateRules("添加规则") {
+            var rule = ModuleRule()
+            rule.macroCondition = ""
+            draft.rules.append(rule)
+        }
     }
 
     func duplicateRule(at index: Int) {
         guard draft.rules.indices.contains(index) else { return }
-        var copy = draft.rules[index]
-        copy.id = UUID()
-        draft.rules.insert(copy, at: index + 1)
+        mutateRules("复制规则") {
+            var copy = draft.rules[index]
+            copy.id = UUID()
+            draft.rules.insert(copy, at: index + 1)
+        }
     }
 
     func insertBlankRule(after index: Int) {
-        var rule = ModuleRule()
-        rule.macroCondition = ""
-        draft.rules.insert(rule, at: min(index + 1, draft.rules.count))
+        mutateRules("添加规则") {
+            var rule = ModuleRule()
+            rule.macroCondition = ""
+            draft.rules.insert(rule, at: min(index + 1, draft.rules.count))
+        }
     }
 
     func deleteRule(at index: Int) {
         guard draft.rules.indices.contains(index) else { return }
-        draft.rules.remove(at: index)
+        mutateRules("删除规则") { draft.rules.remove(at: index) }
     }
 
     func moveRule(from index: Int, by delta: Int) {
         let target = index + delta
         guard draft.rules.indices.contains(index), draft.rules.indices.contains(target) else { return }
-        draft.rules.swapAt(index, target)
+        mutateRules("移动规则") { draft.rules.swapAt(index, target) }
     }
 
     func moveRules(from source: IndexSet, to destination: Int) {
-        draft.rules.move(fromOffsets: source, toOffset: destination)
+        mutateRules("移动规则") { draft.rules.move(fromOffsets: source, toOffset: destination) }
+    }
+
+    // MARK: 撤销
+
+    /// 由规则页在出现时注入。只有增删复制移动这类结构性改动进撤销栈；
+    /// 行内文本框自己有编辑撤销，重复登记反而会打断输入。
+    var undoManager: UndoManager?
+
+    private func mutateRules(_ actionName: String, _ body: () -> Void) {
+        let before = draft.rules
+        body()
+        guard draft.rules != before else { return }
+        registerRulesUndo(restoring: before, actionName: actionName)
+    }
+
+    private func registerRulesUndo(restoring snapshot: [ModuleRule], actionName: String) {
+        guard let undoManager else { return }
+        undoManager.registerUndo(withTarget: self) { store in
+            MainActor.assumeIsolated {
+                let current = store.draft.rules
+                store.draft.rules = snapshot
+                store.registerRulesUndo(restoring: current, actionName: actionName)
+            }
+        }
+        undoManager.setActionName(actionName)
     }
 
     // MARK: 单位 / 数量 / 数值

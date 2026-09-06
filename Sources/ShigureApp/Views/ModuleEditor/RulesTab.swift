@@ -8,6 +8,7 @@ struct RulesTab: View {
     @State private var conditionRuleId: UUID?
     @State private var commentRuleId: UUID?
     @State private var selection: UUID?
+    @Environment(\.undoManager) private var undoManager
 
     var body: some View {
         VStack(spacing: 0) {
@@ -67,6 +68,8 @@ struct RulesTab: View {
             }
             .padding(8)
         }
+        .onAppear { store.undoManager = undoManager }
+        .onChange(of: undoManager) { _, new in store.undoManager = new }
         .sheet(item: Binding(get: { conditionRuleId.map { RuleSheetTarget(id: $0) } }, set: { conditionRuleId = $0?.id })) { target in
             if let index = store.draft.rules.firstIndex(where: { $0.id == target.id }) {
                 let rule = store.draft.rules[index]

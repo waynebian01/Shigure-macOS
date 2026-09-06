@@ -23,6 +23,7 @@ struct ShigureApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {}
             SidebarCommands()
+            PageCommands(model: model)
             RuntimeCommands(model: model)
         }
 
@@ -32,6 +33,34 @@ struct ShigureApp: App {
             MenuBarLabel(model: model)
         }
         .menuBarExtraStyle(.menu)
+    }
+}
+
+/// 「显示」菜单里的分页跳转：⌘1–⌘9、⌘0，顺序与侧栏一致。
+struct PageCommands: Commands {
+    let model: AppModel
+
+    var body: some Commands {
+        CommandGroup(after: .sidebar) {
+            Divider()
+            ForEach(Array(AppPage.allCases.enumerated()), id: \.element) { index, page in
+                let action = { model.selectedPage = page }
+                if let key = Self.shortcut(for: index) {
+                    Button(page.title, action: action).keyboardShortcut(key, modifiers: [.command])
+                } else {
+                    Button(page.title, action: action)
+                }
+            }
+        }
+    }
+
+    /// 前十页拿 ⌘1…⌘9、⌘0；再往后不再占用数字键。
+    private static func shortcut(for index: Int) -> KeyEquivalent? {
+        switch index {
+        case 0..<9: return KeyEquivalent(Character("\(index + 1)"))
+        case 9: return "0"
+        default: return nil
+        }
     }
 }
 

@@ -65,12 +65,11 @@ enum AppPage: String, CaseIterable, Identifiable {
 
 struct MainWindow: View {
     @Environment(AppModel.self) private var model
-    @State private var selection: AppPage = .general
-    @State private var didRestoreSelection = false
 
     var body: some View {
-        NavigationSplitView {
-            List(selection: $selection) {
+        @Bindable var model = model
+        return NavigationSplitView {
+            List(selection: $model.selectedPage) {
                 ForEach(AppPage.groups, id: \.title) { group in
                     Section(group.title) {
                         ForEach(group.pages) { page in
@@ -91,28 +90,19 @@ struct MainWindow: View {
                 }
                 detail
             }
-            .navigationTitle(selection.title)
-            .navigationSubtitle(selection.subtitle)
+            .navigationTitle(model.selectedPage.title)
+            .navigationSubtitle(model.selectedPage.subtitle)
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 RuntimeToolbar()
             }
         }
-        .onAppear {
-            if !didRestoreSelection {
-                didRestoreSelection = true
-                if let saved = model.settings.selectedPage, let page = AppPage(rawValue: saved) { selection = page }
-            }
-        }
-        .onChange(of: selection) { _, newValue in
-            model.settings.selectedPage = newValue.rawValue
-        }
     }
 
     @ViewBuilder
     private var detail: some View {
-        switch selection {
+        switch model.selectedPage {
         case .general: GeneralPage()
         case .config: ConfigEditorPage()
         case .macros: MacroEditorPage()

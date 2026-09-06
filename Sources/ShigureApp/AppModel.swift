@@ -24,6 +24,14 @@ final class AppModel {
         didSet { persistSettings() }
     }
 
+    /// 侧栏当前分页。放在这里而不是视图里，是为了让「显示」菜单的 ⌘1–⌘0 也能切换。
+    var selectedPage: AppPage = .general {
+        didSet {
+            guard selectedPage != oldValue else { return }
+            settings.selectedPage = selectedPage.rawValue
+        }
+    }
+
     // MARK: 运行状态
     private(set) var snapshot: RenderSnapshot = .idle()
     private(set) var isRunning = false
@@ -67,6 +75,7 @@ final class AppModel {
         }
         let settings = AppSettings.load(from: paths.settingsFile)
         self.settings = settings
+        if let saved = settings.selectedPage, let page = AppPage(rawValue: saved) { selectedPage = page }
         moduleStore = ModuleStore(moduleDirectory: paths.moduleDirectory)
         locator = WorkspaceGameLocator(identifiers: settings.gameBundleIdentifiers)
         locator.preferredGameAppURL = settings.gameAppPath.map { URL(fileURLWithPath: $0) }
