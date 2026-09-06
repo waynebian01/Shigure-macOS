@@ -56,12 +56,12 @@ struct UnitEditorSheet: View {
             Divider()
             Form {
                 Section {
-                    Picker("类别", selection: $category) { ForEach(Category.allCases, id: \.self) { Text($0.rawValue).tag($0) } }
+                    Picker("类别", selection: $category) { ForEach(Category.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
                         .disabled(originalId != nil)
                     if category == .unit {
-                        Picker("选择器", selection: $unitKind) { ForEach(Self.unitSelectors, id: \.kind) { Text($0.title).tag($0.kind) } }
+                        Picker("选择器", selection: $unitKind) { ForEach(Self.unitSelectors, id: \.kind) { Text(localizedReferenceText($0.title)).tag($0.kind) } }
                     } else {
-                        Picker("选择器", selection: $countKind) { ForEach(Self.countSelectors, id: \.kind) { Text($0.title).tag($0.kind) } }
+                        Picker("选择器", selection: $countKind) { ForEach(Self.countSelectors, id: \.kind) { Text(localizedReferenceText($0.title)).tag($0.kind) } }
                     }
                     TextField("名称", text: $name)
                     if category == .unit, resolvedUnitKind == .lowestHealth {
@@ -82,10 +82,10 @@ struct UnitEditorSheet: View {
                         }
                     }
                     if category == .unit, unitKind == .lowestHealth || unitKind == .highestHealingAbsorb {
-                        Picker("光环筛选", selection: $auraFilter) { ForEach(AuraFilter.allCases, id: \.self) { Text($0.rawValue).tag($0) } }
+                        Picker("光环筛选", selection: $auraFilter) { ForEach(AuraFilter.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
                     }
                     if category == .unit, unitKind == .lowestHealth {
-                        Picker("职责筛选", selection: $roleFilter) { ForEach(RoleFilter.allCases, id: \.self) { Text($0.rawValue).tag($0) } }
+                        Picker("职责筛选", selection: $roleFilter) { ForEach(RoleFilter.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
                     }
                     if showsRole {
                         Picker("职责", selection: $role) { Text("坦克 (1)").tag(1); Text("治疗 (2)").tag(2); Text("输出 (3)").tag(3) }
@@ -216,16 +216,16 @@ struct UnitEditorSheet: View {
         if category == .unit {
             let hn = healthName.trimmed()
             if resolvedUnitKind == .lowestHealth, !hn.isEmpty {
-                if hn.caseInsensitiveCompare(trimmed) == .orderedSame { error = "值名称不能与名称相同。"; return }
-                if let message = store.support.validateName(hn, taken: taken) { error = "值名称: \(message)"; return }
+                if hn.caseInsensitiveCompare(trimmed) == .orderedSame { error = String(localized: "值名称不能与名称相同。"); return }
+                if let message = store.support.validateName(hn, taken: taken) { error = String(localized: "值名称: \(message)"); return }
             }
-            if needsSingleAura, aura <= 0 { error = "请选择光环。"; return }
-            if needsAuraList, auras.isEmpty { error = "请至少勾选一个光环。"; return }
-            if showsThreshold, dynamicThreshold, thresholdField.isBlank { error = "请选择动态阈值。"; return }
+            if needsSingleAura, aura <= 0 { error = String(localized: "请选择光环。"); return }
+            if needsAuraList, auras.isEmpty { error = String(localized: "请至少勾选一个光环。"); return }
+            if showsThreshold, dynamicThreshold, thresholdField.isBlank { error = String(localized: "请选择动态阈值。"); return }
             store.upsertUnit(buildUnit())
         } else {
-            if needsSingleAura, aura <= 0 { error = "请选择光环。"; return }
-            if showsThreshold, dynamicThreshold, thresholdField.isBlank { error = "请选择动态阈值。"; return }
+            if needsSingleAura, aura <= 0 { error = String(localized: "请选择光环。"); return }
+            if showsThreshold, dynamicThreshold, thresholdField.isBlank { error = String(localized: "请选择动态阈值。"); return }
             store.upsertCount(buildCount())
         }
         dismiss()

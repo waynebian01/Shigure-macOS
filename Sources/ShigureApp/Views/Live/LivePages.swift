@@ -45,8 +45,8 @@ struct StatusPage: View {
         guard let state = s.state else { return [] }
         return state.auraOrder.compactMap { key in
             guard let parsed = SpellFieldKey.parseAura("auras." + key) else { return nil }
-            let name = model.iconCatalog.spellName(parsed.spellId) ?? "未知法术"
-            let type = parsed.metric == SpellFieldKey.auraApplications ? "层数" : "时间"
+            let name = model.iconCatalog.spellName(parsed.spellId) ?? String(localized: "未知法术")
+            let type = String(localized: parsed.metric == SpellFieldKey.auraApplications ? "层数" : "时间")
             return StatusRow(id: key, category: parsed.scope, name: "\(name) · \(parsed.scope)", spellId: String(parsed.spellId), type: type,
                              value: (state.auras[key] ?? nil)?.displayText ?? "-", iconId: parsed.spellId, isItem: false)
         }
@@ -57,22 +57,22 @@ struct StatusPage: View {
         var rows: [StatusRow] = []
         for key in state.spellOrder {
             guard let parsed = SpellFieldKey.parseSpell("spells." + key) else { continue }
-            let name = model.iconCatalog.spellName(parsed.spellId) ?? "未知法术"
+            let name = model.iconCatalog.spellName(parsed.spellId) ?? String(localized: "未知法术")
             let type: String
             if let display = state.spellDisplayTypes[key] {
                 type = display
             } else {
                 switch parsed.metric {
-                case SpellFieldKey.spellChargeCooldown: type = "充能"
-                case SpellFieldKey.spellCount: type = "层数"
-                default: type = "冷却"
+                case SpellFieldKey.spellChargeCooldown: type = String(localized: "充能")
+                case SpellFieldKey.spellCount: type = String(localized: "层数")
+                default: type = String(localized: "冷却")
                 }
             }
             rows.append(StatusRow(id: key, category: "技能", name: name, spellId: String(parsed.spellId), type: type,
                                   value: (state.spells[key] ?? nil)?.displayText ?? "-", iconId: parsed.spellId, isItem: false))
         }
         for (field, itemId) in state.itemIds.sorted(by: { $0.key < $1.key }) {
-            rows.append(StatusRow(id: "item:\(field)", category: "物品", name: field, spellId: String(itemId), type: "冷却",
+            rows.append(StatusRow(id: "item:\(field)", category: "物品", name: field, spellId: String(itemId), type: String(localized: "冷却"),
                                   value: (state.values[field] ?? nil)?.displayText ?? "-", iconId: itemId, isItem: true))
         }
         return rows
@@ -87,8 +87,8 @@ enum StatusColumn { case category, name, spellId, type, value }
 
 struct StatusListCard: View {
     @Environment(AppModel.self) private var model
-    let title: String
-    let subtitle: String
+    let title: LocalizedStringResource
+    let subtitle: LocalizedStringResource
     let rows: [StatusRow]
     let columns: [StatusColumn]
 
@@ -109,15 +109,15 @@ struct StatusListCard: View {
                         Circle().fill(CategoryAccent.color(row.category)).frame(width: 8, height: 8)
                     }
                 }.width(28)
-                if columns.contains(.category) { TableColumn("分类", value: \.category).width(min: 50, ideal: 60) }
-                if columns.contains(.type) { TableColumn("类型", value: \.type).width(min: 44, ideal: 56) }
-                TableColumn("名称", value: \.name)
+                if columns.contains(.category) { TableColumn("分类") { Text(localizedReferenceText($0.category)) }.width(min: 50, ideal: 60) }
+                if columns.contains(.type) { TableColumn("类型") { Text(localizedReferenceText($0.type)) }.width(min: 44, ideal: 56) }
+                TableColumn("名称") { Text(localizedReferenceText($0.name)) }
                 if columns.contains(.spellId) { TableColumn("ID", value: \.spellId).width(min: 60, ideal: 76) }
                 TableColumn("值", value: \.value).width(min: 44, ideal: 70)
             }
             .overlay {
                 if rows.isEmpty {
-                    Text(model.isRunning ? "等待游戏状态" : "未运行").foregroundStyle(.secondary)
+                    Text(String(localized: model.isRunning ? "等待游戏状态" : "未运行")).foregroundStyle(.secondary)
                 }
             }
         }
@@ -161,19 +161,19 @@ struct PartyPage: View {
     }
 
     private var rows: [Row] {
-        guard let state = model.snapshot.state else { return [Row(id: 0, unit: "队伍", summary: "无队伍数据")] }
+        guard let state = model.snapshot.state else { return [Row(id: 0, unit: String(localized: "队伍"), summary: String(localized: "无队伍数据"))] }
         let count = state.getInt("队伍人数")
-        guard count > 0 else { return [Row(id: 0, unit: "队伍", summary: "无队伍数据")] }
+        guard count > 0 else { return [Row(id: 0, unit: String(localized: "队伍"), summary: String(localized: "无队伍数据"))] }
         return (1...min(count, 30)).map { i in
             guard let member = state.group[String(i)] else { return Row(id: i, unit: "Unit \(i)", summary: "-") }
             let summary = member.keys.sorted().map { key -> String in
                 let name: String
                 if let parsed = SpellFieldKey.parseAuraMember(key) {
-                    name = "\(model.iconCatalog.spellName(parsed.spellId) ?? String(parsed.spellId)) \(parsed.metric == SpellFieldKey.auraApplications ? "层数" : "")".trimmed()
+                    name = "\(model.iconCatalog.spellName(parsed.spellId) ?? String(parsed.spellId)) \(parsed.metric == SpellFieldKey.auraApplications ? String(localized: "层数") : "")".trimmed()
                 } else {
                     name = key
                 }
-                return "\(name): \((member[key] ?? nil)?.displayText ?? "-")"
+                return "\(localizedReferenceText(name)): \((member[key] ?? nil)?.displayText ?? "-")"
             }.joined(separator: "  ")
             return Row(id: i, unit: "Unit \(i)", summary: summary)
         }
@@ -190,8 +190,8 @@ struct LogicPage: View {
     var body: some View {
         let info = model.snapshot.unitInfo
         let rows = info.keys.sorted().map { Row(id: $0, value: info[$0]?.displayText ?? "-") }
-        Table(rows.isEmpty ? [Row(id: "逻辑信息", value: "无推荐目标")] : rows) {
-            TableColumn("名称", value: \.id).width(min: 100, ideal: 160)
+        Table(rows.isEmpty ? [Row(id: String(localized: "逻辑信息"), value: String(localized: "无推荐目标"))] : rows) {
+            TableColumn("名称") { Text(localizedReferenceText($0.id)) }.width(min: 100, ideal: 160)
             TableColumn("值", value: \.value)
         }
         .padding(12)

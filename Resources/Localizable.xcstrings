@@ -1,0 +1,7200 @@
+{
+  "sourceLanguage": "zh-Hans",
+  "strings": {
+    "": {
+      "shouldTranslate": false
+    },
+    "#": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#"
+          }
+        }
+      }
+    },
+    "%@  且任一(%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@  and any of (%@)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@  且任一(%2$@)"
+          }
+        }
+      }
+    },
+    "%@ (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (%lld)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ (%2$lld)"
+          }
+        }
+      }
+    },
+    "%@ (自定义)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (custom)"
+          }
+        }
+      }
+    },
+    "%@ / %@": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ / %2$@"
+          }
+        }
+      }
+    },
+    "%@, 重新启动运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@; restarting the session"
+          }
+        }
+      }
+    },
+    "%@: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$lld"
+          }
+        }
+      }
+    },
+    "%@失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ failed: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@失败: %2$@"
+          }
+        }
+      }
+    },
+    "%@必须是 0 到 2147483647 之间的整数，单位为 ms。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ must be an integer between 0 and 2147483647, in ms."
+          }
+        }
+      }
+    },
+    "%@（%@）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (%@)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@（%2$@）"
+          }
+        }
+      }
+    },
+    "%@（未知）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (unknown)"
+          }
+        }
+      }
+    },
+    "%@：通用 %lld + 专精 %lld，共 %lld 项": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %lld general + %lld spec, %lld total"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@：通用 %2$lld + 专精 %3$lld，共 %4$lld 项"
+          }
+        }
+      }
+    },
+    "%@；动态宏 %lld 个（%lld 项 × 30）；静态宏 %lld 个；特殊宏 %lld 个；共 %lld 个；最多 %lld 个": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@; %lld dynamic macros (%lld × 30); %lld static macros; %lld special macros; %lld total; %lld maximum"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@；动态宏 %2$lld 个（%3$lld 项 × 30）；静态宏 %4$lld 个；特殊宏 %5$lld 个；共 %6$lld 个；最多 %7$lld 个"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld ms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ms"
+          }
+        }
+      }
+    },
+    "%lld 个模块保存失败，详情见日志": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld modules failed to save; see the log for details"
+          }
+        }
+      }
+    },
+    "%lld 项": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld items"
+          }
+        }
+      }
+    },
+    "(无条件, 始终命中)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(no conditions, always matches)"
+          }
+        }
+      }
+    },
+    "0 → 非首领战 / -": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0 → not a boss fight / -"
+          }
+        }
+      }
+    },
+    "1, 2, 3": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1, 2, 3"
+          }
+        }
+      }
+    },
+    "1: 魔法": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1: Magic"
+          }
+        }
+      }
+    },
+    "2: 诅咒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2: Curse"
+          }
+        }
+      }
+    },
+    "3: 疾病": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3: Disease"
+          }
+        }
+      }
+    },
+    "4: 中毒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4: Poison"
+          }
+        }
+      }
+    },
+    "=": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "="
+          }
+        }
+      }
+    },
+    "Clean Icons - Mechagnome Edition\n\nhttps://github.com/AcidWeb/Clean-Icons-Mechagnome-Edition\n\nUpscaled icon pack for World of Warcraft.\n\n本软件的技能与物品图标来自该项目。": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Icons - Mechagnome Edition\n\nhttps://github.com/AcidWeb/Clean-Icons-Mechagnome-Edition\n\nUpscaled icon pack for World of Warcraft.\n\nThe spell and item icons in this app come from that project."
+          }
+        }
+      }
+    },
+    "ID": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ID"
+          }
+        }
+      }
+    },
+    "SF Symbols\n\nApple 系统符号库，随 macOS 提供。\n\n本软件的界面图标使用系统符号。": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SF Symbols\n\nApple’s system symbol library, shipped with macOS.\n\nThis app uses system symbols for its interface icons."
+          }
+        }
+      }
+    },
+    "Shigure": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure"
+          }
+        }
+      }
+    },
+    "Shigure - 已关闭": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure — Disabled"
+          }
+        }
+      }
+    },
+    "Shigure - 已开启": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure — Enabled"
+          }
+        }
+      }
+    },
+    "Shigure - 未运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure — Not running"
+          }
+        }
+      }
+    },
+    "Shigure 已启动，数据目录: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure started. Data directory: %@"
+          }
+        }
+      }
+    },
+    "Shigure 是荒坂公司（Arasaka Corporation）开发的冲锋枪。有时人们只想把子弹全打出去，在硝烟过后品味眼前的一片狼藉。": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shigure is a submachine gun made by the Arasaka Corporation. Sometimes you just want to empty the magazine and savour the mess once the smoke clears."
+          }
+        }
+      }
+    },
+    "bundle id 或进程名，逗号分隔": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bundle IDs or process names, comma separated"
+          }
+        }
+      }
+    },
+    "itemId": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "itemId"
+          }
+        }
+      }
+    },
+    "itemId %@（不存在）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "itemId %@ (missing)"
+          }
+        }
+      }
+    },
+    "itemId 或名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "itemId or name"
+          }
+        }
+      }
+    },
+    "itemId、索引或名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "itemId, index, or name"
+          }
+        }
+      }
+    },
+    "maxApps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "maxApps"
+          }
+        }
+      }
+    },
+    "spellId": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spellId"
+          }
+        }
+      }
+    },
+    "spellId %@（不存在）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spellId %@ (missing)"
+          }
+        }
+      }
+    },
+    "spellId 或名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spellId or name"
+          }
+        }
+      }
+    },
+    "spellIds": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spellIds"
+          }
+        }
+      }
+    },
+    "spellIds（逗号分隔）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "spellIds (comma separated)"
+          }
+        }
+      }
+    },
+    "wow-listfile\n\nhttps://github.com/wowdev/wow-listfile\n\nA listfile for WoW archived files.\n\n本软件的部分文件名与资源索引数据来自该项目。": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "wow-listfile\n\nhttps://github.com/wowdev/wow-listfile\n\nA listfile for WoW archived files.\n\nSome of the file names and resource indexes in this app come from that project."
+          }
+        }
+      }
+    },
+    "www.shigure.club": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "www.shigure.club"
+          }
+        }
+      }
+    },
+    "、": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", "
+          }
+        }
+      }
+    },
+    "。请先添加对应字段。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ". Add the matching fields first."
+          }
+        }
+      }
+    },
+    "上移": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Up"
+          }
+        }
+      }
+    },
+    "下移": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Down"
+          }
+        }
+      }
+    },
+    "下载失败：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download failed: %@"
+          }
+        }
+      }
+    },
+    "下载已取消；原数据包未修改。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download cancelled; the existing data pack is unchanged."
+          }
+        }
+      }
+    },
+    "下载数据包": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download Data Pack"
+          }
+        }
+      }
+    },
+    "不含某职责": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exclude a role"
+          }
+        }
+      }
+    },
+    "不在目录中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not in catalog"
+          }
+        }
+      }
+    },
+    "不带任一光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has none of these auras"
+          }
+        }
+      }
+    },
+    "不带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without a specific aura"
+          }
+        }
+      }
+    },
+    "不筛选光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No aura filter"
+          }
+        }
+      }
+    },
+    "不筛选职责": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No role filter"
+          }
+        }
+      }
+    },
+    "专精": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specialization"
+          }
+        }
+      }
+    },
+    "专精 %lld 的物品 itemId %lld 重复。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate itemId %lld in the items of spec %lld."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "专精 %1$lld 的物品 itemId %2$lld 重复。"
+          }
+        }
+      }
+    },
+    "专精 %lld 的物品名称「%@」与状态、特殊、能量或配置开关字段重名。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item name \"%@\" in spec %lld collides with a state, special, resource, or config field."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "专精 %1$lld 的物品名称「%2$@」与状态、特殊、能量或配置开关字段重名。"
+          }
+        }
+      }
+    },
+    "专精 %lld 的物品名称「%@」重复。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate item name \"%@\" in spec %lld."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "专精 %1$lld 的物品名称「%2$@」重复。"
+          }
+        }
+      }
+    },
+    "专精 %lld 的物品第 %lld 行 itemId 必须是正整数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the items in spec %lld: itemId must be a positive integer."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "专精 %1$lld 的物品第 %2$lld 行 itemId 必须是正整数。"
+          }
+        }
+      }
+    },
+    "专精 %lld 的物品第 %lld 行名称不能为空。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the items in spec %lld: the name cannot be empty."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "专精 %1$lld 的物品第 %2$lld 行名称不能为空。"
+          }
+        }
+      }
+    },
+    "专精%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spec %lld"
+          }
+        }
+      }
+    },
+    "且": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AND"
+          }
+        }
+      }
+    },
+    "且任一(%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "and any of (%@)"
+          }
+        }
+      }
+    },
+    "丛林守护者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keeper of the Grove"
+          }
+        }
+      }
+    },
+    "丢弃并切换": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard and Switch"
+          }
+        }
+      }
+    },
+    "为指定环境设置自动选择时优先使用的模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick the module that automatic selection should prefer for a given setup"
+          }
+        }
+      }
+    },
+    "产品": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Product"
+          }
+        }
+      }
+    },
+    "仅技能旧包": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legacy spell-only pack"
+          }
+        }
+      }
+    },
+    "任一(%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "any of (%@)"
+          }
+        }
+      }
+    },
+    "任意": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Any"
+          }
+        }
+      }
+    },
+    "任意 (*)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Any (*)"
+          }
+        }
+      }
+    },
+    "作者": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Author"
+          }
+        }
+      }
+    },
+    "使用字段和算术表达式生成命名数值：+ - * / 括号 int round floor ceil min max": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build named values from fields and arithmetic: + - * / parentheses int round floor ceil min max"
+          }
+        }
+      }
+    },
+    "依赖冲突: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dependency conflict: %@"
+          }
+        }
+      }
+    },
+    "保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "保存中…": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving…"
+          }
+        }
+      }
+    },
+    "保存到: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved to: %@"
+          }
+        }
+      }
+    },
+    "保存后的更新失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post-save update failed: %@"
+          }
+        }
+      }
+    },
+    "保存失败": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save Failed"
+          }
+        }
+      }
+    },
+    "保存设置失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to save settings: %@"
+          }
+        }
+      }
+    },
+    "值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value"
+          }
+        }
+      }
+    },
+    "值名称: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value name: %@"
+          }
+        }
+      }
+    },
+    "值名称不能与名称相同。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The value name cannot be the same as the unit name."
+          }
+        }
+      }
+    },
+    "值名称（可选）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value name (optional)"
+          }
+        }
+      }
+    },
+    "偏移": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offset"
+          }
+        }
+      }
+    },
+    "偏移 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offset %lld"
+          }
+        }
+      }
+    },
+    "偏移为成员内相对格位；保存时按偏移排序": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The offset is the slot position within a member; rows are sorted by offset on save"
+          }
+        }
+      }
+    },
+    "停止运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop"
+          }
+        }
+      }
+    },
+    "停止运行会话": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop the running session"
+          }
+        }
+      }
+    },
+    "元素": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elemental"
+          }
+        }
+      }
+    },
+    "充能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Charges"
+          }
+        }
+      }
+    },
+    "充能法术连续占 2 格：冷却 → 充能冷却": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A charge spell occupies 2 consecutive slots: cooldown → charge cooldown"
+          }
+        }
+      }
+    },
+    "先知": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farseer"
+          }
+        }
+      }
+    },
+    "光环": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auras"
+          }
+        }
+      }
+    },
+    "光环 (可多选)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auras (multiple allowed)"
+          }
+        }
+      }
+    },
+    "光环 - 带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auras — has a specific aura"
+          }
+        }
+      }
+    },
+    "光环值: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aura value: %lld"
+          }
+        }
+      }
+    },
+    "光环筛选": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aura filter"
+          }
+        }
+      }
+    },
+    "免责声明": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disclaimer"
+          }
+        }
+      }
+    },
+    "公司": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Company"
+          }
+        }
+      }
+    },
+    "公式动态数值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formula values"
+          }
+        }
+      }
+    },
+    "公式动态数值第 %lld 行缺少数值名称。请在“数值名称”里输入名称，或把公式写成“名称 = 表达式”。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formula value row %lld has no name. Enter one under \"Value name\", or write the formula as \"name = expression\"."
+          }
+        }
+      }
+    },
+    "关于": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "关闭逻辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disable Logic"
+          }
+        }
+      }
+    },
+    "关闭逻辑（⇧⌘E）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disable logic (⇧⌘E)"
+          }
+        }
+      }
+    },
+    "冰霜": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frost"
+          }
+        }
+      }
+    },
+    "冲锋枪": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Submachine gun"
+          }
+        }
+      }
+    },
+    "冷却": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooldown"
+          }
+        }
+      }
+    },
+    "冷却、充能与次数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cooldowns, charges, and casts"
+          }
+        }
+      }
+    },
+    "分类": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Group"
+          }
+        }
+      }
+    },
+    "创建、匹配并维护运行模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create, match, and maintain runtime modules"
+          }
+        }
+      }
+    },
+    "创建顺序：动态宏（每项 30 槽）→ 静态宏 → 特殊宏；空字符串保留槽位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creation order: dynamic macros (30 slots each) → static macros → special macros; empty strings keep their slots"
+          }
+        }
+      }
+    },
+    "初始化用户数据目录失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to initialize the user data directory: %@"
+          }
+        }
+      }
+    },
+    "删除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "删除模块「%@」？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete module \"%@\"?"
+          }
+        }
+      }
+    },
+    "删除规则": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Rule"
+          }
+        }
+      }
+    },
+    "判断": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Operator"
+          }
+        }
+      }
+    },
+    "利爪德鲁伊": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Druid of the Claw"
+          }
+        }
+      }
+    },
+    "到 GitHub 发布页手动下载 SpellIcons.shgpack": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download SpellIcons.shgpack manually from the GitHub releases page"
+          }
+        }
+      }
+    },
+    "刷新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        }
+      }
+    },
+    "刷新模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh modules"
+          }
+        }
+      }
+    },
+    "前往设置…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings…"
+          }
+        }
+      }
+    },
+    "副本首领的序号、名称与扫描编号": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dungeon boss order, names, and scan numbers"
+          }
+        }
+      }
+    },
+    "动作延迟 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Action delay %@"
+          }
+        }
+      }
+    },
+    "动态单位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamic units"
+          }
+        }
+      }
+    },
+    "动态宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamic macros"
+          }
+        }
+      }
+    },
+    "动态数值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamic values"
+          }
+        }
+      }
+    },
+    "动态阈值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamic threshold"
+          }
+        }
+      }
+    },
+    "包含某职责": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include a role"
+          }
+        }
+      }
+    },
+    "匹配模块: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matched module: %@"
+          }
+        }
+      }
+    },
+    "单人": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo"
+          }
+        }
+      }
+    },
+    "单人 (0)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo (0)"
+          }
+        }
+      }
+    },
+    "单位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unit"
+          }
+        }
+      }
+    },
+    "单位 (可作目标)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unit (can be targeted)"
+          }
+        }
+      }
+    },
+    "单位/条件/技能由宏正文解析；注释非空时作为技能名": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unit, condition, and spell are parsed from the macro body; a non-empty comment is used as the spell name"
+          }
+        }
+      }
+    },
+    "单击": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click"
+          }
+        }
+      }
+    },
+    "单击触发": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click triggered"
+          }
+        }
+      }
+    },
+    "参数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parameters"
+          }
+        }
+      }
+    },
+    "双击编辑，右键删除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-click to edit, right-click to delete"
+          }
+        }
+      }
+    },
+    "双击编辑；右键删除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-click to edit; right-click to delete"
+          }
+        }
+      }
+    },
+    "发送": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send"
+          }
+        }
+      }
+    },
+    "发送失败 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send failed %@"
+          }
+        }
+      }
+    },
+    "发送失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send failed: %@"
+          }
+        }
+      }
+    },
+    "发送模式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send mode"
+          }
+        }
+      }
+    },
+    "发送模式已变更": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send mode changed"
+          }
+        }
+      }
+    },
+    "取消": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "取逆序最后一个匹配单位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take the last matching unit instead of the first"
+          }
+        }
+      }
+    },
+    "可写成「名称 = 表达式」；支持 + - * / 括号、一元正负、int/round/floor/ceil/min/max": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can write \"name = expression\"; supports + - * / parentheses, unary +/-, and int/round/floor/ceil/min/max"
+          }
+        }
+      }
+    },
+    "可编辑": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editable"
+          }
+        }
+      }
+    },
+    "可选模块: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Candidate modules: %lld"
+          }
+        }
+      }
+    },
+    "名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "名称可改为业务别名；图标始终按 itemId 匹配。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The name can be any alias you like; icons always match on itemId."
+          }
+        }
+      }
+    },
+    "向游戏发送按键": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send keystrokes to the game"
+          }
+        }
+      }
+    },
+    "否 (false)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No (false)"
+          }
+        }
+      }
+    },
+    "启动": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "启动初始化失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startup initialization failed: %@"
+          }
+        }
+      }
+    },
+    "启动时自动开始运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start the session automatically on launch"
+          }
+        }
+      }
+    },
+    "启动运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "启动运行会话": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a running session"
+          }
+        }
+      }
+    },
+    "启用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        }
+      }
+    },
+    "启用队伍扫描 (GROUP)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable party scanning (GROUP)"
+          }
+        }
+      }
+    },
+    "命缚者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fatebound"
+          }
+        }
+      }
+    },
+    "哨兵": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sentinel"
+          }
+        }
+      }
+    },
+    "唤魔师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evoker"
+          }
+        }
+      }
+    },
+    "噬灭": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devourer"
+          }
+        }
+      }
+    },
+    "团队": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raid"
+          }
+        }
+      }
+    },
+    "团队 (1-40)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raid (1-40)"
+          }
+        }
+      }
+    },
+    "固定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed"
+          }
+        }
+      }
+    },
+    "固定阈值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixed threshold"
+          }
+        }
+      }
+    },
+    "图标": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icon"
+          }
+        }
+      }
+    },
+    "图腾祭祀": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Totemic"
+          }
+        }
+      }
+    },
+    "圣殿骑士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Templar"
+          }
+        }
+      }
+    },
+    "圣骑士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paladin"
+          }
+        }
+      }
+    },
+    "在 Finder 中显示": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in Finder"
+          }
+        }
+      }
+    },
+    "在 Finder 中显示数据目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the data directory in Finder"
+          }
+        }
+      }
+    },
+    "在 Finder 中显示日志文件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show the log file in Finder"
+          }
+        }
+      }
+    },
+    "在下一行添加空白条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add an empty condition on the next row"
+          }
+        }
+      }
+    },
+    "地狱召唤者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hellcaller"
+          }
+        }
+      }
+    },
+    "地面": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ground"
+          }
+        }
+      }
+    },
+    "坦克 (1)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tank (1)"
+          }
+        }
+      }
+    },
+    "基础字段与当前模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base fields and the current module"
+          }
+        }
+      }
+    },
+    "塑焰者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flameshaper"
+          }
+        }
+      }
+    },
+    "增强": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enhancement"
+          }
+        }
+      }
+    },
+    "增辉": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Augmentation"
+          }
+        }
+      }
+    },
+    "复仇": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vengeance"
+          }
+        }
+      }
+    },
+    "复制": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy"
+          }
+        }
+      }
+    },
+    "复制全部": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy All"
+          }
+        }
+      }
+    },
+    "复制到下一行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate onto the next row"
+          }
+        }
+      }
+    },
+    "复制规则": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate Rule"
+          }
+        }
+      }
+    },
+    "大米": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mythic+"
+          }
+        }
+      }
+    },
+    "天启骑士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rider of the Apocalypse"
+          }
+        }
+      }
+    },
+    "天神御师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conduit of the Celestials"
+          }
+        }
+      }
+    },
+    "奇袭": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assassination"
+          }
+        }
+      }
+    },
+    "奥术": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arcane"
+          }
+        }
+      }
+    },
+    "奥达奇收割者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aldrachi Reaver"
+          }
+        }
+      }
+    },
+    "好": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "始终": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Always"
+          }
+        }
+      }
+    },
+    "始终命中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "always matches"
+          }
+        }
+      }
+    },
+    "子条件 (满足任一即可, 与主条件为「且」关系)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sub-conditions (any one suffices; ANDed with the main condition)"
+          }
+        }
+      }
+    },
+    "字段": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fields"
+          }
+        }
+      }
+    },
+    "存在 %lld 条转换警告": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld conversion warnings"
+          }
+        }
+      }
+    },
+    "守护": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardian"
+          }
+        }
+      }
+    },
+    "安装完成": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed"
+          }
+        }
+      }
+    },
+    "完整包": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full pack"
+          }
+        }
+      }
+    },
+    "完整宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full macro"
+          }
+        }
+      }
+    },
+    "宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Macros"
+          }
+        }
+      }
+    },
+    "宏条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Macro condition"
+          }
+        }
+      }
+    },
+    "实时状态、光环、技能与动态值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live state, auras, spells, and dynamic values"
+          }
+        }
+      }
+    },
+    "宠物": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pet"
+          }
+        }
+      }
+    },
+    "射击": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marksmanship"
+          }
+        }
+      }
+    },
+    "尚无条件（始终命中）。点击「添加条件」。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No conditions yet (always matches). Click \"Add Condition\"."
+          }
+        }
+      }
+    },
+    "尚未保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not saved yet"
+          }
+        }
+      }
+    },
+    "层数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stacks"
+          }
+        }
+      }
+    },
+    "屏幕录制": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen Recording"
+          }
+        }
+      }
+    },
+    "屏幕录制…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen Recording…"
+          }
+        }
+      }
+    },
+    "屠戮者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slayer"
+          }
+        }
+      }
+    },
+    "山丘领主": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mountain Thane"
+          }
+        }
+      }
+    },
+    "巨神兵": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colossus"
+          }
+        }
+      }
+    },
+    "已一并保存该职业的 %lld 个模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also saved %lld modules for this class"
+          }
+        }
+      }
+    },
+    "已从项目 Fuyutsui 更新配置: %lld 个 config、%lld 个 keymap": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated from the project Fuyutsui: %lld config files, %lld keymap files"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "已从项目 Fuyutsui 更新配置: %1$lld 个 config、%2$lld 个 keymap"
+          }
+        }
+      }
+    },
+    "已保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved"
+          }
+        }
+      }
+    },
+    "已保存宏及该职业的模块": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved the macros and this class's modules"
+          }
+        }
+      }
+    },
+    "已保存模块: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module saved: %@"
+          }
+        }
+      }
+    },
+    "已保存配置及该职业的模块": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved the configuration and this class's modules"
+          }
+        }
+      }
+    },
+    "已修改（未保存）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modified (unsaved)"
+          }
+        }
+      }
+    },
+    "已停止": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stopped"
+          }
+        }
+      }
+    },
+    "已删除模块: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module deleted: %@"
+          }
+        }
+      }
+    },
+    "已加载 %lld 个职业宏表": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loaded %lld class macro tables"
+          }
+        }
+      }
+    },
+    "已加载 %lld 个职业文件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loaded %lld class files"
+          }
+        }
+      }
+    },
+    "已取消按键录入": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key capture cancelled"
+          }
+        }
+      }
+    },
+    "已向游戏发送 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent %@ to the game"
+          }
+        }
+      }
+    },
+    "已启动": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Started"
+          }
+        }
+      }
+    },
+    "已复制 %lld 个文件，%lld 个相同文件跳过 → %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied %1$lld file(s), skipped %2$lld identical file(s) → %3$@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "已复制 %1$lld 个文件，%2$lld 个相同文件跳过 → %3$@"
+          }
+        }
+      }
+    },
+    "已安装仅技能旧包：%@。物品搜索库不可用，可检查更新以获取完整包。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A legacy spell-only pack is installed: %@. Item search is unavailable; check for updates to get the full pack."
+          }
+        }
+      }
+    },
+    "已安装完整包：%@。点击检查 GitHub 更新。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full pack installed: %@. Click to check GitHub for updates."
+          }
+        }
+      }
+    },
+    "已录入触发键: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trigger key recorded: %@"
+          }
+        }
+      }
+    },
+    "已授予": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granted"
+          }
+        }
+      }
+    },
+    "已新建模块: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New module created: %@"
+          }
+        }
+      }
+    },
+    "已是最新": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already up to date"
+          }
+        }
+      }
+    },
+    "已更新 %lld 个配置文件，并完成游戏同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated %lld config files and synced them to the game"
+          }
+        }
+      }
+    },
+    "已有此技能：%@（%lld）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This spell is already listed: %@ (%lld)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "已有此技能：%1$@（%2$lld）"
+          }
+        }
+      }
+    },
+    "已有此物品：%@（%lld）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This item is already listed: %@ (%lld)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "已有此物品：%1$@（%2$lld）"
+          }
+        }
+      }
+    },
+    "已检测到游戏进程 pid %d，窗口 %lld×%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game process found: pid %d, window %lld×%lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "已检测到游戏进程 pid %1$d，窗口 %2$lld×%3$lld"
+          }
+        }
+      }
+    },
+    "带任一光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has any of these auras"
+          }
+        }
+      }
+    },
+    "带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With a specific aura"
+          }
+        }
+      }
+    },
+    "带某光环(持续最久)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With an aura (longest remaining)"
+          }
+        }
+      }
+    },
+    "带某光环(持续最短)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With an aura (shortest remaining)"
+          }
+        }
+      }
+    },
+    "带某驱散类型": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With a dispel type"
+          }
+        }
+      }
+    },
+    "常用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
+      }
+    },
+    "平衡": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance"
+          }
+        }
+      }
+    },
+    "序号": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No."
+          }
+        }
+      }
+    },
+    "应用信息、免责声明、许可证与来源": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App info, disclaimer, license, and attributions"
+          }
+        }
+      }
+    },
+    "延迟": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delay"
+          }
+        }
+      }
+    },
+    "开关": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toggle"
+          }
+        }
+      }
+    },
+    "开关：按一次切换；单击：每次触发发送一次；按住：持续按下时运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toggle: one press flips the state. Click: sends once per trigger. Hold: runs while the key is held."
+          }
+        }
+      }
+    },
+    "开启逻辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable Logic"
+          }
+        }
+      }
+    },
+    "开启逻辑（⇧⌘E）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable logic (⇧⌘E)"
+          }
+        }
+      }
+    },
+    "强制已学": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Force learned"
+          }
+        }
+      }
+    },
+    "当前修改尚未保存，确定丢弃吗？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have unsaved changes. Discard them?"
+          }
+        }
+      }
+    },
+    "当前条件为空, 将清除该规则的条件(始终命中)。继续？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The condition is empty, which clears this rule’s condition (always matches). Continue?"
+          }
+        }
+      }
+    },
+    "当前赛季": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current season"
+          }
+        }
+      }
+    },
+    "当前队伍单位与扫描字段摘要": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current party units and a summary of scanned fields"
+          }
+        }
+      }
+    },
+    "影踪派": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shado-Pan"
+          }
+        }
+      }
+    },
+    "德鲁伊": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Druid"
+          }
+        }
+      }
+    },
+    "恢复": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restoration"
+          }
+        }
+      }
+    },
+    "恩护": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preservation"
+          }
+        }
+      }
+    },
+    "恶魔使徒": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diabolist"
+          }
+        }
+      }
+    },
+    "恶魔学识": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demonology"
+          }
+        }
+      }
+    },
+    "恶魔猎手": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demon Hunter"
+          }
+        }
+      }
+    },
+    "惩戒": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retribution"
+          }
+        }
+      }
+    },
+    "戒律": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discipline"
+          }
+        }
+      }
+    },
+    "或": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OR"
+          }
+        }
+      }
+    },
+    "或点击「新建」创建一个模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "or click \"New\" to create one"
+          }
+        }
+      }
+    },
+    "战士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warrior"
+          }
+        }
+      }
+    },
+    "截屏失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen capture failed: %@"
+          }
+        }
+      }
+    },
+    "手动关闭": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disabled manually"
+          }
+        }
+      }
+    },
+    "手动开启": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enabled manually"
+          }
+        }
+      }
+    },
+    "手动重启": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "manual restart"
+          }
+        }
+      }
+    },
+    "打开 Shigure 主窗口": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the Shigure Window"
+          }
+        }
+      }
+    },
+    "打开模块目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Module Folder"
+          }
+        }
+      }
+    },
+    "打开目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Folder"
+          }
+        }
+      }
+    },
+    "执政官": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archon"
+          }
+        }
+      }
+    },
+    "扫描失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan failed: %@"
+          }
+        }
+      }
+    },
+    "扫描已恢复": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning recovered"
+          }
+        }
+      }
+    },
+    "技能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spells"
+          }
+        }
+      }
+    },
+    "技能/物品图标数据包已下载、校验并热加载": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell/item icon pack downloaded, verified and hot-loaded"
+          }
+        }
+      }
+    },
+    "技能/物品图标数据包已是最新": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell/item icon pack is already up to date"
+          }
+        }
+      }
+    },
+    "技能与物品图标来源": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell and item icons"
+          }
+        }
+      }
+    },
+    "技能冷却": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell cooldowns"
+          }
+        }
+      }
+    },
+    "技能列表": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell list"
+          }
+        }
+      }
+    },
+    "技能列表中的法术 ID %lld 重复。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate spell ID %lld in the spell list."
+          }
+        }
+      }
+    },
+    "技能列表第 %lld 行的名称不能为空。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the spell list: the name cannot be empty."
+          }
+        }
+      }
+    },
+    "技能列表第 %lld 行的法术 ID 必须是正整数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the spell list: the spell ID must be a positive integer."
+          }
+        }
+      }
+    },
+    "技能列表第 %lld 行的索引必须是 1–100 的整数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the spell list: the index must be an integer from 1 to 100."
+          }
+        }
+      }
+    },
+    "技能名": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell name"
+          }
+        }
+      }
+    },
+    "技能数据库": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell database"
+          }
+        }
+      }
+    },
+    "技能（手工填写）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell (entered manually)"
+          }
+        }
+      }
+    },
+    "把该单位生命值暴露为同名数值条件字段（如 最低血量 < 50）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expose this unit’s health as a condition field of the same name (e.g. lowestHealth < 50)"
+          }
+        }
+      }
+    },
+    "投递到游戏进程": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Post to the game process"
+          }
+        }
+      }
+    },
+    "拖动可排序；spellIds 非空时 spellId 作为规范 ID": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to reorder; when spellIds is non-empty, spellId is the canonical ID"
+          }
+        }
+      }
+    },
+    "拖动调整顺序": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to reorder"
+          }
+        }
+      }
+    },
+    "按住": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold"
+          }
+        }
+      }
+    },
+    "按住结束": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold released"
+          }
+        }
+      }
+    },
+    "按住触发": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold triggered"
+          }
+        }
+      }
+    },
+    "按职责": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By role"
+          }
+        }
+      }
+    },
+    "按职责且不带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By role, without a specific aura"
+          }
+        }
+      }
+    },
+    "按键 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key %@"
+          }
+        }
+      }
+    },
+    "按键注入": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key injection"
+          }
+        }
+      }
+    },
+    "捕获短促的触发键点击": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catch very short trigger-key presses"
+          }
+        }
+      }
+    },
+    "推荐天赋（仅说明，不参与匹配）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommended talents (informational only, not used for matching)"
+          }
+        }
+      }
+    },
+    "提示": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notice"
+          }
+        }
+      }
+    },
+    "插件同步: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add-on sync: %@"
+          }
+        }
+      }
+    },
+    "插件同步失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add-on sync failed: %@"
+          }
+        }
+      }
+    },
+    "插件源": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add-on source"
+          }
+        }
+      }
+    },
+    "摘要": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Summary"
+          }
+        }
+      }
+    },
+    "支持多行；例如 /cast [@player]荣耀圣令": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multiple lines allowed, e.g. /cast [@player]Word of Glory"
+          }
+        }
+      }
+    },
+    "放弃修改": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard Changes"
+          }
+        }
+      }
+    },
+    "敏锐": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtlety"
+          }
+        }
+      }
+    },
+    "数值名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value name"
+          }
+        }
+      }
+    },
+    "数据库不可用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Database unavailable"
+          }
+        }
+      }
+    },
+    "数据来源": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data sources"
+          }
+        }
+      }
+    },
+    "数据目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data directory"
+          }
+        }
+      }
+    },
+    "数量": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count"
+          }
+        }
+      }
+    },
+    "数量 (仅条件)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count (conditions only)"
+          }
+        }
+      }
+    },
+    "新建": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New"
+          }
+        }
+      }
+    },
+    "新建空表（保存后写入）": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New empty table (written on save)"
+          }
+        }
+      }
+    },
+    "新模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New module"
+          }
+        }
+      }
+    },
+    "施法次数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cast count"
+          }
+        }
+      }
+    },
+    "无推荐目标": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No recommendation"
+          }
+        }
+      }
+    },
+    "无法创建修饰键事件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not create the modifier-key event"
+          }
+        }
+      }
+    },
+    "无法创建按键事件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not create the key event"
+          }
+        }
+      }
+    },
+    "无法创建输入事件源": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not create the input event source"
+          }
+        }
+      }
+    },
+    "无法解析按键“%@”": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not parse the key \"%@\""
+          }
+        }
+      }
+    },
+    "无法识别主键“%@”": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unrecognized main key \"%@\""
+          }
+        }
+      }
+    },
+    "无法识别触发键: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unrecognized trigger key: %@"
+          }
+        }
+      }
+    },
+    "无目标": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No target"
+          }
+        }
+      }
+    },
+    "无队伍数据": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No party data"
+          }
+        }
+      }
+    },
+    "日志": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log"
+          }
+        }
+      }
+    },
+    "日怒": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sunfury"
+          }
+        }
+      }
+    },
+    "旧版稀疏索引格式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legacy sparse-index format"
+          }
+        }
+      }
+    },
+    "旧版稀疏索引格式暂不支持添加技能。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adding spells is not supported in the legacy sparse-index format."
+          }
+        }
+      }
+    },
+    "旧版稀疏索引格式暂不支持添加物品。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adding items is not supported in the legacy sparse-index format."
+          }
+        }
+      }
+    },
+    "时空守卫": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chronowarden"
+          }
+        }
+      }
+    },
+    "时间": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time"
+          }
+        }
+      }
+    },
+    "时间与层数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remaining time and stacks"
+          }
+        }
+      }
+    },
+    "是 (true)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes (true)"
+          }
+        }
+      }
+    },
+    "显示前 %lld 条": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Showing the first %lld"
+          }
+        }
+      }
+    },
+    "暂无动态单位 / 数量": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No dynamic units or counts"
+          }
+        }
+      }
+    },
+    "暂无符合筛选的模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No modules match the filter"
+          }
+        }
+      }
+    },
+    "暗影": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shadow"
+          }
+        }
+      }
+    },
+    "更新中…": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating…"
+          }
+        }
+      }
+    },
+    "更新失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update failed: %@"
+          }
+        }
+      }
+    },
+    "更新配置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update Config"
+          }
+        }
+      }
+    },
+    "更新配置失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config update failed: %@"
+          }
+        }
+      }
+    },
+    "最大充能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Max charges"
+          }
+        }
+      }
+    },
+    "有 %lld 行不完整(字段或值为空), 将被忽略。继续？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld rows are incomplete (empty field or value) and will be ignored. Continue?"
+          }
+        }
+      }
+    },
+    "未保存的修改": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unsaved Changes"
+          }
+        }
+      }
+    },
+    "未分类": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungrouped"
+          }
+        }
+      }
+    },
+    "未加载 classmacros.lua": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "classmacros.lua not loaded"
+          }
+        }
+      }
+    },
+    "未安装；技能/物品图标与添加技能、物品联想不可用。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not installed. Spell and item icons and the add-spell/add-item suggestions are unavailable."
+          }
+        }
+      }
+    },
+    "未找到 Fuyutsui/class，请确认数据目录中包含插件源后点击刷新。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuyutsui/class not found. Make sure the add-on source is in the data directory, then click Refresh."
+          }
+        }
+      }
+    },
+    "未找到 core/classmacros.lua": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "core/classmacros.lua not found"
+          }
+        }
+      }
+    },
+    "未找到目标游戏进程, 已跳过游戏插件同步。": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target game process not found; add-on sync skipped."
+          }
+        }
+      }
+    },
+    "未找到目标进程的可见窗口（%@）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No visible window found for the target process (%@)"
+          }
+        }
+      }
+    },
+    "未授予 · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not granted · %@"
+          }
+        }
+      }
+    },
+    "未授予「屏幕录制」权限，无法读取游戏画面": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Screen Recording permission is not granted; the game screen cannot be read"
+          }
+        }
+      }
+    },
+    "未授予「辅助功能」权限，无法发送按键": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility permission is not granted; keystrokes cannot be sent"
+          }
+        }
+      }
+    },
+    "未检测到游戏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No game detected"
+          }
+        }
+      }
+    },
+    "未检测到运行中的游戏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No running game detected"
+          }
+        }
+      }
+    },
+    "未知": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unknown"
+          }
+        }
+      }
+    },
+    "未知原因": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unknown reason"
+          }
+        }
+      }
+    },
+    "未知法术": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown spell"
+          }
+        }
+      }
+    },
+    "未运行": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not running"
+          }
+        }
+      }
+    },
+    "未配置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not configured"
+          }
+        }
+      }
+    },
+    "本地 Lua 已保存，但后续更新失败：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The local Lua was saved, but the follow-up update failed: %@"
+          }
+        }
+      }
+    },
+    "本地 Lua 已保存，正在更新配置并同步游戏…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Local Lua saved; updating the config and syncing to the game…"
+          }
+        }
+      }
+    },
+    "本地已保存并更新配置，但游戏同步失败": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved locally and regenerated the configuration, but syncing to the game failed"
+          }
+        }
+      }
+    },
+    "本地数据包损坏或格式不受支持；技能/物品图标与添加联想不可用。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The local data pack is corrupt or in an unsupported format. Icons and add-suggestions are unavailable."
+          }
+        }
+      }
+    },
+    "术士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warlock"
+          }
+        }
+      }
+    },
+    "权限": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permissions"
+          }
+        }
+      }
+    },
+    "条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condition"
+          }
+        }
+      }
+    },
+    "条件动态数值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conditional values"
+          }
+        }
+      }
+    },
+    "条件成立时对已有状态、光环、技能或动态字段加减一个整数": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the condition holds, add or subtract an integer from an existing state, aura, spell, or dynamic field"
+          }
+        }
+      }
+    },
+    "条件（点击编辑）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condition (click to edit)"
+          }
+        }
+      }
+    },
+    "来自当前职业 Lua 的 Fuyutsui.itemsList": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fuyutsui.itemsList from the current class Lua"
+          }
+        }
+      }
+    },
+    "来自当前职业 Lua，仅编辑索引 1–100": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the current class Lua; only indexes 1–100 are editable"
+          }
+        }
+      }
+    },
+    "某光环值等于": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aura value equals"
+          }
+        }
+      }
+    },
+    "检查更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check for Updates"
+          }
+        }
+      }
+    },
+    "检测到 config 或 keymap 缺失或不完整，正在从项目 Fuyutsui 自动生成": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The config or keymap is missing or incomplete; regenerating them from the project Fuyutsui"
+          }
+        }
+      }
+    },
+    "检测到目标游戏进程已打开，正在自动更新配置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The target game process was detected; updating the config automatically"
+          }
+        }
+      }
+    },
+    "模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modules"
+          }
+        }
+      }
+    },
+    "模块「%@」: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module \"%@\": %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "模块「%1$@」: %2$@"
+          }
+        }
+      }
+    },
+    "模块「%@」依赖更新失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dependency update failed for module \"%@\": %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "模块「%1$@」依赖更新失败: %2$@"
+          }
+        }
+      }
+    },
+    "模块「%@」被拒绝: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module \"%@\" was rejected: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "模块「%1$@」被拒绝: %2$@"
+          }
+        }
+      }
+    },
+    "模块依赖导入存在问题，详情见日志": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There were problems importing this module’s dependencies; see the log"
+          }
+        }
+      }
+    },
+    "模块依赖已导入: 配置新增 %lld 项、更新 %lld 项、宏新增 %lld 项": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module dependencies imported: %lld config entries added, %lld updated, %lld macros added"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "模块依赖已导入: 配置新增 %1$lld 项、更新 %2$lld 项、宏新增 %3$lld 项"
+          }
+        }
+      }
+    },
+    "模块已保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module saved"
+          }
+        }
+      }
+    },
+    "模块已删除": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module deleted"
+          }
+        }
+      }
+    },
+    "模块已变更": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module changed"
+          }
+        }
+      }
+    },
+    "模块操作失败": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module operation failed"
+          }
+        }
+      }
+    },
+    "模块文件将从模块目录中删除，此操作不可撤销。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The module file will be removed from the module folder. This cannot be undone."
+          }
+        }
+      }
+    },
+    "模块条件可用的状态字段参考": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reference for the state fields available to module conditions"
+          }
+        }
+      }
+    },
+    "模块版本 %@ 与当前版本不一致，保存后升级": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module version %@ differs from the current version; saving will upgrade it"
+          }
+        }
+      }
+    },
+    "模块版本与当前版本 %@ 不一致，不参与选择和运行；保存后升级": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This module’s version differs from the current version %@, so it is excluded from selection and execution. Saving will upgrade it."
+          }
+        }
+      }
+    },
+    "模块目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module folder"
+          }
+        }
+      }
+    },
+    "模块运行时计算值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Values computed by the module at runtime"
+          }
+        }
+      }
+    },
+    "模块选择": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module selection"
+          }
+        }
+      }
+    },
+    "模块选择: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module selection: %@"
+          }
+        }
+      }
+    },
+    "模块选择已变更": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Module selection changed"
+          }
+        }
+      }
+    },
+    "欺诈者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trickster"
+          }
+        }
+      }
+    },
+    "正在保存本地 Lua…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving the local Lua…"
+          }
+        }
+      }
+    },
+    "正在生成配置并同步游戏插件…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generating the config and syncing the game add-on…"
+          }
+        }
+      }
+    },
+    "此文件仍是旧版稀疏索引格式，无法用图形编辑器保存。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This file is still in the legacy sparse-index format and cannot be saved from the editor."
+          }
+        }
+      }
+    },
+    "此文件仍是旧版稀疏索引格式，请先迁移到 states/auras/spells/items/group 后再编辑。": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This file still uses the legacy sparse-index format. Migrate it to states/auras/spells/items/group before editing."
+          }
+        }
+      }
+    },
+    "武僧": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monk"
+          }
+        }
+      }
+    },
+    "武器": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arms"
+          }
+        }
+      }
+    },
+    "死亡使者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deathbringer"
+          }
+        }
+      }
+    },
+    "死亡猎手": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deathstalker"
+          }
+        }
+      }
+    },
+    "死亡骑士": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Death Knight"
+          }
+        }
+      }
+    },
+    "歼灭者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annihilator"
+          }
+        }
+      }
+    },
+    "毁灭": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destruction"
+          }
+        }
+      }
+    },
+    "每成员占用格数 NUM: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slots per member (NUM): %lld"
+          }
+        }
+      }
+    },
+    "每条规则只能设置一个「%@」。请删除多余的 Shigure %@行。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A rule can have only one \"%@\". Remove the extra Shigure %@ rows."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "每条规则只能设置一个「%1$@」。请删除多余的 Shigure %2$@行。"
+          }
+        }
+      }
+    },
+    "每条规则只能设置一个「继续逻辑」。请删除多余的 Shigure 继续逻辑行。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A rule can have only one \"Continue logic\". Remove the extra Shigure continue-logic rows."
+          }
+        }
+      }
+    },
+    "治疗 (2)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Healer (2)"
+          }
+        }
+      }
+    },
+    "治疗吸收 - 大于阈值": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Healing absorb — above threshold"
+          }
+        }
+      }
+    },
+    "治疗吸收 - 大于阈值不带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Healing absorb — above threshold, without an aura"
+          }
+        }
+      }
+    },
+    "治疗吸收 - 大于阈值带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Healing absorb — above threshold, with an aura"
+          }
+        }
+      }
+    },
+    "治疗吸收最高": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Highest healing absorb"
+          }
+        }
+      }
+    },
+    "法师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mage"
+          }
+        }
+      }
+    },
+    "法术 ID": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell ID"
+          }
+        }
+      }
+    },
+    "法术 ID %lld 已被技能列表中索引 101+ 的条目使用。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell ID %lld is already used by an entry at index 101 or above."
+          }
+        }
+      }
+    },
+    "法术 ID、索引或名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell ID, index, or name"
+          }
+        }
+      }
+    },
+    "法术书中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In spellbook"
+          }
+        }
+      }
+    },
+    "法术名": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell name"
+          }
+        }
+      }
+    },
+    "法术名（每项占 30 个团队点名槽）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spell name (each entry uses 30 raid-target slots)"
+          }
+        }
+      }
+    },
+    "注释": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment"
+          }
+        }
+      }
+    },
+    "测试发送": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test Send"
+          }
+        }
+      }
+    },
+    "测试发送: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test send: %@"
+          }
+        }
+      }
+    },
+    "浩劫": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Havoc"
+          }
+        }
+      }
+    },
+    "添加": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        }
+      }
+    },
+    "添加光环": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Aura"
+          }
+        }
+      }
+    },
+    "添加公式数值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Formula Value"
+          }
+        }
+      }
+    },
+    "添加动态宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Dynamic Macro"
+          }
+        }
+      }
+    },
+    "添加子条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Sub-condition"
+          }
+        }
+      }
+    },
+    "添加字段": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Field"
+          }
+        }
+      }
+    },
+    "添加技能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Spell"
+          }
+        }
+      }
+    },
+    "添加条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Condition"
+          }
+        }
+      }
+    },
+    "添加条件数值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Conditional Value"
+          }
+        }
+      }
+    },
+    "添加物品": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Item"
+          }
+        }
+      }
+    },
+    "添加特殊宏": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Special Macro"
+          }
+        }
+      }
+    },
+    "添加规则": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Rule"
+          }
+        }
+      }
+    },
+    "添加队伍光环": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Party Aura"
+          }
+        }
+      }
+    },
+    "添加静态宏": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Static Macro"
+          }
+        }
+      }
+    },
+    "清空显示": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear"
+          }
+        }
+      }
+    },
+    "渲染 %lld ms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Render %lld ms"
+          }
+        }
+      }
+    },
+    "游戏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game"
+          }
+        }
+      }
+    },
+    "游戏 pid %d": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game pid %d"
+          }
+        }
+      }
+    },
+    "游戏同步未完成": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game sync incomplete"
+          }
+        }
+      }
+    },
+    "游戏插件同步未完成：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game add-on sync did not finish: %@"
+          }
+        }
+      }
+    },
+    "游戏插件目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game add-on folder"
+          }
+        }
+      }
+    },
+    "游戏未运行时用于定位 Interface/AddOns；运行中始终以当前进程为准。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to locate Interface/AddOns while the game is not running; a running process always takes precedence."
+          }
+        }
+      }
+    },
+    "游戏标识": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game identifier"
+          }
+        }
+      }
+    },
+    "游戏窗口不可截取（可能已关闭或正在切换）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The game window cannot be captured (it may be closed or switching)"
+          }
+        }
+      }
+    },
+    "湮灭": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devastation"
+          }
+        }
+      }
+    },
+    "潜行者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rogue"
+          }
+        }
+      }
+    },
+    "火焰": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fire"
+          }
+        }
+      }
+    },
+    "灵魂收割者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soul Harvester"
+          }
+        }
+      }
+    },
+    "点击下方「添加」创建": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click \"Add\" below to create one"
+          }
+        }
+      }
+    },
+    "点击刷新以加载 Fuyutsui/class": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click Refresh to load Fuyutsui/class"
+          }
+        }
+      }
+    },
+    "点击刷新以加载 Fuyutsui/core/classmacros.lua": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click Refresh to load Fuyutsui/core/classmacros.lua"
+          }
+        }
+      }
+    },
+    "点击后按下新的键盘键或鼠标侧键（Esc 取消）；不支持 Option 与 Command 组合": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click, then press a new key or mouse side button (Esc cancels). Option and Command combinations are not supported."
+          }
+        }
+      }
+    },
+    "点击编辑公式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to edit the formula"
+          }
+        }
+      }
+    },
+    "点击编辑完整宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to edit the full macro"
+          }
+        }
+      }
+    },
+    "点击编辑条件（当前：%@）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to edit the condition (currently: %@)"
+          }
+        }
+      }
+    },
+    "点击编辑注释": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to edit the comment"
+          }
+        }
+      }
+    },
+    "烈日先驱": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herald of the Sun"
+          }
+        }
+      }
+    },
+    "热键": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hotkey"
+          }
+        }
+      }
+    },
+    "焦点": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        }
+      }
+    },
+    "焦点·友善": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus · Helpful"
+          }
+        }
+      }
+    },
+    "焦点·敌对": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus · Harmful"
+          }
+        }
+      }
+    },
+    "版本": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "版本 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        }
+      }
+    },
+    "牧师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Priest"
+          }
+        }
+      }
+    },
+    "物品": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Items"
+          }
+        }
+      }
+    },
+    "物品冷却": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item cooldowns"
+          }
+        }
+      }
+    },
+    "物品列表": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item list"
+          }
+        }
+      }
+    },
+    "物品列表 itemId %lld 重复。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate itemId %lld in the item list."
+          }
+        }
+      }
+    },
+    "物品列表第 %lld 行 itemId 必须是正整数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the item list: itemId must be a positive integer."
+          }
+        }
+      }
+    },
+    "物品列表第 %lld 行名称不能为空。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the item list: the name cannot be empty."
+          }
+        }
+      }
+    },
+    "物品列表第 %lld 行的索引必须是正整数。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row %lld of the item list: the index must be a positive integer."
+          }
+        }
+      }
+    },
+    "物品列表索引 %lld 重复。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate index %lld in the item list."
+          }
+        }
+      }
+    },
+    "物品数据库": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item database"
+          }
+        }
+      }
+    },
+    "特殊": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Special"
+          }
+        }
+      }
+    },
+    "特殊宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Special macros"
+          }
+        }
+      }
+    },
+    "特殊宏技能名必须手工填写，固定无目标、无宏条件": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Special macro spell names must be typed in; they always have no target and no macro condition"
+          }
+        }
+      }
+    },
+    "状态": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "State"
+          }
+        }
+      }
+    },
+    "狂徒": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outlaw"
+          }
+        }
+      }
+    },
+    "狂怒": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fury"
+          }
+        }
+      }
+    },
+    "猎人": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hunter"
+          }
+        }
+      }
+    },
+    "猎群领袖": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pack Leader"
+          }
+        }
+      }
+    },
+    "玩家": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Player"
+          }
+        }
+      }
+    },
+    "生命值 HEALTH PERCENT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health percent (HEALTH PERCENT)"
+          }
+        }
+      }
+    },
+    "生命值最低": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lowest health"
+          }
+        }
+      }
+    },
+    "生存": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Survival"
+          }
+        }
+      }
+    },
+    "界面图标来源": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interface icons"
+          }
+        }
+      }
+    },
+    "疾咒师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spellslinger"
+          }
+        }
+      }
+    },
+    "痛苦": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affliction"
+          }
+        }
+      }
+    },
+    "监控": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitor"
+          }
+        }
+      }
+    },
+    "目标": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target"
+          }
+        }
+      }
+    },
+    "目标 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target %@"
+          }
+        }
+      }
+    },
+    "目标·友善": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target · Helpful"
+          }
+        }
+      }
+    },
+    "目标·敌对": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target · Harmful"
+          }
+        }
+      }
+    },
+    "目标窗口已切换，等待重新扫描后再发送按键": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The target window changed; waiting for a rescan before sending keys"
+          }
+        }
+      }
+    },
+    "确定": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "神圣": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Holy"
+          }
+        }
+      }
+    },
+    "神谕者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oracle"
+          }
+        }
+      }
+    },
+    "祥和宗师": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Master of Harmony"
+          }
+        }
+      }
+    },
+    "移动规则": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Rule"
+          }
+        }
+      }
+    },
+    "等待启动": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting to start"
+          }
+        }
+      }
+    },
+    "等待游戏状态": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for game state"
+          }
+        }
+      }
+    },
+    "筛选: %@ / %@ / 队伍类型 %lld / 英雄天赋 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter: %@ / %@ / party type %lld / hero talent %lld"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "筛选: %1$@ / %2$@ / 队伍类型 %3$lld / 英雄天赋 %4$lld"
+          }
+        }
+      }
+    },
+    "筛选: 等待游戏状态": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter: waiting for game state"
+          }
+        }
+      }
+    },
+    "类别": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        }
+      }
+    },
+    "类型": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type"
+          }
+        }
+      }
+    },
+    "系统": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "系统级输入（需前台）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System-level input (requires foreground)"
+          }
+        }
+      }
+    },
+    "索引": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Index"
+          }
+        }
+      }
+    },
+    "索引 1–100 已全部使用，无法继续添加技能。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indexes 1–100 are all in use; no more spells can be added."
+          }
+        }
+      }
+    },
+    "约%@秒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "about %@ s"
+          }
+        }
+      }
+    },
+    "织雾": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mistweaver"
+          }
+        }
+      }
+    },
+    "继续": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        }
+      }
+    },
+    "维护职业动态宏、静态宏与特殊宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintain a class’s dynamic, static, and special macros"
+          }
+        }
+      }
+    },
+    "编号": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Number"
+          }
+        }
+      }
+    },
+    "编辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        }
+      }
+    },
+    "编辑公式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Formula"
+          }
+        }
+      }
+    },
+    "编辑单位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Unit"
+          }
+        }
+      }
+    },
+    "编辑完整宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Full Macro"
+          }
+        }
+      }
+    },
+    "编辑条件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Condition"
+          }
+        }
+      }
+    },
+    "编辑职业、专精和扫描字段": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit classes, specializations, and scanned fields"
+          }
+        }
+      }
+    },
+    "编辑规则注释": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Rule Comment"
+          }
+        }
+      }
+    },
+    "缺少权限：%@。读取游戏画面需要「屏幕录制」，发送按键需要「辅助功能」。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missing permissions: %@. Reading the game screen needs Screen Recording; sending keys needs Accessibility."
+          }
+        }
+      }
+    },
+    "职业": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Class"
+          }
+        }
+      }
+    },
+    "职业%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Class %lld"
+          }
+        }
+      }
+    },
+    "职责": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Role"
+          }
+        }
+      }
+    },
+    "职责 ROLE": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Role (ROLE)"
+          }
+        }
+      }
+    },
+    "职责筛选": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Role filter"
+          }
+        }
+      }
+    },
+    "能量": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resource"
+          }
+        }
+      }
+    },
+    "自动滚动": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-scroll"
+          }
+        }
+      }
+    },
+    "自动选择": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic"
+          }
+        }
+      }
+    },
+    "自动选择（最匹配）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (best match)"
+          }
+        }
+      }
+    },
+    "自动（运行中的游戏，否则优先正式服 _retail_）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (the running game, otherwise _retail_)"
+          }
+        }
+      }
+    },
+    "自定义 (%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom (%@)"
+          }
+        }
+      }
+    },
+    "艾露恩钦选者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elune’s Chosen"
+          }
+        }
+      }
+    },
+    "英雄天赋": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hero talent"
+          }
+        }
+      }
+    },
+    "荒野追猎者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wildstalker"
+          }
+        }
+      }
+    },
+    "获取模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Modules"
+          }
+        }
+      }
+    },
+    "萨满祭司": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shaman"
+          }
+        }
+      }
+    },
+    "萨莱因": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "San’layn"
+          }
+        }
+      }
+    },
+    "虚痕枭雄": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Void-Scarred"
+          }
+        }
+      }
+    },
+    "虚空编织者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voidweaver"
+          }
+        }
+      }
+    },
+    "血量 - 低于阈值": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health — below threshold"
+          }
+        }
+      }
+    },
+    "血量 - 低于阈值不带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health — below threshold, without an aura"
+          }
+        }
+      }
+    },
+    "血量 - 低于阈值带某光环": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health — below threshold, with an aura"
+          }
+        }
+      }
+    },
+    "装备中": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Equipped"
+          }
+        }
+      }
+    },
+    "规则 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rule %@"
+          }
+        }
+      }
+    },
+    "规则按顺序判断，第一条命中的规则会执行；拖动行可排序": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rules are evaluated in order and the first match executes; drag rows to reorder"
+          }
+        }
+      }
+    },
+    "触发键": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trigger key"
+          }
+        }
+      }
+    },
+    "触发键不支持 Command 组合, 请重试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command combinations are not supported for the trigger key. Try again."
+          }
+        }
+      }
+    },
+    "触发键不支持 Option(ALT) 或单独的修饰键，请选择其他按键。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The trigger key cannot be Option (ALT) or a bare modifier. Choose another key."
+          }
+        }
+      }
+    },
+    "触发键不支持 Option(ALT), 请重试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Option (ALT) is not supported for the trigger key. Try again."
+          }
+        }
+      }
+    },
+    "触发键不支持单独的修饰键, 请重试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A bare modifier is not supported for the trigger key. Try again."
+          }
+        }
+      }
+    },
+    "触发键已变更": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trigger key changed"
+          }
+        }
+      }
+    },
+    "触发键录入失败: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trigger key capture failed: %@"
+          }
+        }
+      }
+    },
+    "许可证": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License"
+          }
+        }
+      }
+    },
+    "设为默认": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set as Default"
+          }
+        }
+      }
+    },
+    "识别职业: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Class detected: %@"
+          }
+        }
+      }
+    },
+    "该专精使用扁平 states 列表；保存后将保持扁平格式。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This spec uses a flat states list; saving keeps the flat format."
+          }
+        }
+      }
+    },
+    "该按键暂不支持, 请重试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That key is not supported yet. Try again."
+          }
+        }
+      }
+    },
+    "该鼠标按键暂不支持, 请重试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That mouse button is not supported yet. Try again."
+          }
+        }
+      }
+    },
+    "说明": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reference"
+          }
+        }
+      }
+    },
+    "请先刷新并加载 classmacros.lua。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh and load classmacros.lua first."
+          }
+        }
+      }
+    },
+    "请先把该职业 Lua 迁移到 states/auras/spells/items/group 结构后再编辑。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Migrate this class’s Lua to the states/auras/spells/items/group structure before editing it."
+          }
+        }
+      }
+    },
+    "请先选择一个职业文件。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a class file first."
+          }
+        }
+      }
+    },
+    "请先选择职业。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a class first."
+          }
+        }
+      }
+    },
+    "请在「通用 → 下载数据包」安装完整数据包": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install the full data pack from General → Download Data Pack"
+          }
+        }
+      }
+    },
+    "请在左侧选择模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a module on the left"
+          }
+        }
+      }
+    },
+    "请在游戏内重载界面 (/reload)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reload the game UI (/reload)"
+          }
+        }
+      }
+    },
+    "请按任意键...": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press any key…"
+          }
+        }
+      }
+    },
+    "请至少勾选一个光环。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select at least one aura."
+          }
+        }
+      }
+    },
+    "请选择光环。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select an aura."
+          }
+        }
+      }
+    },
+    "请选择动态阈值。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a dynamic threshold."
+          }
+        }
+      }
+    },
+    "请选择职业": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select a class"
+          }
+        }
+      }
+    },
+    "读取游戏窗口像素": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read pixels from the game window"
+          }
+        }
+      }
+    },
+    "调整": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delta"
+          }
+        }
+      }
+    },
+    "资源": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resource"
+          }
+        }
+      }
+    },
+    "踏风": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windwalker"
+          }
+        }
+      }
+    },
+    "转换警告: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversion warning: %@"
+          }
+        }
+      }
+    },
+    "辅助功能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility"
+          }
+        }
+      }
+    },
+    "辅助功能…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility…"
+          }
+        }
+      }
+    },
+    "输入 ID 或名称开始筛选": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type an ID or name to filter"
+          }
+        }
+      }
+    },
+    "输入与运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input and execution"
+          }
+        }
+      }
+    },
+    "输入监控（可选）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input Monitoring (optional)"
+          }
+        }
+      }
+    },
+    "输出 (3)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DPS (3)"
+          }
+        }
+      }
+    },
+    "运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run"
+          }
+        }
+      }
+    },
+    "运行、模块匹配与施放记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session, module matching, and cast history"
+          }
+        }
+      }
+    },
+    "运行会话已停止": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running session stopped"
+          }
+        }
+      }
+    },
+    "运行会话已启动（触发键 %@，模式 %@）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running session started (trigger key %@, mode %@)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "运行会话已启动（触发键 %1$@，模式 %2$@）"
+          }
+        }
+      }
+    },
+    "运行控制、配置同步、数据包与模块选择": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run control, config sync, data pack, and module selection"
+          }
+        }
+      }
+    },
+    "运行时推荐目标与调试值": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Runtime recommendations and debug values"
+          }
+        }
+      }
+    },
+    "运行时错误: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Runtime error: %@"
+          }
+        }
+      }
+    },
+    "连接": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Join"
+          }
+        }
+      }
+    },
+    "退出 Shigure": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit Shigure"
+          }
+        }
+      }
+    },
+    "选择器": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selector"
+          }
+        }
+      }
+    },
+    "通用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
+      }
+    },
+    "通用 %lld 项": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld general entries"
+          }
+        }
+      }
+    },
+    "逻辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic"
+          }
+        }
+      }
+    },
+    "逻辑信息": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic info"
+          }
+        }
+      }
+    },
+    "逻辑关闭": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic off"
+          }
+        }
+      }
+    },
+    "逻辑已关闭": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic disabled"
+          }
+        }
+      }
+    },
+    "逻辑已开启": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic enabled"
+          }
+        }
+      }
+    },
+    "逻辑延迟": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic delay"
+          }
+        }
+      }
+    },
+    "逻辑延迟 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic delay %@"
+          }
+        }
+      }
+    },
+    "逻辑开启": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic on"
+          }
+        }
+      }
+    },
+    "逻辑未返回决策": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic returned no decision"
+          }
+        }
+      }
+    },
+    "逻辑编辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic editing"
+          }
+        }
+      }
+    },
+    "逻辑间隔": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logic interval"
+          }
+        }
+      }
+    },
+    "邪恶": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unholy"
+          }
+        }
+      }
+    },
+    "邪痕枭雄": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fel-Scarred"
+          }
+        }
+      }
+    },
+    "部署目标": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deploy target"
+          }
+        }
+      }
+    },
+    "配置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config"
+          }
+        }
+      }
+    },
+    "配置同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config sync"
+          }
+        }
+      }
+    },
+    "配置已更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "config updated"
+          }
+        }
+      }
+    },
+    "配置已更新；": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config updated; "
+          }
+        }
+      }
+    },
+    "配置开关": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config toggles"
+          }
+        }
+      }
+    },
+    "配置目录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Config folder"
+          }
+        }
+      }
+    },
+    "酒仙": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brewmaster"
+          }
+        }
+      }
+    },
+    "重启运行": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restart Session"
+          }
+        }
+      }
+    },
+    "重新下载": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download Again"
+          }
+        }
+      }
+    },
+    "重新加载模块目录并导入依赖（⌘R）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reload the module folder and import dependencies (⌘R)"
+          }
+        }
+      }
+    },
+    "重新检查": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-check"
+          }
+        }
+      }
+    },
+    "重新检查权限": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-check permissions"
+          }
+        }
+      }
+    },
+    "野兽控制": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beast Mastery"
+          }
+        }
+      }
+    },
+    "野性": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feral"
+          }
+        }
+      }
+    },
+    "铸光者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lightsmith"
+          }
+        }
+      }
+    },
+    "锚点/职业/专精 为固定字段；拖动可排序": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anchor, class, and spec are fixed fields; drag to reorder"
+          }
+        }
+      }
+    },
+    "阈值类型": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Threshold type"
+          }
+        }
+      }
+    },
+    "队伍": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Party"
+          }
+        }
+      }
+    },
+    "队伍 (46)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Party (46)"
+          }
+        }
+      }
+    },
+    "队伍类型": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Party type"
+          }
+        }
+      }
+    },
+    "防护": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protection"
+          }
+        }
+      }
+    },
+    "霜火": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frostfire"
+          }
+        }
+      }
+    },
+    "静态宏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Static macros"
+          }
+        }
+      }
+    },
+    "项目 Fuyutsui 中未找到 core/classmacros.lua，已跳过 keymap 更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "core/classmacros.lua was not found in the project Fuyutsui; the keymap update was skipped"
+          }
+        }
+      }
+    },
+    "项目目录是唯一配置源；尚未执行手动更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The project folder is the only config source; no manual update has run yet"
+          }
+        }
+      }
+    },
+    "顺序": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Order"
+          }
+        }
+      }
+    },
+    "预览: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview: %@"
+          }
+        }
+      }
+    },
+    "风暴使者": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stormbringer"
+          }
+        }
+      }
+    },
+    "首领": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bosses"
+          }
+        }
+      }
+    },
+    "驱散 DISPEL": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispel (DISPEL)"
+          }
+        }
+      }
+    },
+    "驱散类型": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispel type"
+          }
+        }
+      }
+    },
+    "鲜血": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blood"
+          }
+        }
+      }
+    },
+    "鳞长": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scalecommander"
+          }
+        }
+      }
+    },
+    "黑暗游侠": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark Ranger"
+          }
+        }
+      }
+    },
+    "默认 com.blizzard.worldofwarcraft；可追加测试服等其它标识。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Defaults to com.blizzard.worldofwarcraft; you can append PTR or other identifiers."
+          }
+        }
+      }
+    },
+    "默认模块": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default module"
+          }
+        }
+      }
+    },
+    "默认模块: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default module: %@"
+          }
+        }
+      }
+    },
+    "默认模块已变更": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default module changed"
+          }
+        }
+      }
+    },
+    "鼠标": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mouseover"
+          }
+        }
+      }
+    },
+    "（%@）：%@，SHA-256 %@…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%@): %@, SHA-256 %@…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "（%1$@）：%2$@，SHA-256 %3$@…"
+          }
+        }
+      }
+    },
+    "（%lld 个模块未携带依赖）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%lld modules carry no dependencies)"
+          }
+        }
+      }
+    },
+    "（当前默认）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(current default)"
+          }
+        }
+      }
+    },
+    "（无）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(none)"
+          }
+        }
+      }
+    },
+    "，": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", "
+          }
+        }
+      }
+    },
+    "，已选模块不符合当前筛选": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; the selected module does not match the current filter"
+          }
+        }
+      }
+    },
+    "；": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; "
+          }
+        }
+      }
+    },
+    "；%lld 个文件失败：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; %1$lld file(s) failed: %2$@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "new",
+            "value": "；%1$lld 个文件失败：%2$@"
+          }
+        }
+      }
+    },
+    "；延迟 %lld ms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; delay %lld ms"
+          }
+        }
+      }
+    },
+    "；继续逻辑": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; continue logic"
+          }
+        }
+      }
+    },
+    "；逻辑延迟 %lld ms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; logic delay %lld ms"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

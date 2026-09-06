@@ -89,7 +89,7 @@ struct ConfigEditorContent: View {
     private var footer: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(store.isDirty ? "已修改（未保存）" : store.status).font(.callout).foregroundStyle(store.isDirty ? .orange : .secondary).lineLimit(1)
+                Text(store.isDirty ? String(localized: "已修改（未保存）") : store.status).font(.callout).foregroundStyle(store.isDirty ? .orange : .secondary).lineLimit(1)
                 if let doc = store.document {
                     Text(doc.fileURL.path).font(.caption2).foregroundStyle(.tertiary).lineLimit(1).truncationMode(.middle)
                 }
@@ -97,7 +97,7 @@ struct ConfigEditorContent: View {
             Spacer()
             if store.isDirty { Button("放弃修改") { store.discard() } }
             Button { store.refreshClassList() } label: { Label("刷新", systemImage: "arrow.clockwise") }
-            Button { store.save() } label: { Label(store.isSaving ? "保存中…" : "保存", systemImage: "square.and.arrow.down") }
+            Button { store.save() } label: { Label(String(localized: store.isSaving ? "保存中…" : "保存"), systemImage: "square.and.arrow.down") }
                 .keyboardShortcut("s", modifiers: [.command])
                 .buttonStyle(.borderedProminent)
                 .disabled(!store.isDirty || store.isSaving || !store.isModern)
@@ -191,7 +191,7 @@ struct AurasEditor: View {
     @Bindable var store: ConfigEditorStore
     @State private var bucket = 0
 
-    static let buckets = ["玩家", "目标·敌对", "目标·友善", "焦点·敌对", "焦点·友善"]
+    static let buckets: [LocalizedStringResource] = ["玩家", "目标·敌对", "目标·友善", "焦点·敌对", "焦点·友善"]
 
     private var list: Binding<[ClassBlocksStore.AuraEntry]> {
         Binding(get: {
@@ -446,9 +446,9 @@ struct GroupEditor: View {
         }
     }
 
-    private func offsetRow(_ title: String, value: Int?, defaultValue: Int, set: @escaping (Int?) -> Void) -> some View {
+    private func offsetRow(_ title: LocalizedStringResource, value: Int?, defaultValue: Int, set: @escaping (Int?) -> Void) -> some View {
         HStack {
-            Toggle(title, isOn: Binding(get: { value != nil }, set: { set($0 ? (value ?? defaultValue) : nil) }))
+            Toggle(isOn: Binding(get: { value != nil }, set: { set($0 ? (value ?? defaultValue) : nil) })) { Text(title) }
             Spacer()
             if let value {
                 Stepper(value: Binding(get: { value }, set: { set($0) }), in: 0...40) { Text("偏移 \(value)") }
@@ -551,8 +551,8 @@ struct ItemsListEditor: View {
 /// 技能/物品数据库搜索（来自 .shgpack 名称索引），前 200 条结果。
 struct DatabaseSearchPane: View {
     @Environment(AppModel.self) private var model
-    let title: String
-    let placeholder: String
+    let title: LocalizedStringResource
+    let placeholder: LocalizedStringKey
     let suggestions: [(id: Int64, name: String)]
     let isItem: Bool
     let available: Bool
@@ -581,7 +581,7 @@ struct DatabaseSearchPane: View {
                     }
                 }
                 .listStyle(.inset)
-                Text(query.isEmpty ? "输入 ID 或名称开始筛选" : "显示前 \(results.count) 条").font(.caption).foregroundStyle(.secondary).padding(6)
+                Text(query.isEmpty ? String(localized: "输入 ID 或名称开始筛选") : String(localized: "显示前 \(results.count) 条")).font(.caption).foregroundStyle(.secondary).padding(6)
             }
         }
         .onChange(of: query) { _, q in

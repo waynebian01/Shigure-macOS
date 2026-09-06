@@ -26,7 +26,7 @@ struct MacroEditorContent: View {
                         if let image = model.iconCatalog.classImage(cls.id) {
                             Image(nsImage: image).resizable().frame(width: 28, height: 28).clipShape(RoundedRectangle(cornerRadius: 6))
                         }
-                        Text(cls.name + (store.hasClass(cls.id) ? "" : "（无）"))
+                        Text(localizedReferenceText(cls.name) + (store.hasClass(cls.id) ? "" : String(localized: "（无）")))
                     }
                     .tag(cls.id)
                 }
@@ -50,13 +50,13 @@ struct MacroEditorContent: View {
                 Divider()
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(store.isDirty ? "已修改（未保存）" : store.status).font(.callout).foregroundStyle(store.isDirty ? .orange : .secondary)
+                        Text(store.isDirty ? String(localized: "已修改（未保存）") : store.status).font(.callout).foregroundStyle(store.isDirty ? .orange : .secondary)
                         Text(model.paths.classMacrosFile.path).font(.caption2).foregroundStyle(.tertiary).lineLimit(1).truncationMode(.middle)
                     }
                     Spacer()
                     if store.isDirty { Button("放弃修改") { store.discard() } }
                     Button { store.reload() } label: { Label("刷新", systemImage: "arrow.clockwise") }
-                    Button { store.save() } label: { Label(store.isSaving ? "保存中…" : "保存", systemImage: "square.and.arrow.down") }
+                    Button { store.save() } label: { Label(String(localized: store.isSaving ? "保存中…" : "保存"), systemImage: "square.and.arrow.down") }
                         .keyboardShortcut("s", modifiers: [.command]).buttonStyle(.borderedProminent)
                         .disabled(!store.isDirty || store.isSaving)
                 }
@@ -151,7 +151,7 @@ struct ArrayMacrosEditor: View {
                         if isSpecial {
                             TextField("技能名", text: Binding(get: { entry.comment ?? "" }, set: { entries.wrappedValue[index].comment = $0.isBlank ? nil : $0 })).frame(width: 160)
                         } else {
-                            Text(ReservedUnit.displayText(parsed.unit)).frame(width: 60, alignment: .leading).foregroundStyle(.secondary)
+                            Text(localizedReferenceText(ReservedUnit.displayText(parsed.unit))).frame(width: 60, alignment: .leading).foregroundStyle(.secondary)
                             Text(parsed.condition).frame(width: 120, alignment: .leading).foregroundStyle(.secondary).lineLimit(1)
                             Text(parsed.spell).frame(width: 140, alignment: .leading).lineLimit(1)
                         }
@@ -170,9 +170,9 @@ struct ArrayMacrosEditor: View {
             .listStyle(.inset)
             Divider()
             HStack {
-                Button { entries.wrappedValue.append(ClassMacrosStore.ArrayEntry(text: "")) } label: { Label(isSpecial ? "添加特殊宏" : "添加静态宏", systemImage: "plus") }
+                Button { entries.wrappedValue.append(ClassMacrosStore.ArrayEntry(text: "")) } label: { Label(String(localized: isSpecial ? "添加特殊宏" : "添加静态宏"), systemImage: "plus") }
                 Spacer()
-                Text(isSpecial ? "特殊宏技能名必须手工填写，固定无目标、无宏条件" : "单位/条件/技能由宏正文解析；注释非空时作为技能名").font(.caption).foregroundStyle(.secondary)
+                Text(String(localized: isSpecial ? "特殊宏技能名必须手工填写，固定无目标、无宏条件" : "单位/条件/技能由宏正文解析；注释非空时作为技能名")).font(.caption).foregroundStyle(.secondary)
             }
             .padding(8)
         }

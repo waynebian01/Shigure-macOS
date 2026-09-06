@@ -36,16 +36,16 @@ final class KeyRecorder {
         switch event.type {
         case .otherMouseDown:
             if let name = MacKeyCodes.mouseButtonName(event.buttonNumber) { return .captured(name) }
-            return .unsupported("该鼠标按键暂不支持, 请重试")
+            return .unsupported(String(localized: "该鼠标按键暂不支持, 请重试"))
         case .keyDown:
             if event.keyCode == 0x35 { return .cancelled } // Escape
-            if MacKeyCodes.modifierKeyCodes.contains(event.keyCode) { return .unsupported("触发键不支持单独的修饰键, 请重试") }
-            if event.modifierFlags.contains(.option) { return .unsupported("触发键不支持 Option(ALT), 请重试") }
-            if event.modifierFlags.contains(.command) { return .unsupported("触发键不支持 Command 组合, 请重试") }
+            if MacKeyCodes.modifierKeyCodes.contains(event.keyCode) { return .unsupported(String(localized: "触发键不支持单独的修饰键, 请重试")) }
+            if event.modifierFlags.contains(.option) { return .unsupported(String(localized: "触发键不支持 Option(ALT), 请重试")) }
+            if event.modifierFlags.contains(.command) { return .unsupported(String(localized: "触发键不支持 Command 组合, 请重试")) }
             if let name = MacKeyCodes.name(for: event.keyCode) { return .captured(name) }
-            return .unsupported("该按键暂不支持, 请重试")
+            return .unsupported(String(localized: "该按键暂不支持, 请重试"))
         default:
-            return .unsupported("该按键暂不支持, 请重试")
+            return .unsupported(String(localized: "该按键暂不支持, 请重试"))
         }
     }
 }

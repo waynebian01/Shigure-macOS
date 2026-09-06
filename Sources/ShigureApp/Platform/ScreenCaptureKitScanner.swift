@@ -22,10 +22,10 @@ final class ScreenCaptureKitScanner: ScreenScanner, @unchecked Sendable {
 
     func scan() async -> ScreenScanResult {
         guard let target = locator.currentTarget() else {
-            return .failure("未找到目标进程的可见窗口（\(locator.describeConfigured())）")
+            return .failure(String(localized: "未找到目标进程的可见窗口（\(locator.describeConfigured())）"))
         }
         guard Permissions.screenRecording else {
-            return .failure("未授予「屏幕录制」权限，无法读取游戏画面", target: target)
+            return .failure(String(localized: "未授予「屏幕录制」权限，无法读取游戏画面"), target: target)
         }
         do {
             let window = try await resolveWindow(target)
@@ -53,7 +53,7 @@ final class ScreenCaptureKitScanner: ScreenScanner, @unchecked Sendable {
                                     failureReason: decoded.failureReason)
         } catch {
             lock.withLock { cachedWindow = nil }
-            return .failure("截屏失败: \(error.localizedDescription)", target: target)
+            return .failure(String(localized: "截屏失败: \(error.localizedDescription)"), target: target)
         }
     }
 
@@ -71,7 +71,7 @@ final class ScreenCaptureKitScanner: ScreenScanner, @unchecked Sendable {
 
     enum ScanError: LocalizedError {
         case windowNotShareable
-        var errorDescription: String? { "游戏窗口不可截取（可能已关闭或正在切换）" }
+        var errorDescription: String? { String(localized: "游戏窗口不可截取（可能已关闭或正在切换）") }
     }
 
     static func backingScale(for bounds: CGRect) -> CGFloat {

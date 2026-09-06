@@ -13,7 +13,7 @@ final class MacroEditorStore {
     private(set) var selectedClassId: Int?
     /// nil = 通用
     var selectedSpecIndex: Int?
-    var status = "点击刷新以加载 Fuyutsui/core/classmacros.lua"
+    var status = String(localized: "点击刷新以加载 Fuyutsui/core/classmacros.lua")
     var errorMessage: String?
     var infoMessage: String?
     var pendingSwitch: Int?
@@ -51,20 +51,20 @@ final class MacroEditorStore {
         guard FileManager.default.fileExists(atPath: url.path) else {
             document = nil
             original = nil
-            status = "未找到 core/classmacros.lua"
+            status = String(localized: "未找到 core/classmacros.lua")
             return
         }
         do {
             let doc = try ClassMacrosStore.load(url)
             document = doc
             original = doc
-            status = "已加载 \(doc.classOrder.count) 个职业宏表"
+            status = String(localized: "已加载 \(doc.classOrder.count) 个职业宏表")
             if selectedClassId == nil { selectedClassId = ClassNames.allClasses.first?.id }
             selectedSpecIndex = nil
         } catch {
             document = nil
             original = nil
-            status = "加载失败: \(error)"
+            status = String(localized: "加载失败: \(error)")
         }
     }
 
@@ -84,7 +84,7 @@ final class MacroEditorStore {
     private func select(classId: Int) {
         selectedClassId = classId
         selectedSpecIndex = nil
-        status = hasClass(classId) ? "可编辑" : "新建空表（保存后写入）"
+        status = String(localized: hasClass(classId) ? "可编辑" : "新建空表（保存后写入）")
     }
 
     func discard() {
@@ -99,8 +99,8 @@ final class MacroEditorStore {
     }
 
     func specTitle(_ index: Int?) -> String {
-        guard let index else { return "通用" }
-        guard let classId = selectedClassId, let name = ClassNames.specName(classId: classId, specId: index) else { return "专精\(index)" }
+        guard let index else { return String(localized: "通用") }
+        guard let classId = selectedClassId, let name = ClassNames.specName(classId: classId, specId: index) else { return String(localized: "专精\(index)") }
         return name
     }
 
@@ -131,13 +131,13 @@ final class MacroEditorStore {
             let common = m.dynamicCommon.count
             let spec = m.dynamicBySpec[index]?.count ?? 0
             dynamicCount = common + spec
-            prefix = "\(specTitle(index))：通用 \(common) + 专精 \(spec)，共 \(dynamicCount) 项"
+            prefix = String(localized: "\(specTitle(index))：通用 \(common) + 专精 \(spec)，共 \(dynamicCount) 项")
         } else {
             dynamicCount = m.dynamicCommon.count
-            prefix = "通用 \(dynamicCount) 项"
+            prefix = String(localized: "通用 \(dynamicCount) 项")
         }
         let total = dynamicCount * 30 + m.staticSpells.count + m.specialSpells.count
-        return "\(prefix)；动态宏 \(dynamicCount * 30) 个（\(dynamicCount) 项 × 30）；静态宏 \(m.staticSpells.count) 个；特殊宏 \(m.specialSpells.count) 个；共 \(total) 个；最多 \(KeymapCatalog.macroSlotCapacity) 个"
+        return String(localized: "\(prefix)；动态宏 \(dynamicCount * 30) 个（\(dynamicCount) 项 × 30）；静态宏 \(m.staticSpells.count) 个；特殊宏 \(m.specialSpells.count) 个；共 \(total) 个；最多 \(KeymapCatalog.macroSlotCapacity) 个")
     }
 
     var slotOverflow: Bool {
@@ -149,22 +149,22 @@ final class MacroEditorStore {
     }
 
     func save() {
-        guard let doc = document else { errorMessage = "请先刷新并加载 classmacros.lua。"; return }
-        guard let classId = selectedClassId else { errorMessage = "请先选择职业。"; return }
+        guard let doc = document else { errorMessage = String(localized: "请先刷新并加载 classmacros.lua。"); return }
+        guard let classId = selectedClassId else { errorMessage = String(localized: "请先选择职业。"); return }
         isSaving = true
-        status = "正在保存本地 Lua…"
+        status = String(localized: "正在保存本地 Lua…")
         Task {
             do {
                 let saved = try ClassMacrosStore.save(doc)
                 document = saved
                 original = saved
-                status = "本地 Lua 已保存，正在更新配置并同步游戏…"
-                let notes = await model.afterLuaSaved(relativePath: "core/classmacros.lua", classId: classId)
-                status = notes.contains("失败") || notes.contains("未完成") ? "本地已保存并更新配置，但游戏同步失败" : "已保存宏及该职业的模块"
-                infoMessage = notes
+                status = String(localized: "本地 Lua 已保存，正在更新配置并同步游戏…")
+                let outcome = await model.afterLuaSaved(relativePath: "core/classmacros.lua", classId: classId)
+                status = String(localized: outcome.hasIssue ? "本地已保存并更新配置，但游戏同步失败" : "已保存宏及该职业的模块")
+                infoMessage = outcome.notes
             } catch {
-                status = "保存失败"
-                errorMessage = "保存失败：\(error)"
+                status = String(localized: "保存失败")
+                errorMessage = String(localized: "保存失败：\(error)")
             }
             isSaving = false
         }

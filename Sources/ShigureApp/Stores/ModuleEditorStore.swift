@@ -241,7 +241,7 @@ final class ModuleEditorStore {
     }
 
     func addRule() {
-        mutateRules("添加规则") {
+        mutateRules(String(localized: "添加规则")) {
             var rule = ModuleRule()
             rule.macroCondition = ""
             draft.rules.append(rule)
@@ -250,7 +250,7 @@ final class ModuleEditorStore {
 
     func duplicateRule(at index: Int) {
         guard draft.rules.indices.contains(index) else { return }
-        mutateRules("复制规则") {
+        mutateRules(String(localized: "复制规则")) {
             var copy = draft.rules[index]
             copy.id = UUID()
             draft.rules.insert(copy, at: index + 1)
@@ -258,7 +258,7 @@ final class ModuleEditorStore {
     }
 
     func insertBlankRule(after index: Int) {
-        mutateRules("添加规则") {
+        mutateRules(String(localized: "添加规则")) {
             var rule = ModuleRule()
             rule.macroCondition = ""
             draft.rules.insert(rule, at: min(index + 1, draft.rules.count))
@@ -267,17 +267,17 @@ final class ModuleEditorStore {
 
     func deleteRule(at index: Int) {
         guard draft.rules.indices.contains(index) else { return }
-        mutateRules("删除规则") { draft.rules.remove(at: index) }
+        mutateRules(String(localized: "删除规则")) { draft.rules.remove(at: index) }
     }
 
     func moveRule(from index: Int, by delta: Int) {
         let target = index + delta
         guard draft.rules.indices.contains(index), draft.rules.indices.contains(target) else { return }
-        mutateRules("移动规则") { draft.rules.swapAt(index, target) }
+        mutateRules(String(localized: "移动规则")) { draft.rules.swapAt(index, target) }
     }
 
     func moveRules(from source: IndexSet, to destination: Int) {
-        mutateRules("移动规则") { draft.rules.move(fromOffsets: source, toOffset: destination) }
+        mutateRules(String(localized: "移动规则")) { draft.rules.move(fromOffsets: source, toOffset: destination) }
     }
 
     // MARK: 撤销
@@ -346,17 +346,17 @@ final class ModuleEditorStore {
             let saved = try model.moduleStore.save(module)
             reload()
             select(saved.id)
-            model.log.append("已新建模块: \(name)")
-            model.restartRuntime(reason: "模块已变更")
+            model.log.append(String(localized: "已新建模块: \(name)"))
+            model.restartRuntime(reason: String(localized: "模块已变更"))
         } catch {
-            errorMessage = "模块操作失败：\(error)"
+            errorMessage = String(localized: "模块操作失败：\(error)")
         }
     }
 
     func save() {
         guard hasSelection else { return }
         var module = draft
-        if module.name.isBlank { module.name = "新模块" }
+        if module.name.isBlank { module.name = String(localized: "新模块") }
         module.name = module.name.trimmed()
         module.author = module.author.trimmed()
         module.recommendedTalent = module.recommendedTalent.trimmed()
@@ -367,7 +367,7 @@ final class ModuleEditorStore {
         }
         for (i, adjustment) in module.valueAdjustments.enumerated() where !adjustment.formula.isBlank || adjustment.field.isBlank {
             if adjustment.field.isBlank && !adjustment.formula.isBlank {
-                errorMessage = "公式动态数值第 \(i + 1) 行缺少数值名称。请在“数值名称”里输入名称，或把公式写成“名称 = 表达式”。"
+                errorMessage = String(localized: "公式动态数值第 \(i + 1) 行缺少数值名称。请在“数值名称”里输入名称，或把公式写成“名称 = 表达式”。")
                 return
             }
         }
@@ -381,7 +381,7 @@ final class ModuleEditorStore {
         do {
             warning = try service.capture(&module)
         } catch {
-            errorMessage = "保存失败：\(error)"
+            errorMessage = String(localized: "保存失败：\(error)")
             return
         }
         do {
@@ -389,10 +389,10 @@ final class ModuleEditorStore {
             selectedId = saved.id
             reload()
             if let warning { infoMessage = warning }
-            model.log.append("已保存模块: \(saved.name)")
-            model.restartRuntime(reason: "模块已保存")
+            model.log.append(String(localized: "已保存模块: \(saved.name)"))
+            model.restartRuntime(reason: String(localized: "模块已保存"))
         } catch {
-            errorMessage = "保存失败：\(error)"
+            errorMessage = String(localized: "保存失败：\(error)")
         }
     }
 
@@ -407,10 +407,10 @@ final class ModuleEditorStore {
             try model.moduleStore.delete(original)
             selectedId = nil
             reload()
-            model.log.append("已删除模块: \(original.name)")
-            model.restartRuntime(reason: "模块已删除")
+            model.log.append(String(localized: "已删除模块: \(original.name)"))
+            model.restartRuntime(reason: String(localized: "模块已删除"))
         } catch {
-            errorMessage = "删除失败：\(error)"
+            errorMessage = String(localized: "删除失败：\(error)")
         }
         pendingDeleteName = nil
     }

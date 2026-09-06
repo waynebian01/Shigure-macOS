@@ -46,9 +46,9 @@ struct PageCommands: Commands {
             ForEach(Array(AppPage.allCases.enumerated()), id: \.element) { index, page in
                 let action = { model.selectedPage = page }
                 if let key = Self.shortcut(for: index) {
-                    Button(page.title, action: action).keyboardShortcut(key, modifiers: [.command])
+                    Button(action: action) { Text(page.title) }.keyboardShortcut(key, modifiers: [.command])
                 } else {
-                    Button(page.title, action: action)
+                    Button(action: action) { Text(page.title) }
                 }
             }
         }
@@ -74,7 +74,7 @@ struct RuntimeCommands: Commands {
                 .disabled(!model.isRunning)
             Divider()
             Button("启动运行") { model.startRuntime() }.disabled(model.isRunning)
-            Button("重启运行") { model.restartRuntime(reason: "手动重启") }
+            Button("重启运行") { model.restartRuntime(reason: String(localized: "手动重启")) }
             Button("停止运行") { model.stopRuntime() }.disabled(!model.isRunning)
             Divider()
             Button("更新配置") { model.updateConfigFromProject(showFeedback: true) }

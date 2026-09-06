@@ -139,8 +139,8 @@ struct ConditionEditorSheet: View {
 
     private var pendingConfirmMessage: String {
         let incomplete = rows.filter { ($0.field.isEmpty) != ($0.value.isEmpty) }.count
-        if incomplete > 0 { return "有 \(incomplete) 行不完整(字段或值为空), 将被忽略。继续？" }
-        return "当前条件为空, 将清除该规则的条件(始终命中)。继续？"
+        if incomplete > 0 { return String(localized: "有 \(incomplete) 行不完整(字段或值为空), 将被忽略。继续？") }
+        return String(localized: "当前条件为空, 将清除该规则的条件(始终命中)。继续？")
     }
 
     private var header: some View {
@@ -180,11 +180,11 @@ struct ConditionEditorSheet: View {
                 rows[index].value = ""
                 rows[index].op = "=="
             })) {
-                ForEach(availableCategories, id: \.self) { Text($0.rawValue).tag($0) }
+                ForEach(availableCategories, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) }
             }
             .labelsHidden().frame(width: 100)
             Picker("", selection: Binding(get: { rows[index].classification }, set: { rows[index].classification = $0; rows[index].field = "" })) {
-                ForEach(classifications(for: row.category), id: \.self) { Text($0.isEmpty ? "未分类" : $0).tag($0) }
+                ForEach(classifications(for: row.category), id: \.self) { Text($0.isEmpty ? String(localized: "未分类") : localizedReferenceText($0)).tag($0) }
             }
             .labelsHidden().frame(width: 110)
             .disabled(![.state, .aura, .spell].contains(row.category))
@@ -274,15 +274,15 @@ struct ConditionEditorSheet: View {
     private func valueEditor(index: Int, row: ConditionRowDraft, field: ConditionField?) -> some View {
         let binding = Binding(get: { rows[index].value }, set: { rows[index].value = $0 })
         if let field, SpellIdConditionFields.contains(field.name) {
-            IdPicker(options: context.spells.map { IdOption(id: $0.spellId, label: "\($0.index). \($0.name) / \($0.spellId)", index: $0.index) }, selection: binding, missingFormat: "spellId %@（不存在）", iconProvider: { model.iconCatalog.spellImage($0) })
+            IdPicker(options: context.spells.map { IdOption(id: $0.spellId, label: "\($0.index). \($0.name) / \($0.spellId)", index: $0.index) }, selection: binding, missingFormat: String(localized: "spellId %@（不存在）"), iconProvider: { model.iconCatalog.spellImage($0) })
         } else if let field, ItemIdConditionFields.contains(field.name) {
-            IdPicker(options: context.items.map { IdOption(id: $0.itemId, label: "\($0.index). \($0.name) / \($0.itemId)", index: $0.index) }, selection: binding, missingFormat: "itemId %@（不存在）", iconProvider: { model.iconCatalog.itemImage($0) })
+            IdPicker(options: context.items.map { IdOption(id: $0.itemId, label: "\($0.index). \($0.name) / \($0.itemId)", index: $0.index) }, selection: binding, missingFormat: String(localized: "itemId %@（不存在）"), iconProvider: { model.iconCatalog.itemImage($0) })
         } else if let field, field.name == "首领战" {
             Picker("", selection: binding) {
                 Text("0 → 非首领战 / -").tag("0")
                 ForEach(ReferenceData.bossOptions) { Text($0.display).tag(String($0.number)) }
                 if Int(row.value) == nil || (Int(row.value)! != 0 && !ReferenceData.bossOptions.contains { String($0.number) == row.value }) {
-                    Text(row.value.isEmpty ? "" : "\(row.value)（未知）").tag(row.value)
+                    Text(row.value.isEmpty ? "" : String(localized: "\(row.value)（未知）")).tag(row.value)
                 }
             }
             .labelsHidden()
@@ -294,9 +294,9 @@ struct ConditionEditorSheet: View {
             .labelsHidden()
         } else {
             HStack(spacing: 4) {
-                TextField(row.op == "in" || row.op == "not in" ? "1, 2, 3" : "值", text: binding)
+                TextField(String(localized: row.op == "in" || row.op == "not in" ? "1, 2, 3" : "值"), text: binding)
                 if let field, field.name.contains("施法") || field.name.contains("引导"), let n = Int(row.value) {
-                    Text("约\(String(format: "%.1f", Double(n) / 10))秒").font(.caption2).foregroundStyle(.secondary)
+                    Text(String(localized: "约\(String(format: "%.1f", Double(n) / 10))秒")).font(.caption2).foregroundStyle(.secondary)
                 }
             }
         }
@@ -336,12 +336,12 @@ struct ConditionEditorSheet: View {
 
     private var preview: String {
         var text = ConditionExpression.build(terms(excludingRuleSettings: true))
-        if !subConditions.isEmpty { text += (text.isEmpty ? "" : "  ") + "且任一(\(subConditions.joined(separator: " | ")))" }
-        if text.isEmpty { text = "(无条件, 始终命中)" }
+        if !subConditions.isEmpty { text += (text.isEmpty ? "" : "  ") + String(localized: "且任一(\(subConditions.joined(separator: " | ")))") }
+        if text.isEmpty { text = String(localized: "(无条件, 始终命中)") }
         let (delay, logicDelay, cont, _) = ruleSettings()
-        if let delay, delay > 0 { text += "；延迟 \(delay) ms" }
-        if let logicDelay, logicDelay > 0 { text += "；逻辑延迟 \(logicDelay) ms" }
-        if cont == true { text += "；继续逻辑" }
+        if let delay, delay > 0 { text += String(localized: "；延迟 \(delay) ms") }
+        if let logicDelay, logicDelay > 0 { text += String(localized: "；逻辑延迟 \(logicDelay) ms") }
+        if cont == true { text += String(localized: "；继续逻辑") }
         return text
     }
 
@@ -355,25 +355,25 @@ struct ConditionEditorSheet: View {
         enum DelayRead { case success(Int?), failure(String) }
         func readDelay(_ name: String, _ display: String) -> DelayRead {
             let matches = rows.filter { $0.field == name }
-            if matches.count > 1 { return .failure("每条规则只能设置一个「\(display)」。请删除多余的 Shigure \(display)行。") }
+            if matches.count > 1 { return .failure(String(localized: "每条规则只能设置一个「\(display)」。请删除多余的 Shigure \(display)行。")) }
             guard let row = matches.first else { return .success(nil) }
             let text = row.value.trimmed()
-            guard let value = Int(text.isEmpty ? "0" : text), value >= 0 else { return .failure("\(display)必须是 0 到 2147483647 之间的整数，单位为 ms。") }
+            guard let value = Int(text.isEmpty ? "0" : text), value >= 0 else { return .failure(String(localized: "\(display)必须是 0 到 2147483647 之间的整数，单位为 ms。")) }
             return .success(value > 0 ? value : nil)
         }
         var error: String?
         var delay: Int?
         var logicDelay: Int?
-        switch readDelay(ShigureConditionFields.delay, "延迟") {
+        switch readDelay(ShigureConditionFields.delay, String(localized: "延迟")) {
         case .success(let v): delay = v
         case .failure(let e): error = e
         }
-        switch readDelay(ShigureConditionFields.logicDelay, "逻辑延迟") {
+        switch readDelay(ShigureConditionFields.logicDelay, String(localized: "逻辑延迟")) {
         case .success(let v): logicDelay = v
         case .failure(let e): error = error ?? e
         }
         let contRows = rows.filter { $0.field == ShigureConditionFields.continueLogic }
-        if contRows.count > 1 { error = error ?? "每条规则只能设置一个「继续逻辑」。请删除多余的 Shigure 继续逻辑行。" }
+        if contRows.count > 1 { error = error ?? String(localized: "每条规则只能设置一个「继续逻辑」。请删除多余的 Shigure 继续逻辑行。") }
         var cont: Bool?
         if let first = contRows.first, !Self.isFalseText(first.value) { cont = true }
         return (delay, logicDelay, cont, error)

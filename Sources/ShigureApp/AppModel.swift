@@ -37,7 +37,7 @@ final class AppModel {
     private(set) var isRunning = false
     private(set) var runtimeError: String?
     private(set) var logEntries: [LogEntry] = []
-    private(set) var configStatus = "项目目录是唯一配置源；尚未执行手动更新"
+    private(set) var configStatus = String(localized: "项目目录是唯一配置源；尚未执行手动更新")
     private(set) var configStatusIsError = false
     private(set) var isUpdatingConfig = false
     private(set) var isRecordingKey = false
@@ -70,7 +70,7 @@ final class AppModel {
             do {
                 try paths.seed(fromBundleResources: resources)
             } catch {
-                log.append("初始化用户数据目录失败: \(error.localizedDescription)")
+                log.append(String(localized: "初始化用户数据目录失败: \(error.localizedDescription)"))
             }
         }
         let settings = AppSettings.load(from: paths.settingsFile)
@@ -114,7 +114,7 @@ final class AppModel {
         startEventLoop()
         refreshGameTarget()
         trigger.startLatchIfPossible()
-        log.append("Shigure 已启动，数据目录: \(paths.root.path)")
+        log.append(String(localized: "Shigure 已启动，数据目录: \(paths.root.path)"))
     }
 
     private let settingsBox: SettingsSnapshotBox
@@ -137,7 +137,7 @@ final class AppModel {
         do {
             try settings.save(to: paths.settingsFile)
         } catch {
-            log.append("保存设置失败: \(error.localizedDescription)")
+            log.append(String(localized: "保存设置失败: \(error.localizedDescription)"))
         }
     }
 
@@ -164,7 +164,7 @@ final class AppModel {
             }
         case .failed(_, let message):
             runtimeError = message
-            log.append("运行时错误: \(message)")
+            log.append(String(localized: "运行时错误: \(message)"))
         case .stopped:
             Task { [weak self] in
                 guard let self else { return }
@@ -187,36 +187,37 @@ final class AppModel {
     private func writeSnapshotLog(_ s: RenderSnapshot) {
         if let failure = s.scanFailureReason {
             if failure != lastLoggedFailure {
-                log.append("扫描失败: \(failure)")
+                log.append(String(localized: "扫描失败: \(failure)"))
                 lastLoggedFailure = failure
             }
         } else if lastLoggedFailure != nil {
-            log.append("扫描已恢复")
+            log.append(String(localized: "扫描已恢复"))
             lastLoggedFailure = nil
         }
         if let className = s.className {
             let text = "\(className) / \(s.specName ?? "-")"
             if text != lastLoggedClass {
-                log.append("识别职业: \(text)")
+                log.append(String(localized: "识别职业: \(text)"))
                 lastLoggedClass = text
             }
         }
         if s.enabled != lastLoggedEnabled {
-            log.append(s.enabled ? "逻辑已开启" : "逻辑已关闭")
+            log.append(String(localized: s.enabled ? "逻辑已开启" : "逻辑已关闭"))
             lastLoggedEnabled = s.enabled
         }
         if let module = s.moduleName, module != lastLoggedModule {
-            log.append("匹配模块: \(module)")
+            log.append(String(localized: "匹配模块: \(module)"))
             lastLoggedModule = module
         }
         var details: [String] = []
-        if let v = s.unitInfo["动作单位"] { details.append("目标 \(v.displayText)") }
-        if let v = s.unitInfo["动作按键"], v.displayText != "-" { details.append("按键 \(v.displayText)") }
-        if let v = s.unitInfo["动作延迟"], v.displayText != "-" { details.append("动作延迟 \(v.displayText)") }
-        if let v = s.unitInfo["逻辑延迟"], v.displayText != "-" { details.append("逻辑延迟 \(v.displayText)") }
-        if let v = s.unitInfo["规则编号"] { details.append("规则 \(v.displayText)") }
-        if let v = s.unitInfo["发送失败"] { details.append("发送失败 \(v.displayText)") }
-        let line = details.isEmpty ? s.currentStep : "\(s.currentStep)（\(details.joined(separator: "，"))）"
+        if let v = s.unitInfo["动作单位"] { details.append(String(localized: "目标 \(v.displayText)")) }
+        if let v = s.unitInfo["动作按键"], v.displayText != "-" { details.append(String(localized: "按键 \(v.displayText)")) }
+        if let v = s.unitInfo["动作延迟"], v.displayText != "-" { details.append(String(localized: "动作延迟 \(v.displayText)")) }
+        if let v = s.unitInfo["逻辑延迟"], v.displayText != "-" { details.append(String(localized: "逻辑延迟 \(v.displayText)")) }
+        if let v = s.unitInfo["规则编号"] { details.append(String(localized: "规则 \(v.displayText)")) }
+        if let v = s.unitInfo["发送失败"] { details.append(String(localized: "发送失败 \(v.displayText)")) }
+        let step = localizedReferenceText(s.currentStep)
+        let line = details.isEmpty ? step : String(localized: "\(step)（\(details.joined(separator: String(localized: "，")))）")
         if line != lastLoggedDetails {
             log.append(line)
             lastLoggedDetails = line
@@ -239,7 +240,7 @@ final class AppModel {
                     if isLaunch, let launchedPid,
                        self.locator.runningGameApplications().contains(where: { $0.processIdentifier == launchedPid }),
                        !wasPresent {
-                        self.log.append("检测到目标游戏进程已打开，正在自动更新配置")
+                        self.log.append(String(localized: "检测到目标游戏进程已打开，正在自动更新配置"))
                         self.updateConfigFromProject(showFeedback: false)
                     }
                 }
@@ -267,8 +268,8 @@ final class AppModel {
 
     var missingPermissions: [String] {
         var list: [String] = []
-        if !hasScreenRecording { list.append("屏幕录制") }
-        if !hasAccessibility { list.append("辅助功能") }
+        if !hasScreenRecording { list.append(String(localized: "屏幕录制")) }
+        if !hasAccessibility { list.append(String(localized: "辅助功能")) }
         return list
     }
 
@@ -280,7 +281,7 @@ final class AppModel {
             await configQueue.waitUntilIdle()
             await coordinator.start(settings.options)
             isRunning = await coordinator.isRunning
-            log.append("运行会话已启动（触发键 \(settings.toggleKey)，模式 \(settings.sendMode.displayName)）")
+            log.append(String(localized: "运行会话已启动（触发键 \(settings.toggleKey)，模式 \(String(localized: settings.sendMode.localizedName))）"))
         }
     }
 
@@ -291,7 +292,7 @@ final class AppModel {
             let wasRunning = await coordinator.isRunning
             await coordinator.restart(settings.options)
             isRunning = await coordinator.isRunning
-            if let reason, wasRunning { log.append("\(reason), 重新启动运行") }
+            if let reason, wasRunning { log.append(String(localized: "\(reason), 重新启动运行")) }
         }
     }
 
@@ -299,8 +300,8 @@ final class AppModel {
         Task {
             await coordinator.stop()
             isRunning = await coordinator.isRunning
-            snapshot = .idle(step: "已停止")
-            log.append("运行会话已停止")
+            snapshot = .idle(step: String(localized: "已停止"))
+            log.append(String(localized: "运行会话已停止"))
         }
     }
 
@@ -314,11 +315,11 @@ final class AppModel {
 
     private func validateRuntimeOptions() -> Bool {
         if MacKeyCodes.isUnsupportedToggleKey(settings.toggleKey) {
-            runtimeError = "触发键不支持 Option(ALT) 或单独的修饰键，请选择其他按键。"
+            runtimeError = String(localized: "触发键不支持 Option(ALT) 或单独的修饰键，请选择其他按键。")
             return false
         }
         if trigger.resolve(keyName: settings.toggleKey) == nil {
-            runtimeError = "无法识别触发键: \(settings.toggleKey)"
+            runtimeError = String(localized: "无法识别触发键: \(settings.toggleKey)")
             return false
         }
         runtimeError = nil
@@ -328,8 +329,8 @@ final class AppModel {
     /// 通用页「测试发送」：直接向游戏发送一个热键，验证注入方式是否有效。
     func testSend(hotkey: String) -> String {
         let result = keyInjector.send(hotkey: hotkey, expectedTarget: nil)
-        let message = result.succeeded ? "已向游戏发送 \(hotkey)" : "发送失败: \(result.failureReason ?? "未知原因")"
-        log.append("测试发送: \(message)")
+        let message = result.succeeded ? String(localized: "已向游戏发送 \(hotkey)") : String(localized: "发送失败: \(result.failureReason ?? String(localized: "未知原因"))")
+        log.append(String(localized: "测试发送: \(message)"))
         return message
     }
 
@@ -337,23 +338,23 @@ final class AppModel {
 
     func beginRecordingToggleKey() {
         isRecordingKey = true
-        recordingHint = "请按任意键..."
+        recordingHint = String(localized: "请按任意键...")
         keyRecorder.begin { [weak self] outcome in
             guard let self else { return }
             self.isRecordingKey = false
             switch outcome {
             case .cancelled:
                 self.recordingHint = nil
-                self.log.append("已取消按键录入")
+                self.log.append(String(localized: "已取消按键录入"))
             case .unsupported(let reason):
                 self.recordingHint = reason
-                self.log.append("触发键录入失败: \(reason)")
+                self.log.append(String(localized: "触发键录入失败: \(reason)"))
                 Task { try? await Task.sleep(for: .seconds(2)); await MainActor.run { self.recordingHint = nil } }
             case .captured(let name):
                 self.recordingHint = nil
                 self.settings.toggleKey = name
-                self.log.append("已录入触发键: \(name)")
-                self.restartRuntime(reason: "触发键已变更")
+                self.log.append(String(localized: "已录入触发键: \(name)"))
+                self.restartRuntime(reason: String(localized: "触发键已变更"))
             }
         }
     }
@@ -375,35 +376,36 @@ final class AppModel {
     }
 
     var moduleFilterCaption: String {
-        guard let state = snapshot.state, state.getBool("有效性") else { return "筛选: 等待游戏状态" }
+        guard let state = snapshot.state, state.getBool("有效性") else { return String(localized: "筛选: 等待游戏状态") }
         let cls = snapshot.className.map { "\($0) (\(snapshot.classId ?? 0))" } ?? "-"
         let spec = snapshot.specName.map { "\($0) (\(snapshot.specId ?? 0))" } ?? "-"
-        return "筛选: \(cls) / \(spec) / 队伍类型 \(state.getInt("队伍类型")) / 英雄天赋 \(state.getInt("英雄天赋"))"
+        return String(localized: "筛选: \(cls) / \(spec) / 队伍类型 \(state.getInt("队伍类型")) / 英雄天赋 \(state.getInt("英雄天赋"))")
     }
 
     func selectModule(_ id: String?) {
         settings.selectedModuleId = id
-        log.append("模块选择: \(id.flatMap { mid in moduleStore.getModulesForDisplay().first { $0.id == mid }?.name } ?? "自动选择")")
-        restartRuntime(reason: "模块选择已变更")
+        log.append(String(localized: "模块选择: \(id.flatMap { mid in moduleStore.getModulesForDisplay().first { $0.id == mid }?.name } ?? String(localized: "自动选择"))"))
+        restartRuntime(reason: String(localized: "模块选择已变更"))
     }
 
     func setDefaultModule(_ selection: DefaultModuleSelection) {
         settings.defaultModules.removeAll { $0.hasSameFilter(classId: selection.classId, specId: selection.specId, partyType: selection.partyType, heroTalent: selection.heroTalent) }
         settings.defaultModules.append(selection)
         let name = moduleStore.getModulesForDisplay().first { $0.id == selection.moduleId }?.name ?? selection.moduleId
-        log.append("默认模块: \(name)")
-        restartRuntime(reason: "默认模块已变更")
+        log.append(String(localized: "默认模块: \(name)"))
+        restartRuntime(reason: String(localized: "默认模块已变更"))
     }
 
     func removeDefaultModule(_ selection: DefaultModuleSelection) {
         settings.defaultModules.removeAll { $0 == selection }
-        restartRuntime(reason: "默认模块已变更")
+        restartRuntime(reason: String(localized: "默认模块已变更"))
     }
 
     var moduleReloadVersion = 0
 
     /// 刷新模块：重新加载目录，导入依赖，重启运行时。
-    func reloadModules(reason: String = "刷新模块") {
+    func reloadModules(reason: String? = nil) {
+        let reason = reason ?? String(localized: "刷新模块")
         enqueueConfigWork(label: reason) { [self] in
             self.moduleStore.reload()
             let importResult = try await self.importModuleDependencies()
@@ -413,11 +415,11 @@ final class AppModel {
             switch result {
             case .success(let imported):
                 if let imported, imported.hasChanges {
-                    self.log.append("模块依赖已导入: 配置新增 \(imported.configAdded) 项、更新 \(imported.configUpdated) 项、宏新增 \(imported.macrosAdded) 项")
+                    self.log.append(String(localized: "模块依赖已导入: 配置新增 \(imported.configAdded) 项、更新 \(imported.configUpdated) 项、宏新增 \(imported.macrosAdded) 项"))
                 }
                 self.restartRuntime(reason: reason)
             case .failure(let error):
-                self.log.append("\(reason)失败: \(error.localizedDescription)")
+                self.log.append(String(localized: "\(reason)失败: \(error.localizedDescription)"))
             }
         }
     }
@@ -430,8 +432,8 @@ final class AppModel {
         for module in result.sanitizedModules {
             _ = try? moduleStore.saveDependenciesInPlace(module)
         }
-        for rejected in result.rejected { log.append("模块「\(rejected.moduleName)」被拒绝: \(rejected.reason)") }
-        for conflict in result.conflicts.prefix(20) { log.append("依赖冲突: \(conflict)") }
+        for rejected in result.rejected { log.append(String(localized: "模块「\(rejected.moduleName)」被拒绝: \(rejected.reason)")) }
+        for conflict in result.conflicts.prefix(20) { log.append(String(localized: "依赖冲突: \(conflict)")) }
         if result.hasChanges {
             try regenerateConfigAndKeymap()
             _ = deployAddon()
@@ -470,7 +472,7 @@ final class AppModel {
             outcome.keymapFiles = keymapResult.updatedFiles.count
             outcome.warnings.append(contentsOf: keymapResult.warnings)
         } else {
-            log.append("项目 Fuyutsui 中未找到 core/classmacros.lua，已跳过 keymap 更新")
+            log.append(String(localized: "项目 Fuyutsui 中未找到 core/classmacros.lua，已跳过 keymap 更新"))
         }
         catalogVersion += 1
         return outcome
@@ -487,10 +489,10 @@ final class AppModel {
             } else {
                 result = try FuyutsuiAddonSync.synchronizeAll(sourceRoot: paths.fuyutsuiDirectory, targetRoot: target)
             }
-            log.append("插件同步: \(result.summary)")
+            log.append(String(localized: "插件同步: \(localizedAddonSyncSummary(result))"))
             return result
         } catch {
-            log.append("插件同步失败: \(error.localizedDescription)")
+            log.append(String(localized: "插件同步失败: \(error.localizedDescription)"))
             return nil
         }
     }
@@ -498,9 +500,9 @@ final class AppModel {
     /// 通用页「更新配置」：生成 config/keymap → 全量部署 → 重启运行时。
     func updateConfigFromProject(showFeedback: Bool) {
         isUpdatingConfig = true
-        configStatus = "正在生成配置并同步游戏插件…"
+        configStatus = String(localized: "正在生成配置并同步游戏插件…")
         configStatusIsError = false
-        enqueueConfigWork(label: "更新配置") { [self] in
+        enqueueConfigWork(label: String(localized: "更新配置")) { [self] in
             var outcome = try self.regenerateConfigAndKeymap()
             outcome.sync = self.deployAddon()
             return outcome
@@ -510,50 +512,62 @@ final class AppModel {
             case .success(let outcome):
                 let syncOK = outcome.sync?.completedSuccessfully ?? false
                 if syncOK && outcome.warnings.isEmpty {
-                    self.configStatus = "已更新 \(outcome.configFiles) 个配置文件，并完成游戏同步"
+                    self.configStatus = String(localized: "已更新 \(outcome.configFiles) 个配置文件，并完成游戏同步")
                     self.configStatusIsError = false
                 } else {
                     var issues: [String] = []
-                    if !syncOK { issues.append(outcome.sync?.summary ?? "游戏同步未完成") }
-                    if !outcome.warnings.isEmpty { issues.append("存在 \(outcome.warnings.count) 条转换警告") }
-                    self.configStatus = "配置已更新；" + issues.joined(separator: "；")
+                    if !syncOK { issues.append(outcome.sync?.summary ?? String(localized: "游戏同步未完成")) }
+                    if !outcome.warnings.isEmpty { issues.append(String(localized: "存在 \(outcome.warnings.count) 条转换警告")) }
+                    self.configStatus = String(localized: "配置已更新；") + issues.joined(separator: String(localized: "；"))
                     self.configStatusIsError = !syncOK
                 }
-                self.log.append("已从项目 Fuyutsui 更新配置: \(outcome.configFiles) 个 config、\(outcome.keymapFiles) 个 keymap")
-                for warning in outcome.warnings.prefix(20) { self.log.append("转换警告: \(warning)") }
-                self.restartRuntime(reason: "配置已更新")
+                self.log.append(String(localized: "已从项目 Fuyutsui 更新配置: \(outcome.configFiles) 个 config、\(outcome.keymapFiles) 个 keymap"))
+                for warning in outcome.warnings.prefix(20) { self.log.append(String(localized: "转换警告: \(warning)")) }
+                self.restartRuntime(reason: String(localized: "配置已更新"))
             case .failure(let error):
-                self.configStatus = "更新失败: \(error.localizedDescription)"
+                self.configStatus = String(localized: "更新失败: \(error.localizedDescription)")
                 self.configStatusIsError = true
-                self.log.append("更新配置失败: \(error.localizedDescription)")
+                self.log.append(String(localized: "更新配置失败: \(error.localizedDescription)"))
             }
         }
     }
 
+    /// 编辑器保存 Lua 后的结果。`hasIssue` 由流程本身给出，而不是回头去匹配提示文本里的
+    /// 「失败」二字 —— 那种写法在界面语言切换到英文后就永远判不出问题了。
+    struct LuaSaveOutcome: Sendable {
+        var notes: String
+        var hasIssue: Bool
+    }
+
     /// 编辑器保存 Lua 后的流程：重捕获该职业模块依赖 → 重新生成 → 单文件部署 → 重启。
-    func afterLuaSaved(relativePath: String, classId: Int?) async -> String {
+    func afterLuaSaved(relativePath: String, classId: Int?) async -> LuaSaveOutcome {
         let task = await configQueue.enqueue { @MainActor [self] in
             var notes: [String] = []
+            var hasIssue = false
             if let classId {
                 let (saved, failed, missing) = self.recaptureDependencies(classId: classId)
-                notes.append("已一并保存该职业的 \(saved) 个模块" + (missing > 0 ? "（\(missing) 个模块未携带依赖）" : ""))
-                if failed > 0 { notes.append("\(failed) 个模块保存失败，详情见日志") }
+                notes.append(String(localized: "已一并保存该职业的 \(saved) 个模块") + (missing > 0 ? String(localized: "（\(missing) 个模块未携带依赖）") : ""))
+                if failed > 0 {
+                    notes.append(String(localized: "\(failed) 个模块保存失败，详情见日志"))
+                    hasIssue = true
+                }
             }
             _ = try self.regenerateConfigAndKeymap()
             let sync = self.deployAddon(singleFile: relativePath)
             if let sync, !sync.completedSuccessfully {
-                notes.append("游戏插件同步未完成：\(sync.summary)")
+                notes.append(String(localized: "游戏插件同步未完成：\(localizedAddonSyncSummary(sync))"))
+                hasIssue = true
             } else {
-                notes.append("请在游戏内重载界面 (/reload)")
+                notes.append(String(localized: "请在游戏内重载界面 (/reload)"))
             }
-            self.restartRuntime(reason: "配置已更新")
-            return notes.joined(separator: "\n")
+            self.restartRuntime(reason: String(localized: "配置已更新"))
+            return LuaSaveOutcome(notes: notes.joined(separator: "\n"), hasIssue: hasIssue)
         }
         do {
             return try await task.value
         } catch {
-            log.append("保存后的更新失败: \(error.localizedDescription)")
-            return "本地 Lua 已保存，但后续更新失败：\(error.localizedDescription)"
+            log.append(String(localized: "保存后的更新失败: \(error.localizedDescription)"))
+            return LuaSaveOutcome(notes: String(localized: "本地 Lua 已保存，但后续更新失败：\(error.localizedDescription)"), hasIssue: true)
         }
     }
 
@@ -564,13 +578,13 @@ final class AppModel {
             do {
                 if let warning = try service.capture(&module) {
                     missing += 1
-                    log.append("模块「\(module.name)」: \(warning)")
+                    log.append(String(localized: "模块「\(module.name)」: \(warning)"))
                 }
                 _ = try moduleStore.saveDependenciesInPlace(module)
                 saved += 1
             } catch {
                 failed += 1
-                log.append("模块「\(module.name)」依赖更新失败: \(error.localizedDescription)")
+                log.append(String(localized: "模块「\(module.name)」依赖更新失败: \(error.localizedDescription)"))
             }
         }
         return (saved, failed, missing)
@@ -578,13 +592,13 @@ final class AppModel {
 
     /// 启动时：补齐缺失的 config/keymap → 导入模块依赖 → 部署插件 → 自动启动。
     func performStartupSequence() {
-        enqueueConfigWork(label: "启动") { [self] in
+        enqueueConfigWork(label: String(localized: "启动")) { [self] in
             var didWork = false
             let missing = !FileManager.default.fileExists(atPath: paths.configDirectory.appendingPathComponent("common.json").path)
                 || ClassNames.allClasses.contains { !FileManager.default.fileExists(atPath: paths.configDirectory.appendingPathComponent("\(ClassNames.configFileName($0.id)).json").path) }
                 || ClassNames.allClasses.contains { !FileManager.default.fileExists(atPath: paths.keymapDirectory.appendingPathComponent("\(ClassNames.configFileName($0.id).lowercased()).json").path) }
             if missing {
-                log.append("检测到 config 或 keymap 缺失或不完整，正在从项目 Fuyutsui 自动生成")
+                log.append(String(localized: "检测到 config 或 keymap 缺失或不完整，正在从项目 Fuyutsui 自动生成"))
                 _ = try regenerateConfigAndKeymap()
                 didWork = true
             }
@@ -592,7 +606,7 @@ final class AppModel {
             if !didWork { _ = deployAddon() }
         } completion: { [self] result in
             if case .failure(let error) = result {
-                log.append("启动初始化失败: \(error.localizedDescription)")
+                log.append(String(localized: "启动初始化失败: \(error.localizedDescription)"))
             }
             if settings.autoStartRuntime { startRuntime() }
         }

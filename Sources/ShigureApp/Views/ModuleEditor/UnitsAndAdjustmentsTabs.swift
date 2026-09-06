@@ -17,7 +17,7 @@ struct UnitsTab: View {
                 List {
                     ForEach(store.draft.units) { unit in
                         let issues = store.issues(for: unit)
-                        row(name: unit.healthName.isNilOrBlank ? unit.name : "\(unit.name) / \(unit.healthName!)", kind: "单位",
+                        row(name: unit.healthName.isNilOrBlank ? unit.name : "\(unit.name) / \(unit.healthName!)", isUnit: true,
                             summary: UnitSummary.describe(unit, resolveAuraName: { store.groupAuraName($0) }), issues: issues)
                             .contextMenu {
                                 Button("编辑") { editing = .unit(unit) }
@@ -27,7 +27,7 @@ struct UnitsTab: View {
                     }
                     ForEach(store.draft.counts) { count in
                         let issues = store.issues(for: count)
-                        row(name: count.name, kind: "数量", summary: UnitSummary.describe(count, resolveAuraName: { store.groupAuraName($0) }), issues: issues)
+                        row(name: count.name, isUnit: false, summary: UnitSummary.describe(count, resolveAuraName: { store.groupAuraName($0) }), issues: issues)
                             .contextMenu {
                                 Button("编辑") { editing = .count(count) }
                                 Button("删除", role: .destructive) { store.deleteCount(count) }
@@ -50,15 +50,15 @@ struct UnitsTab: View {
         }
     }
 
-    private func row(name: String, kind: String, summary: String, issues: [String]) -> some View {
+    private func row(name: String, isUnit: Bool, summary: String, issues: [String]) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text(name).fontWeight(.medium).frame(width: 200, alignment: .leading).lineLimit(1)
-                Text(kind).font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
-                    .background(kind == "单位" ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.15), in: Capsule())
+                Text(isUnit ? "单位" : "数量").font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
+                    .background(isUnit ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.15), in: Capsule())
                 Text(summary).foregroundStyle(issues.isEmpty ? Color.primary : Color.red).lineLimit(2)
             }
-            if !issues.isEmpty { Text(issues.joined(separator: "；")).font(.caption).foregroundStyle(.red) }
+            if !issues.isEmpty { Text(issues.joined(separator: String(localized: "；"))).font(.caption).foregroundStyle(.red) }
         }
         .contentShape(Rectangle())
         .listRowBackground(issues.isEmpty ? nil : Color.red.opacity(0.08))
@@ -139,7 +139,7 @@ struct AdjustmentsTab: View {
 
     private func isFormulaRow(_ a: ModuleValueAdjustment) -> Bool { !a.formula.isBlank }
 
-    private func section<Content: View, Footer: View>(title: String, subtitle: String, @ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) -> some View {
+    private func section<Content: View, Footer: View>(title: LocalizedStringResource, subtitle: LocalizedStringResource, @ViewBuilder content: () -> Content, @ViewBuilder footer: () -> Footer) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title).font(.headline).padding(.horizontal, 12).padding(.top, 8)
             Text(subtitle).font(.caption).foregroundStyle(.secondary).padding(.horizontal, 12)
@@ -174,13 +174,13 @@ struct AdjustmentsTab: View {
                 Button {
                     conditionAdjustmentId = adjustment.id
                 } label: {
-                    Text(adjustment.condition.isBlank ? "始终" : store.support.humanize(adjustment.condition, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) }))
+                    Text(adjustment.condition.isBlank ? String(localized: "始终") : store.support.humanize(adjustment.condition, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) }))
                         .lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .buttonStyle(.plain)
                 Button(role: .destructive) { store.draft.valueAdjustments.remove(at: index) } label: { Image(systemName: "trash") }.buttonStyle(.borderless)
             }
-            if !issues.isEmpty { Text(issues.joined(separator: "；")).font(.caption).foregroundStyle(.red) }
+            if !issues.isEmpty { Text(issues.joined(separator: String(localized: "；"))).font(.caption).foregroundStyle(.red) }
         }
         .listRowBackground(issues.isEmpty ? nil : Color.red.opacity(0.08))
     }
@@ -193,13 +193,13 @@ struct AdjustmentsTab: View {
                 TextField("数值名称", text: Binding(get: { adjustment.field }, set: { store.draft.valueAdjustments[index].field = $0; store.invalidateValidation() }))
                     .frame(width: 180)
                 Button { formulaAdjustmentId = adjustment.id } label: {
-                    Text(adjustment.formula.isBlank ? "点击编辑公式" : adjustment.formula).font(.system(.body, design: .monospaced)).lineLimit(2)
+                    Text(adjustment.formula.isBlank ? String(localized: "点击编辑公式") : adjustment.formula).font(.system(.body, design: .monospaced)).lineLimit(2)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .buttonStyle(.plain)
                 Button(role: .destructive) { store.draft.valueAdjustments.remove(at: index) } label: { Image(systemName: "trash") }.buttonStyle(.borderless)
             }
-            if !issues.isEmpty { Text(issues.joined(separator: "；")).font(.caption).foregroundStyle(.red) }
+            if !issues.isEmpty { Text(issues.joined(separator: String(localized: "；"))).font(.caption).foregroundStyle(.red) }
         }
         .listRowBackground(issues.isEmpty ? nil : Color.red.opacity(0.08))
     }

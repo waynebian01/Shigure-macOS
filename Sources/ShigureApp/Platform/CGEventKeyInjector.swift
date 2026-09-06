@@ -20,21 +20,21 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
 
     func send(hotkey: String, expectedTarget: GameTarget?) -> KeySendResult {
         let parsed = KeymapCatalog.parseHotkey(hotkey)
-        guard let mainKey = parsed.mainKey else { return .failure("无法解析按键“\(hotkey)”") }
-        guard let mainCode = MacKeyCodes.keyCode(for: mainKey) else { return .failure("无法识别主键“\(mainKey)”") }
+        guard let mainKey = parsed.mainKey else { return .failure(String(localized: "无法解析按键“\(hotkey)”")) }
+        guard let mainCode = MacKeyCodes.keyCode(for: mainKey) else { return .failure(String(localized: "无法识别主键“\(mainKey)”")) }
         guard let target = locator.currentTarget() else {
-            return .failure("未找到目标进程的可见窗口（\(locator.describeConfigured())）")
+            return .failure(String(localized: "未找到目标进程的可见窗口（\(locator.describeConfigured())）"))
         }
         if let expected = expectedTarget, expected.windowID != target.windowID {
-            return .failure("目标窗口已切换，等待重新扫描后再发送按键")
+            return .failure(String(localized: "目标窗口已切换，等待重新扫描后再发送按键"))
         }
         guard Permissions.accessibility else {
-            return .failure("未授予「辅助功能」权限，无法发送按键")
+            return .failure(String(localized: "未授予「辅助功能」权限，无法发送按键"))
         }
         let modifiers = parsed.modifiers.compactMap { MacKeyCodes.Modifier(rawValue: $0) }
         let currentMode = lock.withLock { mode }
         guard let source = CGEventSource(stateID: .combinedSessionState) else {
-            return .failure("无法创建输入事件源")
+            return .failure(String(localized: "无法创建输入事件源"))
         }
 
         var flags: CGEventFlags = []
@@ -43,14 +43,14 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
         for modifier in modifiers {
             flags.insert(Self.flag(for: modifier))
             guard let event = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(modifier.keyCode), keyDown: true) else {
-                return .failure("无法创建修饰键事件")
+                return .failure(String(localized: "无法创建修饰键事件"))
             }
             event.flags = flags
             events.append(event)
         }
         guard let down = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(mainCode), keyDown: true),
               let up = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(mainCode), keyDown: false) else {
-            return .failure("无法创建按键事件")
+            return .failure(String(localized: "无法创建按键事件"))
         }
         down.flags = flags
         up.flags = flags
@@ -59,7 +59,7 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
         for modifier in modifiers.reversed() {
             flags.remove(Self.flag(for: modifier))
             guard let event = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(modifier.keyCode), keyDown: false) else {
-                return .failure("无法创建修饰键事件")
+                return .failure(String(localized: "无法创建修饰键事件"))
             }
             event.flags = flags
             events.append(event)

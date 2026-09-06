@@ -6,7 +6,7 @@ enum AppPage: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    var title: String {
+    var title: LocalizedStringResource {
         switch self {
         case .general: return "通用"
         case .config: return "配置"
@@ -22,7 +22,7 @@ enum AppPage: String, CaseIterable, Identifiable {
         }
     }
 
-    var subtitle: String {
+    var subtitle: LocalizedStringResource {
         switch self {
         case .general: return "运行控制、配置同步、数据包与模块选择"
         case .config: return "编辑职业、专精和扫描字段"
@@ -54,7 +54,7 @@ enum AppPage: String, CaseIterable, Identifiable {
         }
     }
 
-    static let groups: [(title: String, pages: [AppPage])] = [
+    static let groups: [(title: LocalizedStringResource, pages: [AppPage])] = [
         ("常用", [.general]),
         ("编辑", [.config, .macros, .modules]),
         ("监控", [.status, .party, .logic, .logs]),
@@ -75,11 +75,13 @@ struct MainWindow: View {
         @Bindable var model = model
         return NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $model.selectedPage) {
-                ForEach(AppPage.groups, id: \.title) { group in
-                    Section(group.title) {
+                ForEach(AppPage.groups, id: \.pages.first) { group in
+                    Section { 
                         ForEach(group.pages) { page in
-                            Label(page.title, systemImage: page.symbol).tag(page)
+                            Label { Text(page.title) } icon: { Image(systemName: page.symbol) }.tag(page)
                         }
+                    } header: {
+                        Text(group.title)
                     }
                 }
             }
@@ -95,8 +97,8 @@ struct MainWindow: View {
                 }
                 detail
             }
-            .navigationTitle(model.selectedPage.title)
-            .navigationSubtitle(model.selectedPage.subtitle)
+            .navigationTitle(Text(model.selectedPage.title))
+            .navigationSubtitle(Text(model.selectedPage.subtitle))
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
@@ -156,10 +158,10 @@ struct RuntimeStatusFooter: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
                 Circle().fill(ClassColors.color(for: s.classId)).frame(width: 10, height: 10)
-                Text(s.className.map { "\($0) / \(s.specName ?? "-")" } ?? (model.isRunning ? "等待游戏状态" : "未运行"))
+                Text(s.className.map { "\($0) / \(s.specName ?? "-")" } ?? String(localized: model.isRunning ? "等待游戏状态" : "未运行"))
                     .font(.callout).lineLimit(1)
             }
-            Text(s.currentStep).font(.caption).foregroundStyle(.secondary).lineLimit(2)
+            Text(localizedReferenceText(s.currentStep)).font(.caption).foregroundStyle(.secondary).lineLimit(2)
             if let target = model.gameTarget {
                 Text("游戏 pid \(target.pid)").font(.caption2).foregroundStyle(.tertiary)
             }

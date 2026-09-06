@@ -80,7 +80,7 @@ struct ModuleEditorContent: View {
                         }
                     }
                     .foregroundStyle(store.hasImportIssue(module) ? Color.red : Color.primary)
-                    .help(store.hasImportIssue(module) ? (module.hasCompatibleVersion ? "模块依赖导入存在问题，详情见日志" : "模块版本 \(module.version.isEmpty ? "未知" : module.version) 与当前版本不一致，保存后升级") : "")
+                    .help(store.hasImportIssue(module) ? (module.hasCompatibleVersion ? String(localized: "模块依赖导入存在问题，详情见日志") : String(localized: "模块版本 \(module.version.isEmpty ? String(localized: "未知") : module.version) 与当前版本不一致，保存后升级")) : "")
                     .tag(module.id)
                 }
             }
@@ -98,8 +98,8 @@ struct ModuleEditorContent: View {
 
     private func matchText(_ module: ModuleDefinition) -> String {
         let m = module.match
-        let cls = m.classId.map { ClassNames.className($0) ?? "职业\($0)" } ?? "*"
-        let spec = m.specId.flatMap { s in m.classId.map { ClassNames.specName(classId: $0, specId: s) ?? "专精\(s)" } } ?? "*"
+        let cls = m.classId.map { ClassNames.className($0).map(localizedReferenceText) ?? String(localized: "职业\($0)") } ?? "*"
+        let spec = m.specId.flatMap { s in m.classId.map { ClassNames.specName(classId: $0, specId: s).map(localizedReferenceText) ?? String(localized: "专精\(s)") } } ?? "*"
         return "\(cls) / \(spec) / \(m.partyType ?? "*") / \(m.heroTalent.map(String.init) ?? "*")"
     }
 
@@ -138,16 +138,16 @@ struct ModuleEditorContent: View {
             }
             HStack {
                 TextField("推荐天赋（仅说明，不参与匹配）", text: $store.draft.recommendedTalent).textFieldStyle(.roundedBorder)
-                Text(store.draft.fileURL?.lastPathComponent ?? "尚未保存").font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(minWidth: 0, maxWidth: 200)
-                Text("版本 \(store.draft.version.isEmpty ? "未知" : store.draft.version)").font(.caption)
+                Text(store.draft.fileURL?.lastPathComponent ?? String(localized: "尚未保存")).font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(minWidth: 0, maxWidth: 200)
+                Text("版本 \(store.draft.version.isEmpty ? String(localized: "未知") : store.draft.version)").font(.caption)
                     .foregroundStyle(store.draft.hasCompatibleVersion ? Color.secondary : Color.red)
-                    .help(store.draft.hasCompatibleVersion ? "" : "模块版本与当前版本 \(AppInfo.version) 不一致，不参与选择和运行；保存后升级")
+                    .help(store.draft.hasCompatibleVersion ? "" : String(localized: "模块版本与当前版本 \(AppInfo.version) 不一致，不参与选择和运行；保存后升级"))
             }
         }
         .padding(12)
     }
 
-    private func matchPicker<S: Hashable, C: View>(_ title: String, selection: Binding<S>, @ViewBuilder content: () -> C) -> some View {
+    private func matchPicker<S: Hashable, C: View>(_ title: LocalizedStringResource, selection: Binding<S>, @ViewBuilder content: () -> C) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.caption).foregroundStyle(.secondary)
             // `minWidth: 0` 是关键：只写 `maxWidth` 时，下限取内容固有宽度，而弹出菜单的固有

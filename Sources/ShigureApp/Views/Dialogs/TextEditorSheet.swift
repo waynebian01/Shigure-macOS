@@ -3,11 +3,11 @@ import SwiftUI
 /// 多行文本编辑（规则注释 / 公式）。
 struct TextEditorSheet: View {
     @Environment(\.dismiss) private var dismiss
-    let title: String
+    let title: LocalizedStringResource
     @State var text: String
-    var confirmTitle = "确定"
+    var confirmTitle: LocalizedStringResource = "确定"
     var monospaced = false
-    var hint: String?
+    var hint: LocalizedStringResource?
     let onConfirm: (String) -> Void
 
     var body: some View {
@@ -22,7 +22,7 @@ struct TextEditorSheet: View {
             HStack {
                 Spacer()
                 Button("取消") { dismiss() }.keyboardShortcut(.cancelAction)
-                Button(confirmTitle) { onConfirm(text); dismiss() }.keyboardShortcut(.defaultAction).buttonStyle(.borderedProminent)
+                Button { onConfirm(text); dismiss() } label: { Text(confirmTitle) }.keyboardShortcut(.defaultAction).buttonStyle(.borderedProminent)
             }
             .padding(12)
         }

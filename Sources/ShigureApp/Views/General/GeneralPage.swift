@@ -12,7 +12,7 @@ struct GeneralPage: View {
             Section("输入与运行") {
                 LabeledContent("触发键") {
                     HStack {
-                        Button(model.isRecordingKey ? (model.recordingHint ?? "请按任意键...") : (model.recordingHint ?? model.settings.toggleKey)) {
+                        Button(model.isRecordingKey ? (model.recordingHint ?? String(localized: "请按任意键...")) : (model.recordingHint ?? model.settings.toggleKey)) {
                             if model.isRecordingKey { model.cancelRecordingToggleKey() } else { model.beginRecordingToggleKey() }
                         }
                         .frame(minWidth: 160)
@@ -20,12 +20,12 @@ struct GeneralPage: View {
                     }
                 }
                 Picker("发送模式", selection: $model.settings.sendMode) {
-                    ForEach(SendMode.allCases, id: \.self) { mode in Text(mode.displayName).tag(mode) }
+                    ForEach(SendMode.allCases, id: \.self) { mode in Text(mode.localizedName).tag(mode) }
                 }
-                .onChange(of: model.settings.sendMode) { _, _ in model.restartRuntime(reason: "发送模式已变更") }
+                .onChange(of: model.settings.sendMode) { _, _ in model.restartRuntime(reason: String(localized: "发送模式已变更")) }
                 Text("开关：按一次切换；单击：每次触发发送一次；按住：持续按下时运行").font(.caption).foregroundStyle(.secondary)
                 Picker("按键注入", selection: $model.settings.keyInjectionMode) {
-                    ForEach(KeyInjectionMode.allCases, id: \.self) { mode in Text(mode.displayName).tag(mode) }
+                    ForEach(KeyInjectionMode.allCases, id: \.self) { mode in Text(mode.localizedName).tag(mode) }
                 }
                 LabeledContent("测试发送") {
                     HStack {
@@ -49,7 +49,7 @@ struct GeneralPage: View {
                         Text(model.configStatus).font(.callout).foregroundStyle(model.configStatusIsError ? .orange : .secondary)
                         Spacer()
                         if model.isUpdatingConfig { ProgressView().controlSize(.small) }
-                        Button(model.isUpdatingConfig ? "更新中…" : "更新配置") { model.updateConfigFromProject(showFeedback: true) }
+                        Button(String(localized: model.isUpdatingConfig ? "更新中…" : "更新配置")) { model.updateConfigFromProject(showFeedback: true) }
                             .disabled(model.isUpdatingConfig)
                     }
                 }
@@ -109,19 +109,21 @@ struct GeneralPage: View {
 }
 
 struct PermissionRow: View {
-    let title: String
+    let title: LocalizedStringResource
     let granted: Bool
-    let detail: String
+    let detail: LocalizedStringResource
     let action: () -> Void
 
     var body: some View {
-        LabeledContent(title) {
+        LabeledContent { 
             HStack {
                 Image(systemName: granted ? "checkmark.circle.fill" : "xmark.circle").foregroundStyle(granted ? .green : .orange)
-                Text(granted ? "已授予" : "未授予 · \(detail)").foregroundStyle(.secondary)
+                Text(granted ? String(localized: "已授予") : String(localized: "未授予 · \(String(localized: detail))")).foregroundStyle(.secondary)
                 Spacer()
                 if !granted { Button("前往设置…", action: action) }
             }
+        } label: {
+            Text(title)
         }
     }
 }
@@ -174,14 +176,14 @@ struct ModuleSelectionCard: View {
                 }
             }
             Text(model.moduleFilterCaption).font(.caption).foregroundStyle(.secondary)
-            Text("可选模块: \(matches.count)" + (selectedVisible ? "" : "，已选模块不符合当前筛选")).font(.caption).foregroundStyle(.secondary)
+            Text(String(localized: "可选模块: \(matches.count)") + (selectedVisible ? "" : String(localized: "，已选模块不符合当前筛选"))).font(.caption).foregroundStyle(.secondary)
         }
     }
 
     func moduleLabel(_ module: ModuleDefinition) -> String {
         let m = module.match
-        let cls = m.classId.map { ClassNames.className($0) ?? "职业\($0)" } ?? "*"
-        let spec = m.specId.flatMap { s in m.classId.map { ClassNames.specName(classId: $0, specId: s) ?? "专精\(s)" } } ?? "*"
+        let cls = m.classId.map { ClassNames.className($0) ?? String(localized: "职业\($0)") } ?? "*"
+        let spec = m.specId.flatMap { s in m.classId.map { ClassNames.specName(classId: $0, specId: s) ?? String(localized: "专精\(s)") } } ?? "*"
         return "\(module.name)  ·  \(cls)/\(spec)/\(m.partyType ?? "*")/\(m.heroTalent.map(String.init) ?? "*")"
     }
 }
@@ -232,7 +234,7 @@ struct DefaultModuleCard: View {
                         Text("暂无符合筛选的模块").tag("")
                     } else {
                         ForEach(candidates) { module in
-                            Text(module.name + (isCurrentDefault(module) ? "（当前默认）" : "")).tag(module.id)
+                            Text(module.name + (isCurrentDefault(module) ? String(localized: "（当前默认）") : "")).tag(module.id)
                         }
                     }
                 }
@@ -274,15 +276,15 @@ struct DefaultModuleCard: View {
     }
 
     private func describe(_ s: DefaultModuleSelection) -> String {
-        let cls = s.classId.map { ClassNames.className($0) ?? "职业\($0)" } ?? "任意"
-        let spec = s.specId.flatMap { sid in s.classId.map { ClassNames.specName(classId: $0, specId: sid) ?? "专精\(sid)" } } ?? "任意"
-        let hero = s.heroTalent.flatMap { h in s.classId.flatMap { c in s.specId.map { ClassNames.heroTalentName(classId: c, specId: $0, talentId: h) ?? "\(h)" } } } ?? "任意"
+        let cls = s.classId.map { ClassNames.className($0) ?? String(localized: "职业\($0)") } ?? String(localized: "任意")
+        let spec = s.specId.flatMap { sid in s.classId.map { ClassNames.specName(classId: $0, specId: sid) ?? String(localized: "专精\(sid)") } } ?? String(localized: "任意")
+        let hero = s.heroTalent.flatMap { h in s.classId.flatMap { c in s.specId.map { ClassNames.heroTalentName(classId: c, specId: $0, talentId: h) ?? "\(h)" } } } ?? String(localized: "任意")
         let party: String
         switch ModuleMatch.normalizePartyType(s.partyType) {
-        case "0": party = "单人"
-        case "1-40": party = "团队"
-        case "46": party = "队伍"
-        case nil: party = "任意"
+        case "0": party = String(localized: "单人")
+        case "1-40": party = String(localized: "团队")
+        case "46": party = String(localized: "队伍")
+        case nil: party = String(localized: "任意")
         case let other?: party = other
         }
         let name = model.moduleStore.getModulesForDisplay().first { $0.id == s.moduleId }?.name ?? s.moduleId

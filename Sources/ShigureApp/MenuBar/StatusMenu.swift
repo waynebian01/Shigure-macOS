@@ -8,11 +8,11 @@ struct StatusMenu: View {
 
     var body: some View {
         let s = model.snapshot
-        Text(statusLine).font(.headline)
+        Text(verbatim: statusLine).font(.headline)
         if let className = s.className {
-            Text("\(className) / \(s.specName ?? "-")" + (s.moduleName.map { " · \($0)" } ?? ""))
+            Text(verbatim: "\(className) / \(s.specName ?? "-")" + (s.moduleName.map { " · \($0)" } ?? ""))
         }
-        Text(s.currentStep).foregroundStyle(.secondary)
+        Text(localizedReferenceText(s.currentStep)).foregroundStyle(.secondary)
         Divider()
         Button(s.enabled ? "关闭逻辑" : "开启逻辑") { model.toggleEnabled() }
             .disabled(!model.isRunning)
@@ -30,7 +30,7 @@ struct StatusMenu: View {
     }
 
     private var statusLine: String {
-        if !model.isRunning { return "Shigure - 未运行" }
-        return model.snapshot.enabled ? "Shigure - 已开启" : "Shigure - 已关闭"
+        if !model.isRunning { return String(localized: "Shigure - 未运行") }
+        return String(localized: model.snapshot.enabled ? "Shigure - 已开启" : "Shigure - 已关闭")
     }
 }

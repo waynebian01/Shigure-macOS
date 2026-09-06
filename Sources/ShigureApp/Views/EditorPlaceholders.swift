@@ -39,16 +39,16 @@ struct IconPackCard: View {
         if catalog.isPackageAvailable {
             let size = String(format: "%.2f MiB", catalog.packageSizeMiB)
             return catalog.isItemDatabaseAvailable
-                ? "已安装完整包：\(size)。点击检查 GitHub 更新。"
-                : "已安装仅技能旧包：\(size)。物品搜索库不可用，可检查更新以获取完整包。"
+                ? String(localized: "已安装完整包：\(size)。点击检查 GitHub 更新。")
+                : String(localized: "已安装仅技能旧包：\(size)。物品搜索库不可用，可检查更新以获取完整包。")
         }
-        if catalog.loadError != nil { return "本地数据包损坏或格式不受支持；技能/物品图标与添加联想不可用。" }
-        return "未安装；技能/物品图标与添加技能、物品联想不可用。"
+        if catalog.loadError != nil { return String(localized: "本地数据包损坏或格式不受支持；技能/物品图标与添加联想不可用。") }
+        return String(localized: "未安装；技能/物品图标与添加技能、物品联想不可用。")
     }
 
     private var buttonTitle: String {
-        if model.iconCatalog.isPackageAvailable { return "检查更新" }
-        return model.iconCatalog.loadError != nil ? "重新下载" : "下载数据包"
+        if model.iconCatalog.isPackageAvailable { return String(localized: "检查更新") }
+        return String(localized: model.iconCatalog.loadError != nil ? "重新下载" : "下载数据包")
     }
 
     private func start() {
@@ -65,18 +65,18 @@ struct IconPackCard: View {
                     }
                 }
                 model.iconCatalog.reload()
-                let kind = model.iconCatalog.isItemDatabaseAvailable ? "完整包" : "仅技能旧包"
+                let kind = String(localized: model.iconCatalog.isItemDatabaseAvailable ? "完整包" : "仅技能旧包")
                 let size = String(format: "%.2f MiB", Double(outcome.size) / 1024 / 1024)
-                resultMessage = (outcome.upToDate ? "已是最新" : "安装完成") + "（\(kind)）：\(size)，SHA-256 \(outcome.sha256.prefix(12))…"
-                model.log.append(outcome.upToDate ? "技能/物品图标数据包已是最新" : "技能/物品图标数据包已下载、校验并热加载")
+                resultMessage = String(localized: outcome.upToDate ? "已是最新" : "安装完成") + String(localized: "（\(kind)）：\(size)，SHA-256 \(outcome.sha256.prefix(12))…")
+                model.log.append(String(localized: outcome.upToDate ? "技能/物品图标数据包已是最新" : "技能/物品图标数据包已下载、校验并热加载"))
             } catch is CancellationError {
-                resultMessage = "下载已取消；原数据包未修改。"
+                resultMessage = String(localized: "下载已取消；原数据包未修改。")
             } catch let error as URLError where error.code == .cancelled {
-                resultMessage = "下载已取消；原数据包未修改。"
+                resultMessage = String(localized: "下载已取消；原数据包未修改。")
             } catch {
                 failed = true
-                resultMessage = "下载失败：\(error.localizedDescription)"
-                model.log.append("数据包下载失败: \(error)")
+                resultMessage = String(localized: "下载失败：\(error.localizedDescription)")
+                model.log.append(String(localized: "数据包下载失败: \(error)"))
             }
             progressMessage = nil
             percentage = nil

@@ -25,7 +25,7 @@ final class WorkspaceGameLocator: @unchecked Sendable {
 
     func describeConfigured() -> String {
         let ids = configuredIdentifiers.filter { !$0.isEmpty }
-        return ids.isEmpty ? "未配置" : ids.joined(separator: "、")
+        return ids.isEmpty ? String(localized: "未配置") : ids.joined(separator: String(localized: "、"))
     }
 
     private func matches(_ app: NSRunningApplication, _ ids: [String]) -> Bool {

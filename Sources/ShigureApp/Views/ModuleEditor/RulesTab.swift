@@ -137,7 +137,7 @@ struct RuleRow: View {
                 }
                 .labelsHidden().frame(width: RulesTab.spellWidth)
                 Picker("", selection: Binding(get: { store.targetTag(rule) }, set: { store.setTarget(ruleIndex: index, tag: $0) })) {
-                    ForEach(store.targetOptions(for: rule), id: \.tag) { Text($0.label).tag($0.tag) }
+                    ForEach(store.targetOptions(for: rule), id: \.tag) { Text(localizedReferenceText($0.label)).tag($0.tag) }
                 }
                 .labelsHidden().frame(width: RulesTab.unitWidth)
                 Picker("", selection: Binding(get: { MacroConditionText.displayText(rule.macroCondition) }, set: { store.draft.rules[index].macroCondition = $0 })) {
@@ -149,13 +149,13 @@ struct RuleRow: View {
                         .foregroundStyle(issues.isEmpty ? Color.primary : Color.red)
                 }
                 .buttonStyle(.plain)
-                .help(issues.isEmpty ? "点击编辑条件 (当前: \(rule.describeCondition().isBlank ? "始终命中" : rule.describeCondition()))" : issues.joined(separator: "\n"))
+                .help(issues.isEmpty ? String(localized: "点击编辑条件（当前：\(rule.describeCondition().isBlank ? String(localized: "始终命中") : rule.describeCondition())）") : issues.joined(separator: "\n"))
                 HStack(spacing: 6) {
                     Button(action: onEditComment) {
                         Image(systemName: rule.comment.isBlank ? "text.bubble" : "text.bubble.fill")
                             .foregroundStyle(rule.comment.isBlank ? Color.secondary : Color.accentColor)
                     }
-                    .buttonStyle(.borderless).help(rule.comment.isBlank ? "点击编辑注释" : rule.comment)
+                    .buttonStyle(.borderless).help(rule.comment.isBlank ? String(localized: "点击编辑注释") : rule.comment)
                     Menu {
                         Button("复制到下一行") { store.duplicateRule(at: index) }
                         Button("在下一行添加空白条件") { store.insertBlankRule(after: index) }
@@ -172,7 +172,7 @@ struct RuleRow: View {
                 .frame(width: RulesTab.actionsWidth)
             }
             if !issues.isEmpty {
-                Text(issues.joined(separator: "；") + "。请先添加对应字段。").font(.caption).foregroundStyle(.red).padding(.leading, 44)
+                Text(issues.joined(separator: String(localized: "；")) + String(localized: "。请先添加对应字段。")).font(.caption).foregroundStyle(.red).padding(.leading, 44)
             }
         }
         .padding(.vertical, 2)
@@ -183,12 +183,12 @@ struct RuleRow: View {
         var text = store.support.humanize(rule.condition, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) })
         if let subs = rule.subConditions, !subs.isEmpty {
             let any = subs.map { store.support.humanize($0, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) }) }.joined(separator: " | ")
-            text = text.isBlank ? "任一(\(any))" : "\(text)  且任一(\(any))"
+            text = text.isBlank ? String(localized: "任一(\(any))") : String(localized: "\(text)  且任一(\(any))")
         }
-        if text.isBlank { text = "始终命中" }
-        if let d = rule.delayMs, d > 0 { text += "；延迟 \(d) ms" }
-        if let d = rule.logicDelayMs, d > 0 { text += "；逻辑延迟 \(d) ms" }
-        if rule.continueLogic == true { text += "；继续逻辑" }
+        if text.isBlank { text = String(localized: "始终命中") }
+        if let d = rule.delayMs, d > 0 { text += String(localized: "；延迟 \(d) ms") }
+        if let d = rule.logicDelayMs, d > 0 { text += String(localized: "；逻辑延迟 \(d) ms") }
+        if rule.continueLogic == true { text += String(localized: "；继续逻辑") }
         return text
     }
 }

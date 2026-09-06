@@ -4,6 +4,7 @@ options:
   deploymentTarget:
     macOS: "15.0"
   developmentLanguage: zh-Hans
+  knownRegions: [zh-Hans, en, Base]
   createIntermediateGroups: true
   generateEmptyDirectories: true
 packages:
@@ -21,6 +22,7 @@ targets:
     sources:
       - path: Sources/ShigureApp
       - path: Resources/Assets.xcassets
+      - path: Resources/Localizable.xcstrings
       - path: Resources/Fuyutsui
         type: folder
         buildPhase: resources
@@ -43,6 +45,8 @@ targets:
         CFBundleShortVersionString: "1.2.1"
         CFBundleVersion: "23"
         CFBundleIconName: AppIcon
+        CFBundleDevelopmentRegion: zh-Hans
+        CFBundleLocalizations: [zh-Hans, en]
         LSApplicationCategoryType: public.app-category.utilities
         LSMinimumSystemVersion: "15.0"
         NSHumanReadableCopyright: "Copyright © 2026 waynebian01. MIT License."
