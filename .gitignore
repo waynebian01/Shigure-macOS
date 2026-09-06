@@ -1,10 +1,13 @@
+# 构建产物
 .build/
-.swiftpm/
-*.xcodeproj/
+build/
 DerivedData/
 xcuserdata/
-.DS_Store
 *.xcuserstate
 
-# xcodegen 生成物
-Shigure.xcodeproj/
+# xcodegen 生成物（由 project.yml 生成，运行 scripts/bootstrap.sh 重建）
+*.xcodeproj/
+
+# SwiftPM / 编辑器 / 系统
+.swiftpm/
+.DS_Store
