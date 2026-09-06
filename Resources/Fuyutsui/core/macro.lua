@@ -5,10 +5,10 @@ local macroKind = {}
 local bindingOwner = CreateFrame("Frame")
 
 local modifiers = {
-    "CTRL", "ALT", "SHIFT", "CMD",
-    "SHIFT-CMD",
-    "CTRL-SHIFT", "CTRL-CMD",
-    "ALT-CTRL", "ALT-SHIFT", "ALT-CMD", "ALT-CTRL-SHIFT", "ALT-CTRL-SHIFT-CMD",
+    "CTRL", "ALT", "SHIFT", "META",
+    "SHIFT-META",
+    "CTRL-SHIFT", "CTRL-META",
+    "ALT-CTRL", "ALT-SHIFT", "ALT-META", "ALT-CTRL-SHIFT", "ALT-CTRL-SHIFT-META",
 }
 
 local keys = {
@@ -46,7 +46,7 @@ local function createMacro(name, key, macro)
     end
     SetOverrideBindingClick(bindingOwner, true, key, name, "LeftButton")
     btn:SetAttribute("macrotext", macro)
-    -- print(name, key, macro)
+    print(name, key, macro)
 end
 
 -- 解析法术名/宏体：优先查 MacroBodies；以 / 开头则原样使用；否则加 /cast

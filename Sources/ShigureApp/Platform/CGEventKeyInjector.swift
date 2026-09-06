@@ -39,6 +39,9 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
 
         var flags: CGEventFlags = []
         if Self.isKeypad(mainKey) { flags.insert(.maskNumericPad) }
+        // 真实键盘的功能键/导航键事件始终带 fn 标志（方向键还带 numericPad），缺了会被游戏忽略。
+        if Self.isFunctionOrNavKey(mainKey) { flags.insert(.maskSecondaryFn) }
+        if Self.isArrowKey(mainKey) { flags.insert(.maskNumericPad) }
         var events: [CGEvent] = []
         for modifier in modifiers {
             flags.insert(Self.flag(for: modifier))
@@ -84,5 +87,20 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
 
     static func isKeypad(_ name: String) -> Bool {
         name.uppercased().hasPrefix("NUMPAD")
+    }
+
+    private static let arrowKeys: Set<String> = ["UP", "DOWN", "LEFT", "RIGHT"]
+    private static let navKeys: Set<String> = ["INSERT", "DELETE", "HOME", "END", "PAGEUP", "PAGEDOWN"]
+
+    static func isArrowKey(_ name: String) -> Bool {
+        arrowKeys.contains(name.uppercased())
+    }
+
+    static func isFunctionOrNavKey(_ name: String) -> Bool {
+        let upper = name.uppercased()
+        if arrowKeys.contains(upper) || navKeys.contains(upper) { return true }
+        // F1–F19：F 后跟纯数字
+        guard upper.hasPrefix("F"), upper.count >= 2, upper.count <= 3 else { return false }
+        return upper.dropFirst().allSatisfy(\.isNumber)
     }
 }

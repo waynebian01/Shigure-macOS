@@ -69,6 +69,8 @@ final class AppModel {
     private var lastLoggedEnabled: Bool?
     private var lastLoggedModule: String?
     private var lastLoggedDetails: String?
+    /// 启动时内置插件框架文件有升级：需要强制向游戏部署一次。
+    private var frameworkFilesUpgraded = false
     private var logListener: UUID?
     private var workspaceObservers: [NSObjectProtocol] = []
 
@@ -79,6 +81,11 @@ final class AppModel {
         if let resources = Bundle.main.resourceURL {
             do {
                 try paths.seed(fromBundleResources: resources)
+                let upgraded = try paths.upgradeFrameworkFiles(fromBundleResources: resources)
+                if !upgraded.isEmpty {
+                    frameworkFilesUpgraded = true
+                    log.append(String(localized: "插件框架已随 app 升级 \(upgraded.count) 个文件: \(upgraded.joined(separator: ", "))"))
+                }
             } catch {
                 log.append(String(localized: "初始化用户数据目录失败: \(error.localizedDescription)"))
             }
@@ -613,7 +620,8 @@ final class AppModel {
                 didWork = true
             }
             if let imported = try await importModuleDependencies(), imported.hasChanges { didWork = true }
-            if !didWork { _ = deployAddon() }
+            // 框架文件升级后必须部署，否则游戏侧继续用旧版键池/布局。
+            if !didWork || frameworkFilesUpgraded { _ = deployAddon() }
         } completion: { [self] result in
             if case .failure(let error) = result {
                 log.append(String(localized: "启动初始化失败: \(error.localizedDescription)"))
