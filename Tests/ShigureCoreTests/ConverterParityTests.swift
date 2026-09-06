@@ -99,14 +99,16 @@ struct ConverterParityTests {
         }
     }
 
-    @Test("热键池 350 槽且顺序为修饰符外层")
+    @Test("热键池 552 槽且顺序为修饰符外层")
     func macroKind() {
-        #expect(KeymapCatalog.macroSlotCapacity == 350)
-        #expect(KeymapCatalog.macroKind.count == 350)
+        #expect(KeymapCatalog.macroSlotCapacity == 552)
+        #expect(KeymapCatalog.macroKind.count == 552)
         #expect(KeymapCatalog.macroKind[0] == "CTRL-NUMPAD1")
-        #expect(KeymapCatalog.macroKind[49] == "CTRL-RIGHT")
-        #expect(KeymapCatalog.macroKind[50] == "ALT-NUMPAD1")
-        #expect(KeymapCatalog.macroKind[349] == "ALT-CTRL-SHIFT-RIGHT")
+        #expect(KeymapCatalog.macroKind[45] == "CTRL-RIGHT")
+        #expect(KeymapCatalog.macroKind[46] == "ALT-NUMPAD1")
+        #expect(KeymapCatalog.macroKind[92] == "SHIFT-NUMPAD1")
+        #expect(KeymapCatalog.macroKind[138] == "CMD-NUMPAD1")
+        #expect(KeymapCatalog.macroKind[551] == "ALT-CTRL-SHIFT-CMD-RIGHT")
     }
 
     @Test("DeriveSpellName 各分支")

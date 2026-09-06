@@ -9,10 +9,20 @@ struct KeymapTests {
         #expect(KeymapCatalog.parseHotkey("CTRL--") == .init(modifiers: ["CTRL"], mainKey: "-"))
         #expect(KeymapCatalog.parseHotkey("ALT-CTRL-SHIFT-NUMPAD1") == .init(modifiers: ["ALT", "CTRL", "SHIFT"], mainKey: "NUMPAD1"))
         #expect(KeymapCatalog.parseHotkey("control-menu-F5") == .init(modifiers: ["CTRL", "ALT"], mainKey: "F5"))
+        #expect(KeymapCatalog.parseHotkey("CMD-F1") == .init(modifiers: ["CMD"], mainKey: "F1"))
+        #expect(KeymapCatalog.parseHotkey("COMMAND-ALT-F1") == .init(modifiers: ["CMD", "ALT"], mainKey: "F1"))
+        #expect(KeymapCatalog.parseHotkey("ALT-CTRL-SHIFT-CMD-RIGHT") == .init(modifiers: ["ALT", "CTRL", "SHIFT", "CMD"], mainKey: "RIGHT"))
         #expect(KeymapCatalog.parseHotkey("CTRL-CTRL-7") == .init(modifiers: ["CTRL"], mainKey: "7"))
         #expect(KeymapCatalog.parseHotkey("SHIFT-") == .init(modifiers: ["SHIFT"], mainKey: nil))
         #expect(KeymapCatalog.parseHotkey("  ") == .init(modifiers: [], mainKey: nil))
         #expect(KeymapCatalog.parseHotkey("XBUTTON2") == .init(modifiers: [], mainKey: "XBUTTON2"))
+    }
+
+    @Test("macOS Command 与小键盘虚拟键码")
+    func macKeyCodes() {
+        #expect(MacKeyCodes.Modifier.cmd.keyCode == 0x37)
+        #expect(MacKeyCodes.keyCode(for: "NUMPAD1") == 0x53)
+        #expect(MacKeyCodes.keyCode(for: "RIGHT") == 0x7C)
     }
 
     @Test("三元组精确匹配、nil 走二元回退、last-wins")

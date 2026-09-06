@@ -1,11 +1,12 @@
 import Foundation
 
-/// 热键池：7 个修饰符组合 × 50 个主键 = 350 个宏槽位（与 Fuyutsui core/macro.lua 对齐）。
+/// 热键池：12 个修饰符组合 × 46 个主键 = 552 个宏槽位（与 Fuyutsui core/macro.lua 对齐）。
 public enum KeymapCatalog {
     public static let modifiers: [String] = [
-        "CTRL", "ALT", "SHIFT",
-        "ALT-CTRL", "ALT-SHIFT", "CTRL-SHIFT",
-        "ALT-CTRL-SHIFT"
+        "CTRL", "ALT", "SHIFT", "CMD",
+        "SHIFT-CMD",
+        "CTRL-SHIFT", "CTRL-CMD",
+        "ALT-CTRL", "ALT-SHIFT", "ALT-CMD", "ALT-CTRL-SHIFT", "ALT-CTRL-SHIFT-CMD"
     ]
 
     public static let keys: [String] = [
@@ -13,9 +14,8 @@ public enum KeymapCatalog {
         "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9", "NUMPAD0",
         "NUMPADDECIMAL", "NUMPADPLUS", "NUMPADMINUS", "NUMPADMULTIPLY", "NUMPADDIVIDE",
         "F1", "F2", "F3", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
-        ",", ".", "/", ";", "'", "[", "]", "\\",
-        "7", "8", "9", "0", "=",
-        "-", "INSERT", "DELETE", "HOME", "END", "PAGEUP", "PAGEDOWN",
+        ",", ".", "/", ";", "'", "[", "]", "\\", "-", "=",
+        "INSERT", "DELETE", "HOME", "END", "PAGEUP", "PAGEDOWN",
         "UP", "DOWN", "LEFT", "RIGHT"
     ]
 
@@ -33,7 +33,7 @@ public enum KeymapCatalog {
     public static var macroSlotCapacity: Int { modifiers.count * keys.count }
 
     public struct ParsedHotkey: Sendable, Equatable {
-        public let modifiers: [String] // CTRL / ALT / SHIFT，去重，按出现顺序
+        public let modifiers: [String] // CTRL / ALT / SHIFT / CMD，去重，按出现顺序
         public let mainKey: String?
     }
 
@@ -51,7 +51,9 @@ public enum KeymapCatalog {
 
     private static func consumeModifierPrefix(_ text: String) -> (String, String)? {
         let prefixes: [(String, String)] = [
-            ("CONTROL-", "CTRL"), ("CTRL-", "CTRL"), ("MENU-", "ALT"), ("ALT-", "ALT"), ("SHIFT-", "SHIFT")
+            ("CONTROL-", "CTRL"), ("CTRL-", "CTRL"),
+            ("MENU-", "ALT"), ("ALT-", "ALT"),
+            ("SHIFT-", "SHIFT"), ("COMMAND-", "CMD"), ("CMD-", "CMD")
         ]
         for (prefix, modifier) in prefixes {
             if let rest = text.dropPrefixIgnoringCase(prefix) {

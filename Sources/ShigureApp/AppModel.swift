@@ -19,6 +19,16 @@ final class AppModel {
     let iconCatalog: IconCatalogStore
     let keyRecorder = KeyRecorder()
 
+    // 页面退出侧栏时保留草稿和目录；不让缓存本身参与界面依赖追踪。
+    @ObservationIgnored private var cachedModuleEditor: ModuleEditorStore?
+
+    func moduleEditor() -> ModuleEditorStore {
+        if let cachedModuleEditor { return cachedModuleEditor }
+        let editor = ModuleEditorStore(model: self)
+        cachedModuleEditor = editor
+        return editor
+    }
+
     // MARK: 设置
     var settings: AppSettings {
         didSet { persistSettings() }

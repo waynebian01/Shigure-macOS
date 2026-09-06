@@ -44,7 +44,8 @@ public enum PixelDecoder {
     public static let topRowFirstSchemeMax = 255
     public static let healAbsorbMaxRows = 6
     public static let healAbsorbMaxUnits = 30
-    /// 锚点行搜索范围（物理像素行）；Retina 下 1 个 UI 单位可能是 2 个物理像素。
+    /// 旧版固定搜索上限，仅为源兼容保留；解码时会扫描整个截图高度。
+    @available(*, deprecated, message: "锚点现在扫描整个截图高度")
     public static let anchorSearchRows = 8
 
     public struct Decoded: Sendable, Equatable {
@@ -63,8 +64,9 @@ public enum PixelDecoder {
             result.failureReason = "目标窗口客户区尺寸无效"
             return result
         }
-        // 1. 顶行：在前几行中寻找 step==1 的锚点
-        for y in 0..<min(anchorSearchRows, buffer.height) {
+        // 1. 顶行：从截图左上角向下寻找第一个主色块（step==1）作为锚点。
+        //    截图行是物理像素，窗口装饰和 Retina 缩放可能让主色条出现在更靠下的位置。
+        for y in 0..<buffer.height {
             let row = scanTopRow(buffer, y: y)
             if !row.isEmpty {
                 result.rowData = row

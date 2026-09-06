@@ -2,7 +2,7 @@ import Foundation
 
 /// 模块依赖快照的捕获与导入（对应 C# ModuleDependencyService）。
 /// Capture：以当前本地 Lua 完全覆盖模块 Dependencies。
-/// Import：把模块携带而本地缺少的配置与宏追加到本地 Lua，逐模块提交；超 350 槽拒绝整个模块；写入失败回滚。
+/// Import：把模块携带而本地缺少的配置与宏追加到本地 Lua，逐模块提交；超过当前宏槽位容量拒绝整个模块；写入失败回滚。
 public struct ModuleDependencyService: Sendable {
     public struct ImportResult: Sendable {
         public var configAdded = 0
@@ -579,7 +579,7 @@ public struct ModuleDependencyService: Sendable {
         (value ?? "").replacingOccurrences(of: "\r\n", with: "\n").trimmed()
     }
 
-    /// 对该职业所有专精检查 动态数×30 + 静态 + 特殊 ≤ 350。
+    /// 对该职业所有专精检查 动态数×30 + 静态 + 特殊 ≤ 当前宏槽位容量。
     public static func ensureMacroCapacity(classId: Int, macros: ClassMacrosStore.ClassMacros) throws {
         for spec in ClassNames.specs(of: classId) {
             let dynamicCount = macros.usesSpecDynamicSpells

@@ -72,8 +72,14 @@ public struct ConditionFieldCatalog: Sendable {
     public let paths: AppPaths
 
     public init(paths: AppPaths) {
+        self.init(paths: paths, config: try? ConfigService.load(configDirectory: paths.configDirectory))
+    }
+
+    /// Allows callers that build the catalog asynchronously to provide a preloaded config.
+    /// Passing nil creates an empty catalog without touching the filesystem.
+    public init(paths: AppPaths, config: ConfigService?) {
         self.paths = paths
-        config = try? ConfigService.load(configDirectory: paths.configDirectory)
+        self.config = config
     }
 
     /// 指定职业/专精下可用的条件字段；classId/specId 为空时只返回公共字段。

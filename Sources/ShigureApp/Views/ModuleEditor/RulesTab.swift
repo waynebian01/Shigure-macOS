@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import ShigureCore
 
 /// 规则列表：启用 / 图标 / 技能 / 目标 / 宏条件 / 条件 / 注释 / 操作；支持拖拽排序、⌘D 复制。
@@ -8,6 +9,7 @@ struct RulesTab: View {
     @State private var conditionRuleId: UUID?
     @State private var commentRuleId: UUID?
     @State private var selection: UUID?
+    @FocusState private var rulesFocused: Bool
     @Environment(\.undoManager) private var undoManager
 
     /// 列宽表头与数据行共用。固定列合计必须留得下弹性的「条件」列，
@@ -34,27 +36,7 @@ struct RulesTab: View {
             .font(.caption).foregroundStyle(.secondary)
             .padding(.horizontal, 16).padding(.vertical, 4)
             Divider()
-            List(selection: $selection) {
-                ForEach(Array(store.draft.rules.enumerated()), id: \.element.id) { index, rule in
-                    RuleRow(store: store, index: index, rule: rule,
-                            onEditCondition: { conditionRuleId = rule.id },
-                            onEditComment: { commentRuleId = rule.id })
-                        .tag(rule.id)
-                        .listRowSeparator(.visible)
-                }
-                .onMove { source, destination in store.moveRules(from: source, to: destination) }
-            }
-            .listStyle(.inset)
-            .contextMenu(forSelectionType: UUID.self) { ids in
-                if let id = ids.first, let index = store.draft.rules.firstIndex(where: { $0.id == id }) {
-                    Button("复制到下一行") { store.duplicateRule(at: index) }
-                    Button("在下一行添加空白条件") { store.insertBlankRule(after: index) }
-                    Button("上移") { store.moveRule(from: index, by: -1) }
-                    Button("下移") { store.moveRule(from: index, by: 1) }
-                    Divider()
-                    Button("删除", role: .destructive) { store.deleteRule(at: index) }
-                }
-            }
+            ruleList
             Divider()
             HStack {
                 Button { store.addRule() } label: { Label("添加规则", systemImage: "plus") }
@@ -78,6 +60,7 @@ struct RulesTab: View {
             }
             .padding(8)
         }
+        .onChange(of: store.selectedId) { _, _ in selection = nil }
         .onAppear { store.undoManager = undoManager }
         .onChange(of: undoManager) { _, new in store.undoManager = new }
         .sheet(item: Binding(get: { conditionRuleId.map { RuleSheetTarget(id: $0) } }, set: { conditionRuleId = $0?.id })) { target in
@@ -104,6 +87,71 @@ struct RulesTab: View {
             }
         }
     }
+    private var ruleList: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 0, pinnedViews: []) {
+                    ForEach(Array(store.draft.rules.enumerated()), id: \.element.id) { index, rule in
+                        listRow(index: index, rule: rule)
+                        Divider()
+                    }
+                }
+            }
+            .focusable()
+            .focusEffectDisabled()
+            .focused($rulesFocused)
+            .onKeyPress(keys: [.upArrow]) { press in
+                guard press.modifiers.isEmpty else { return .ignored }
+                moveSelection(by: -1)
+                return .handled
+            }
+            .onKeyPress(keys: [.downArrow]) { press in
+                guard press.modifiers.isEmpty else { return .ignored }
+                moveSelection(by: 1)
+                return .handled
+            }
+            .onChange(of: selection) { _, id in
+                if let id {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        proxy.scrollTo(id, anchor: .center)
+                    }
+                }
+            }
+        }
+    }
+
+    private func listRow(index: Int, rule: ModuleRule) -> some View {
+        let isSelected = selection == rule.id
+        return RuleRow(store: store, index: index, rule: rule,
+                onEditCondition: { conditionRuleId = rule.id },
+                onEditComment: { commentRuleId = rule.id },
+                onSelect: { selection = $0 })
+            .padding(.horizontal, 16)
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(isSelected ? Color.accentColor.opacity(0.12) : Color.clear)
+            .contentShape(Rectangle())
+            .onTapGesture { selection = rule.id; rulesFocused = true }
+            .id(rule.id)
+            .contextMenu { ruleActions(index: index) }
+    }
+
+    @ViewBuilder
+    private func ruleActions(index: Int) -> some View {
+        Button("复制到下一行") { store.duplicateRule(at: index) }
+        Button("在下一行添加空白条件") { store.insertBlankRule(after: index) }
+        Button("上移") { store.moveRule(from: index, by: -1) }.disabled(index == 0)
+        Button("下移") { store.moveRule(from: index, by: 1) }.disabled(index == store.draft.rules.count - 1)
+        Divider()
+        Button("删除", role: .destructive) { store.deleteRule(at: index) }
+    }
+
+    private func moveSelection(by delta: Int) {
+        guard !store.draft.rules.isEmpty else { return }
+        let current = selection.flatMap { id in store.draft.rules.firstIndex { $0.id == id } }
+        let next = current.map { min(max(0, $0 + delta), store.draft.rules.count - 1) } ?? 0
+        selection = store.draft.rules[next].id
+    }
 }
 
 struct RuleSheetTarget: Identifiable { let id: UUID }
@@ -115,15 +163,19 @@ struct RuleRow: View {
     let rule: ModuleRule
     let onEditCondition: () -> Void
     let onEditComment: () -> Void
+    let onSelect: (UUID) -> Void
+    @State private var dropTargeted = false
+    @State private var cachedIcon: NSImage?
 
     var body: some View {
-        let issues = store.issues(for: rule)
+        let presentation = store.rulePresentation(for: rule)
+        let issues = presentation.issues
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: RulesTab.columnSpacing) {
                 Toggle("", isOn: Binding(get: { rule.enabled }, set: { store.draft.rules[index].enabled = $0 }))
                     .labelsHidden().frame(width: RulesTab.enabledWidth)
                 Group {
-                    if let image = model.iconCatalog.image(named: rule.spell) {
+                    if let image = cachedIcon {
                         Image(nsImage: image).resizable().clipShape(RoundedRectangle(cornerRadius: 4))
                     } else {
                         Text("\(index + 1)").font(.caption2).foregroundStyle(.secondary)
@@ -131,21 +183,29 @@ struct RuleRow: View {
                 }
                 .frame(width: 24, height: 24)
                 .frame(width: 32)
-                Picker("", selection: Binding(get: { rule.spell }, set: { store.draft.rules[index].spell = $0; store.applySpellChange(ruleIndex: index) })) {
-                    Text("").tag("")
-                    ForEach(store.spellOptions, id: \.self) { Text($0).tag($0) }
+                .task(id: rule.spell) {
+                    cachedIcon = model.iconCatalog.image(named: rule.spell)
                 }
-                .labelsHidden().frame(width: RulesTab.spellWidth)
-                Picker("", selection: Binding(get: { store.targetTag(rule) }, set: { store.setTarget(ruleIndex: index, tag: $0) })) {
-                    ForEach(store.targetOptions(for: rule), id: \.tag) { Text(localizedReferenceText($0.label)).tag($0.tag) }
+                DeferredRulePicker(title: String(localized: "技能"), selection: rule.spell, label: rule.spell,
+                                   options: { [(tag: "", label: "")] + store.spellOptions.map { (tag: $0, label: $0) } }) {
+                    store.draft.rules[index].spell = $0
+                    store.applySpellChange(ruleIndex: index)
                 }
-                .labelsHidden().frame(width: RulesTab.unitWidth)
-                Picker("", selection: Binding(get: { MacroConditionText.displayText(rule.macroCondition) }, set: { store.draft.rules[index].macroCondition = $0 })) {
-                    ForEach(store.macroConditionOptions(for: rule), id: \.self) { Text($0.isEmpty ? " " : $0).tag($0) }
+                .frame(width: RulesTab.spellWidth)
+                DeferredRulePicker(title: String(localized: "目标"), selection: store.targetTag(rule),
+                                   label: localizedReferenceText(store.targetLabel(rule)),
+                                   options: { store.targetOptions(for: rule).map { (tag: $0.tag, label: localizedReferenceText($0.label)) } }) {
+                    store.setTarget(ruleIndex: index, tag: $0)
                 }
-                .labelsHidden().frame(width: RulesTab.macroWidth)
+                .frame(width: RulesTab.unitWidth)
+                DeferredRulePicker(title: String(localized: "宏条件"), selection: MacroConditionText.displayText(rule.macroCondition),
+                                   label: MacroConditionText.displayText(rule.macroCondition),
+                                   options: { store.macroConditionOptions(for: rule).map { (tag: $0, label: $0) } }) {
+                    store.draft.rules[index].macroCondition = $0
+                }
+                .frame(width: RulesTab.macroWidth)
                 Button(action: onEditCondition) {
-                    Text(conditionDisplay).lineLimit(2).frame(minWidth: RulesTab.conditionMinWidth, maxWidth: .infinity, alignment: .leading)
+                    Text(presentation.conditionDisplay).lineLimit(2).frame(minWidth: RulesTab.conditionMinWidth, maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(issues.isEmpty ? Color.primary : Color.red)
                 }
                 .buttonStyle(.plain)
@@ -167,7 +227,10 @@ struct RuleRow: View {
                         Image(systemName: "ellipsis.circle")
                     }
                     .menuStyle(.borderlessButton).frame(width: 40)
-                    Image(systemName: "line.3.horizontal").foregroundStyle(.tertiary).help("拖动调整顺序")
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundStyle(.tertiary)
+                        .help("拖动调整顺序")
+                        .draggable(ModuleRuleDrag(moduleId: store.draft.id, ruleId: rule.id))
                 }
                 .frame(width: RulesTab.actionsWidth)
             }
@@ -176,19 +239,124 @@ struct RuleRow: View {
             }
         }
         .padding(.vertical, 2)
-        .listRowBackground(issues.isEmpty ? nil : Color.red.opacity(0.08))
+        .background(issues.isEmpty ? Color.clear : Color.red.opacity(0.08))
+        .overlay(alignment: .bottom) {
+            if dropTargeted { Rectangle().fill(Color.accentColor).frame(height: 2) }
+        }
+        .dropDestination(for: ModuleRuleDrag.self) { items, _ in
+            guard let dragged = items.first, dragged.moduleId == store.draft.id,
+                  let source = store.draft.rules.firstIndex(where: { $0.id == dragged.ruleId }),
+                  let target = store.draft.rules.firstIndex(where: { $0.id == rule.id }), source != target else { return false }
+            store.moveRules(from: IndexSet(integer: source), to: source < target ? target + 1 : target)
+            onSelect(dragged.ruleId)
+            return true
+        } isTargeted: { dropTargeted = $0 }
     }
 
-    private var conditionDisplay: String {
-        var text = store.support.humanize(rule.condition, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) })
-        if let subs = rule.subConditions, !subs.isEmpty {
-            let any = subs.map { store.support.humanize($0, spellName: { model.iconCatalog.spellName($0) }, itemName: { model.iconCatalog.itemName($0) }) }.joined(separator: " | ")
-            text = text.isBlank ? String(localized: "任一(\(any))") : String(localized: "\(text)  且任一(\(any))")
+}
+
+private struct ModuleRuleDrag: Codable, Transferable {
+    let moduleId: String
+    let ruleId: UUID
+
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: UTType(exportedAs: "club.shigure.module-rule"))
+    }
+}
+
+/// 表格关闭的下拉框只显示当前值；用户打开时才构建菜单选项。
+/// 避免每条规则的三个 SwiftUI Picker 在首屏创建、测量整份选项视图树。
+struct DeferredRulePicker: NSViewRepresentable {
+    let title: String
+    let selection: String
+    let label: String
+    let options: () -> [(tag: String, label: String)]
+    let onSelect: (String) -> Void
+
+    func makeNSView(context: Context) -> DeferredRulePopUpButton {
+        let button = DeferredRulePopUpButton(frame: .zero, pullsDown: false)
+        button.controlSize = .small
+        button.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+        button.lineBreakMode = .byTruncatingTail
+        button.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return button
+    }
+
+    func updateNSView(_ button: DeferredRulePopUpButton, context: Context) {
+        button.options = options
+        button.onSelect = onSelect
+        button.setAccessibilityLabel(title)
+        button.showSelection(selection, label: label)
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, nsView: DeferredRulePopUpButton, context: Context) -> CGSize? {
+        // 宽度由表格列指定，不能再按菜单中最长的选项测量。
+        CGSize(width: proposal.width ?? 100, height: nsView.intrinsicContentSize.height)
+    }
+}
+
+final class DeferredRulePopUpButton: NSPopUpButton {
+    var options: () -> [(tag: String, label: String)] = { [] }
+    var onSelect: (String) -> Void = { _ in }
+    private var selectedValue = ""
+    private var selectedLabel = ""
+
+    func showSelection(_ value: String, label: String) {
+        guard numberOfItems == 0 || selectedValue != value || selectedLabel != label else { return }
+        selectedValue = value
+        selectedLabel = label
+        removeAllItems()
+        addItem(withTitle: label.isEmpty ? " " : label)
+        selectedItem?.representedObject = value
+    }
+
+    func prepareMenu() {
+        let menu = NSMenu()
+        menu.autoenablesItems = false
+        for option in options() {
+            let item = NSMenuItem(title: option.label.isEmpty ? " " : option.label,
+                                  action: #selector(choose(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = option.tag
+            menu.addItem(item)
         }
-        if text.isBlank { text = String(localized: "始终命中") }
-        if let d = rule.delayMs, d > 0 { text += String(localized: "；延迟 \(d) ms") }
-        if let d = rule.logicDelayMs, d > 0 { text += String(localized: "；逻辑延迟 \(d) ms") }
-        if rule.continueLogic == true { text += String(localized: "；继续逻辑") }
-        return text
+        // 保留旧模块中暂时不在目录里的值，打开菜单也不能悄悄改写规则。
+        if !menu.items.contains(where: { ($0.representedObject as? String) == selectedValue }) {
+            let item = NSMenuItem(title: selectedLabel.isEmpty ? " " : selectedLabel,
+                                  action: #selector(choose(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = selectedValue
+            menu.addItem(item)
+        }
+        self.menu = menu
+        select(menu.items.first { ($0.representedObject as? String) == selectedValue })
+    }
+
+    @objc private func choose(_ sender: NSMenuItem) {
+        guard let value = sender.representedObject as? String else { return }
+        selectedValue = value
+        selectedLabel = sender.title == " " ? "" : sender.title
+        onSelect(value)
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        prepareMenu()
+        super.mouseDown(with: event)
+    }
+
+    override func keyDown(with event: NSEvent) {
+        prepareMenu()
+        super.keyDown(with: event)
+    }
+
+    override func performClick(_ sender: Any?) {
+        prepareMenu()
+        super.performClick(sender)
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        prepareMenu()
+        return super.accessibilityPerformPress()
     }
 }

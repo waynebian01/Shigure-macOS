@@ -67,7 +67,10 @@ struct StateAndPixelTests {
             var absorb1: [(UInt8, UInt8, UInt8)] = rep((1, 7, 0)) + rep((255, 255, 255), 1) + rep((1, 1, 7)) + rep((200, 200, 200))
             absorb1 += rep((0, 0, 0), 60 - 4)
             var rows: [[(UInt8, UInt8, UInt8)]] = []
-            if scale == 2 { rows.append(Array(repeating: (0, 0, 0), count: width)) } // Retina 下顶部可能有一行非锚点
+            let leadingRows = 12 * scale // 覆盖原先 8 行上限，并模拟窗口顶部垂直偏移
+            for _ in 0..<leadingRows {
+                rows.append(Array(repeating: (0, 0, 0), count: width))
+            }
             for _ in 0..<scale { rows.append(Array(top.prefix(width))) }
             for _ in 0..<(2 * scale) { rows.append(Array(bars.prefix(width))) }
             for _ in 0..<(2 * scale) { rows.append(Array(absorb0.prefix(width))) }
@@ -76,6 +79,7 @@ struct StateAndPixelTests {
             let buffer = PixelBuffer.make(rows: rows)
             let decoded = PixelDecoder.decode(buffer)
             #expect(decoded.failureReason == nil, "scale \(scale): \(decoded.failureReason ?? "")")
+            #expect(decoded.anchorRow == leadingRows, "scale \(scale)")
             #expect(decoded.rowData[1] == 1)
             #expect(decoded.rowData[2] == 5)
             #expect(decoded.rowData[300] == 77)

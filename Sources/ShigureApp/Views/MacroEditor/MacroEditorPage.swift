@@ -80,12 +80,37 @@ struct MacroEditorContent: View {
 struct DynamicMacrosEditor: View {
     @Bindable var store: MacroEditorStore
 
+    private enum DynamicSelection: Hashable {
+        case common
+        case spec(Int)
+    }
+
+    private var selection: Binding<DynamicSelection?> {
+        Binding(
+            get: {
+                store.selectedSpecIndex.map(DynamicSelection.spec) ?? .common
+            },
+            set: { value in
+                guard let value else {
+                    store.selectedSpecIndex = nil
+                    return
+                }
+                switch value {
+                case .common:
+                    store.selectedSpecIndex = nil
+                case let .spec(index):
+                    store.selectedSpecIndex = index
+                }
+            }
+        )
+    }
+
     var body: some View {
         HSplitView {
-            List(selection: $store.selectedSpecIndex) {
-                Text("通用").tag(Int?.none)
+            List(selection: selection) {
+                Text("通用").tag(DynamicSelection.common)
                 ForEach(store.specIndexes, id: \.self) { index in
-                    Text(store.specTitle(index) + "（" + String(store.macros.dynamicBySpec[index]?.count ?? 0) + "）").tag(Int?.some(index))
+                    Text(store.specTitle(index) + "（" + String(store.macros.dynamicBySpec[index]?.count ?? 0) + "）").tag(DynamicSelection.spec(index))
                 }
             }
             .listStyle(.inset)

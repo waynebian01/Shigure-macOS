@@ -78,6 +78,7 @@ final class CGEventKeyInjector: KeyOutput, @unchecked Sendable {
         case .ctrl: return .maskControl
         case .alt: return .maskAlternate
         case .shift: return .maskShift
+        case .cmd: return .maskCommand
         }
     }
 

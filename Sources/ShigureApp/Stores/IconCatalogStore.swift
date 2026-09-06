@@ -12,8 +12,10 @@ final class IconCatalogStore {
     private(set) var version = 0
     private(set) var loadError: String?
 
-    private var spellImages: [Int64: NSImage] = [:]
-    private var itemImages: [Int64: NSImage] = [:]
+    @ObservationIgnored private var spellImages: [Int64: NSImage] = [:]
+    @ObservationIgnored private var itemImages: [Int64: NSImage] = [:]
+    @ObservationIgnored private var classImages: [Int: NSImage] = [:]
+    @ObservationIgnored private var specImages: [String: NSImage] = [:]
     private var registeredSpellNames: [Int64: String] = [:]
     private var registeredSpellIds: [String: Int64] = [:]
     private var registeredItemNames: [Int64: String] = [:]
@@ -32,7 +34,7 @@ final class IconCatalogStore {
         "停止施法": "stop-casting.png"
     ]
     private static let spellIdResources: [Int64: String] = [241288: "recklessness-potion.jpg", 241308: "lights-potential.jpg", 241300: "light-infused-mana-potion.jpg"]
-    private var namedImages: [String: NSImage] = [:]
+    @ObservationIgnored private var namedImages: [String: NSImage] = [:]
 
     init(packageURL: URL) {
         self.packageURL = packageURL
@@ -46,6 +48,8 @@ final class IconCatalogStore {
     func reload() {
         spellImages.removeAll()
         itemImages.removeAll()
+        classImages.removeAll()
+        specImages.removeAll()
         if FileManager.default.fileExists(atPath: packageURL.path) {
             do {
                 reader = try ShgPackReader(url: packageURL)
@@ -119,6 +123,8 @@ final class IconCatalogStore {
     }
 
     func spellImage(_ spellId: Int64) -> NSImage? {
+        // 缓存填充不应让其它行失效；只有数据包换代才刷新已显示的图标。
+        _ = version
         guard spellId > 0 else { return nil }
         if let cached = spellImages[spellId] { return cached }
         var image: NSImage?
@@ -129,6 +135,7 @@ final class IconCatalogStore {
     }
 
     func itemImage(_ itemId: Int64) -> NSImage? {
+        _ = version
         guard itemId > 0 else { return nil }
         if let cached = itemImages[itemId] { return cached }
         var image: NSImage?
@@ -158,14 +165,21 @@ final class IconCatalogStore {
 
     /// 职业图标 / 专精图标（Resources/Icons/Class|Spec）。
     func classImage(_ classId: Int) -> NSImage? {
+        if let cached = classImages[classId] { return cached }
         let name = ClassNames.configFileName(classId).lowercased()
         guard let url = Bundle.main.url(forResource: name, withExtension: "jpg", subdirectory: "Icons/Class") else { return nil }
-        return NSImage(contentsOf: url)
+        guard let image = NSImage(contentsOf: url) else { return nil }
+        classImages[classId] = image
+        return image
     }
 
     func specImage(classId: Int, specId: Int) -> NSImage? {
         guard let name = ClassNames.specIconFileName(classId: classId, specId: specId),
               let url = Bundle.main.url(forResource: name, withExtension: "jpg", subdirectory: "Icons/Spec") else { return nil }
-        return NSImage(contentsOf: url)
+        let key = "\(classId):\(specId)"
+        if let cached = specImages[key] { return cached }
+        guard let image = NSImage(contentsOf: url) else { return nil }
+        specImages[key] = image
+        return image
     }
 }

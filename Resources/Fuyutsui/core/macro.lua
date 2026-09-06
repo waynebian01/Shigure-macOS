@@ -5,9 +5,10 @@ local macroKind = {}
 local bindingOwner = CreateFrame("Frame")
 
 local modifiers = {
-    "CTRL", "ALT", "SHIFT",
-    "ALT-CTRL", "ALT-SHIFT", "CTRL-SHIFT",
-    "ALT-CTRL-SHIFT"
+    "CTRL", "ALT", "SHIFT", "CMD",
+    "SHIFT-CMD",
+    "CTRL-SHIFT", "CTRL-CMD",
+    "ALT-CTRL", "ALT-SHIFT", "ALT-CMD", "ALT-CTRL-SHIFT", "ALT-CTRL-SHIFT-CMD",
 }
 
 local keys = {
@@ -15,8 +16,7 @@ local keys = {
     "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9", "NUMPAD0",
     "NUMPADDECIMAL", "NUMPADPLUS", "NUMPADMINUS", "NUMPADMULTIPLY", "NUMPADDIVIDE",
     "F1", "F2", "F3", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
-    ",", ".", "/", ";", "'", "[", "]", "\\",
-    "7", "8", "9", "0", "=", "-",
+    ",", ".", "/", ";", "'", "[", "]", "\\", "-", "=",
     "INSERT", "DELETE", "HOME", "END", "PAGEUP", "PAGEDOWN",
     "UP", "DOWN", "LEFT", "RIGHT"
 }

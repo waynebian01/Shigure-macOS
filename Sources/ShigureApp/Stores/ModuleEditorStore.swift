@@ -12,6 +12,7 @@ final class ModuleEditorStore {
     private(set) var selectedId: String?
     var draft = ModuleDefinition()
     private var original = ModuleDefinition()
+    var selectedTab = 0
     var hasSelection = false
     var errorMessage: String?
     var infoMessage: String?
@@ -19,23 +20,47 @@ final class ModuleEditorStore {
 
     private(set) var support: ModuleEditorSupport
     private(set) var keymapCatalog: KeymapEditorCatalog = .empty
-    private(set) var validation: ModuleEditorSupport.ValidationCatalog?
-    private var validationModuleKey = ""
+    @ObservationIgnored private(set) var validation: ModuleEditorSupport.ValidationCatalog?
+    @ObservationIgnored private var validationModuleKey = ""
+    @ObservationIgnored private var rulePresentationCache: [UUID: RulePresentation] = [:]
+    @ObservationIgnored private var rulePresentationKey = ""
     private var loadedCatalogVersion = -1
+    private var loadedModuleVersion = -1
+    private var loadedClassId: Int? = nil
+    @ObservationIgnored private var catalogTask: Task<Void, Never>?
 
     init(model: AppModel) {
         self.model = model
-        support = ModuleEditorSupport(catalog: ConditionFieldCatalog(paths: model.paths))
+        // Catalog construction parses all class Lua/config files; defer it so the page can render first.
+        support = ModuleEditorSupport(catalog: ConditionFieldCatalog(paths: model.paths, config: nil))
         reload()
+    }
+
+    deinit {
+        catalogTask?.cancel()
     }
 
     var isDirty: Bool { hasSelection && draft != original }
 
     // MARK: 列表
 
+    /// 离开页面期间配置也可能被其它编辑器更新。刷新目录时保留未保存草稿。
+    func synchronize() {
+        if loadedModuleVersion != model.moduleReloadVersion {
+            if isDirty {
+                modules = model.moduleStore.getModulesForDisplay()
+                loadedModuleVersion = model.moduleReloadVersion
+            } else {
+                reload()
+            }
+        }
+        if loadedCatalogVersion != model.catalogVersion { refreshCatalogs() }
+    }
+
     func reload(reloadStore: Bool = false) {
         if reloadStore { model.moduleStore.reload() }
         modules = model.moduleStore.getModulesForDisplay()
+        loadedModuleVersion = model.moduleReloadVersion
         if let selectedId, let module = modules.first(where: { $0.id == selectedId }) {
             load(module)
         } else if let first = modules.first {
@@ -47,13 +72,11 @@ final class ModuleEditorStore {
     }
 
     func refreshCatalogs() {
-        support = ModuleEditorSupport(catalog: ConditionFieldCatalog(paths: model.paths))
-        loadedCatalogVersion = model.catalogVersion
-        reloadKeymapCatalog()
-        invalidateValidation()
+        scheduleCatalogLoad()
     }
 
     func select(_ id: String) {
+        guard selectedId != id || !hasSelection else { return }
         guard let module = modules.first(where: { $0.id == id }) else { return }
         selectedId = id
         load(module)
@@ -65,7 +88,7 @@ final class ModuleEditorStore {
         draft = module
         original = module
         hasSelection = true
-        reloadKeymapCatalog()
+        scheduleCatalogLoad()
         invalidateValidation()
     }
 
@@ -73,16 +96,38 @@ final class ModuleEditorStore {
         model.moduleStore.hasImportIssue(module.id) || !module.hasCompatibleVersion
     }
 
-    private func reloadKeymapCatalog() {
-        if loadedCatalogVersion != model.catalogVersion {
-            support = ModuleEditorSupport(catalog: ConditionFieldCatalog(paths: model.paths))
-            loadedCatalogVersion = model.catalogVersion
+    private func scheduleCatalogLoad() {
+        catalogTask?.cancel()
+        let paths = model.paths
+        let classId = draft.match.classId
+        let moduleId = draft.id
+        let catalogVersion = model.catalogVersion
+        catalogTask = Task { [weak self] in
+            // 在任务开始前检查是否需要重新加载
+            guard let self else { return }
+            let needsReload = self.loadedCatalogVersion != catalogVersion || self.loadedClassId != classId
+            guard needsReload else { return }
+
+            let result = await Task.detached(priority: .utility) {
+                let config = try? ConfigService.load(configDirectory: paths.configDirectory)
+                let catalog = ConditionFieldCatalog(paths: paths, config: config)
+                let keymapName = config?.keymapName(classId: classId)
+                let keymapURL = KeymapCatalog.resolveKeymapFile(keymapDirectory: paths.keymapDirectory, keymapName: keymapName)
+                let keymap = KeymapEditorCatalog.load(keymapURL)
+                let spells = catalog.conditionSpells(classId: classId)
+                let items = catalog.conditionItems(classId: classId)
+                return (catalog, keymap, spells, items)
+            }.value
+            guard !Task.isCancelled else { return }
+            guard self.draft.id == moduleId else { return }
+            self.support = ModuleEditorSupport(catalog: result.0)
+            self.keymapCatalog = result.1
+            self.loadedCatalogVersion = catalogVersion
+            self.loadedClassId = classId
+            for spell in result.2 { self.model.iconCatalog.register(spellId: spell.spellId, name: spell.name) }
+            for item in result.3 { self.model.iconCatalog.registerItem(itemId: item.itemId, name: item.name) }
+            self.invalidateValidation()
         }
-        guard let config = support.catalog.config else { keymapCatalog = .empty; return }
-        let url = KeymapCatalog.resolveKeymapFile(keymapDirectory: model.paths.keymapDirectory, keymapName: config.keymapName(classId: draft.match.classId))
-        keymapCatalog = KeymapEditorCatalog.load(url)
-        for spell in support.catalog.conditionSpells(classId: draft.match.classId) { model.iconCatalog.register(spellId: spell.spellId, name: spell.name) }
-        for item in support.catalog.conditionItems(classId: draft.match.classId) { model.iconCatalog.registerItem(itemId: item.itemId, name: item.name) }
     }
 
     // MARK: 匹配
@@ -91,7 +136,7 @@ final class ModuleEditorStore {
         draft.match.classId = classId
         if classId == nil || draft.match.specId.map({ s in !ClassNames.specs(of: classId!).contains { $0.id == s } }) ?? false { draft.match.specId = nil }
         draft.match.heroTalent = nil
-        reloadKeymapCatalog()
+        scheduleCatalogLoad()
         invalidateValidation()
         for i in draft.rules.indices { applySpellChange(ruleIndex: i, keepTarget: true) }
     }
@@ -99,6 +144,7 @@ final class ModuleEditorStore {
     func setSpec(_ specId: Int?) {
         draft.match.specId = specId
         draft.match.heroTalent = nil
+        scheduleCatalogLoad()
         invalidateValidation()
     }
 
@@ -107,10 +153,12 @@ final class ModuleEditorStore {
     func invalidateValidation() {
         validation = nil
         validationModuleKey = ""
+        rulePresentationCache.removeAll(keepingCapacity: true)
+        rulePresentationKey = ""
     }
 
     var validationCatalog: ModuleEditorSupport.ValidationCatalog {
-        let key = "\(draft.match.classId ?? -1)/\(draft.match.specId ?? -1)/\(draft.units.map(\.name))/\(draft.units.map { $0.healthName ?? "" })/\(draft.counts.map(\.name))/\(draft.valueAdjustments.map(\.field))"
+        let key = validationKeyForCurrentDraft
         if let validation, validationModuleKey == key { return validation }
         let v = support.validationCatalog(module: draft)
         validation = v
@@ -123,12 +171,61 @@ final class ModuleEditorStore {
     func issues(for count: ModuleCountField) -> [String] { support.countIssues(count, catalog: validationCatalog) }
     func issues(for adjustment: ModuleValueAdjustment) -> [String] { support.adjustmentIssues(adjustment, module: draft, catalog: validationCatalog) }
 
+    /// 规则行会同时显示校验结果和可读条件。按行缓存可以避免 SwiftUI 在列表布局、图标加载
+    /// 和焦点变化时重复解析同一条规则。
+    func rulePresentation(for rule: ModuleRule) -> RulePresentation {
+        let key = rulePresentationKeyForCurrentDraft
+        if key != rulePresentationKey {
+            rulePresentationCache.removeAll(keepingCapacity: true)
+            rulePresentationKey = key
+        }
+        if let cached = rulePresentationCache[rule.id], cached.rule == rule {
+            return cached
+        }
+
+        let issues = support.ruleIssues(rule, catalog: validationCatalog)
+        var text = support.humanize(rule.condition,
+                                    spellName: { model.iconCatalog.spellName($0) },
+                                    itemName: { model.iconCatalog.itemName($0) })
+        if let subs = rule.subConditions, !subs.isEmpty {
+            let any = subs.map {
+                support.humanize($0,
+                                 spellName: { model.iconCatalog.spellName($0) },
+                                 itemName: { model.iconCatalog.itemName($0) })
+            }.joined(separator: " | ")
+            text = text.isBlank ? String(localized: "任一(\(any))") : String(localized: "\(text)  且任一(\(any))")
+        }
+        if text.isBlank { text = String(localized: "始终命中") }
+        if let delay = rule.delayMs, delay > 0 { text += String(localized: "；延迟 \(delay) ms") }
+        if let delay = rule.logicDelayMs, delay > 0 { text += String(localized: "；逻辑延迟 \(delay) ms") }
+        if rule.continueLogic == true { text += String(localized: "；继续逻辑") }
+
+        let result = RulePresentation(rule: rule, issues: issues, conditionDisplay: text)
+        rulePresentationCache[rule.id] = result
+        return result
+    }
+
+    private var rulePresentationKeyForCurrentDraft: String {
+        "\(validationKeyForCurrentDraft)/catalog:\(loadedCatalogVersion)/icons:\(model.iconCatalog.version)"
+    }
+
+    private var validationKeyForCurrentDraft: String {
+        "\(draft.match.classId ?? -1)/\(draft.match.specId ?? -1)/\(draft.units.map(\.name).joined(separator: ","))/\(draft.units.compactMap(\.healthName).joined(separator: ","))/\(draft.counts.map(\.name).joined(separator: ","))/\(draft.valueAdjustments.map(\.field).joined(separator: ","))"
+    }
+
+    struct RulePresentation {
+        let rule: ModuleRule
+        let issues: [String]
+        let conditionDisplay: String
+    }
+
     // MARK: 规则
 
     var spellOptions: [String] {
         var options = ModuleSpecialActions.all
-        for spell in keymapCatalog.spells where !options.contains(spell) { options.append(spell) }
-        for rule in draft.rules where !rule.spell.isBlank && !options.contains(rule.spell) { options.append(rule.spell) }
+        var seen = Set(options)
+        for spell in keymapCatalog.spells where seen.insert(spell).inserted { options.append(spell) }
+        for rule in draft.rules where !rule.spell.isBlank && seen.insert(rule.spell).inserted { options.append(rule.spell) }
         return options
     }
 

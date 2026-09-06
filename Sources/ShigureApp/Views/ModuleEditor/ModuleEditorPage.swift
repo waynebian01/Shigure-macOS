@@ -14,17 +14,17 @@ struct ModuleEditorPage: View {
             }
         }
         .onAppear {
-            if store == nil { store = ModuleEditorStore(model: model) }
+            if store == nil { store = model.moduleEditor() }
+            store?.synchronize()
         }
-        .onChange(of: model.moduleReloadVersion) { _, _ in store?.reload() }
-        .onChange(of: model.catalogVersion) { _, _ in store?.refreshCatalogs() }
+        .onChange(of: model.moduleReloadVersion) { _, _ in store?.synchronize() }
+        .onChange(of: model.catalogVersion) { _, _ in store?.synchronize() }
     }
 }
 
 struct ModuleEditorContent: View {
     @Environment(AppModel.self) private var model
     @Bindable var store: ModuleEditorStore
-    @State private var tab = 0
 
     var body: some View {
         HSplitView {
@@ -34,7 +34,7 @@ struct ModuleEditorContent: View {
                 if store.hasSelection {
                     header
                     Divider()
-                    Picker("", selection: $tab) {
+                    Picker("", selection: $store.selectedTab) {
                         Text("逻辑编辑").tag(0)
                         Text("动态单位").tag(1)
                         Text("动态数值").tag(2)
@@ -43,7 +43,7 @@ struct ModuleEditorContent: View {
                     .labelsHidden()
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
-                    switch tab {
+                    switch store.selectedTab {
                     case 0: RulesTab(store: store)
                     case 1: UnitsTab(store: store)
                     default: AdjustmentsTab(store: store)
@@ -72,16 +72,7 @@ struct ModuleEditorContent: View {
         VStack(spacing: 0) {
             List(selection: Binding(get: { store.selectedId }, set: { if let id = $0 { store.select(id) } })) {
                 ForEach(store.modules) { module in
-                    HStack(spacing: 8) {
-                        ModuleIconView(classId: module.match.classId, specId: module.match.specId)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(module.name).lineLimit(1)
-                            Text(matchText(module)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                        }
-                    }
-                    .foregroundStyle(store.hasImportIssue(module) ? Color.red : Color.primary)
-                    .help(store.hasImportIssue(module) ? (module.hasCompatibleVersion ? String(localized: "模块依赖导入存在问题，详情见日志") : String(localized: "模块版本 \(module.version.isEmpty ? String(localized: "未知") : module.version) 与当前版本不一致，保存后升级")) : "")
-                    .tag(module.id)
+                    ModuleListRow(module: module, store: store, matchText: matchText(module))
                 }
             }
             .listStyle(.inset)
@@ -178,6 +169,26 @@ struct ModuleEditorContent: View {
                 .buttonStyle(.borderedProminent)
         }
         .padding(10)
+    }
+}
+
+struct ModuleListRow: View {
+    @Environment(AppModel.self) private var model
+    let module: ModuleDefinition
+    @Bindable var store: ModuleEditorStore
+    let matchText: String
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ModuleIconView(classId: module.match.classId, specId: module.match.specId)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(module.name).lineLimit(1)
+                Text(matchText).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+            }
+        }
+        .foregroundStyle(store.hasImportIssue(module) ? Color.red : Color.primary)
+        .help(store.hasImportIssue(module) ? (module.hasCompatibleVersion ? String(localized: "模块依赖导入存在问题，详情见日志") : String(localized: "模块版本 \(module.version.isEmpty ? String(localized: "未知") : module.version) 与当前版本不一致，保存后升级")) : "")
+        .tag(module.id)
     }
 }
 

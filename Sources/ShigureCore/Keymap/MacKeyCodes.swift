@@ -1,18 +1,20 @@
 import Foundation
 
-/// Windows 键名 ↔ macOS 虚拟键码（kVK_*，固定 ANSI 布局，不查键盘布局）。
-/// 修饰符映射：CTRL→Control、ALT→Option、SHIFT→Shift。
+/// Windows/Fuyutsui 键名 ↔ macOS 虚拟键码（kVK_*，固定 ANSI 布局，不查键盘布局）。
+/// 修饰符映射：CTRL→Control、ALT→Option、SHIFT→Shift、CMD→Command。
 public enum MacKeyCodes {
     public enum Modifier: String, Sendable, CaseIterable {
         case ctrl = "CTRL"
         case alt = "ALT"
         case shift = "SHIFT"
+        case cmd = "CMD"
 
         public var keyCode: UInt16 {
             switch self {
             case .ctrl: return 0x3B
             case .alt: return 0x3A
             case .shift: return 0x38
+            case .cmd: return 0x37
             }
         }
     }
