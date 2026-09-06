@@ -32,7 +32,7 @@ struct MacroEditorContent: View {
                 }
             }
             .listStyle(.inset)
-            .frame(minWidth: 150, idealWidth: 170, maxWidth: 220)
+            .frame(minWidth: Layout.listMin, idealWidth: Layout.listIdeal, maxWidth: Layout.listMax)
             VStack(spacing: 0) {
                 if store.document != nil {
                     Text(store.slotHint).font(.caption).foregroundStyle(store.slotOverflow ? .red : .secondary).padding(8).frame(maxWidth: .infinity, alignment: .leading)
@@ -62,7 +62,7 @@ struct MacroEditorContent: View {
                 }
                 .padding(10)
             }
-            .frame(minWidth: 700)
+            .frame(minWidth: Layout.editorMin)
         }
         .alert("保存失败", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("好") { store.errorMessage = nil }

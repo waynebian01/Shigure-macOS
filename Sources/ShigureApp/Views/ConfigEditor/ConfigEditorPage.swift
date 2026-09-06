@@ -20,7 +20,7 @@ struct ConfigEditorContent: View {
 
     var body: some View {
         HSplitView {
-            classList.frame(minWidth: 150, idealWidth: 170, maxWidth: 220)
+            classList.frame(minWidth: Layout.listMin, idealWidth: Layout.listIdeal, maxWidth: Layout.listMax)
             VStack(spacing: 0) {
                 if store.document != nil {
                     HStack {
@@ -57,7 +57,7 @@ struct ConfigEditorContent: View {
                 Divider()
                 footer
             }
-            .frame(minWidth: 700)
+            .frame(minWidth: Layout.editorMin)
         }
         .alert("保存失败", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("好") { store.errorMessage = nil }
@@ -289,17 +289,7 @@ struct CooldownsEditor: View {
                 .padding(8)
                 List {
                     ForEach(Array(store.spec.spells.enumerated()).filter { matches($0.element, spellFilter) }, id: \.element.spellId) { index, spell in
-                        HStack(spacing: 8) {
-                            SpellIconView(spellId: spell.spellId, name: spell.name)
-                            TextField("名称", text: Binding(get: { spell.name }, set: { store.spec.spells[index].name = $0 })).frame(width: 140)
-                            TextField("法术 ID", text: Binding(get: { String(spell.spellId) }, set: { store.spec.spells[index].spellId = Int64($0.trimmed()) ?? 0 })).frame(width: 90)
-                            Toggle("充能", isOn: Binding(get: { spell.charge }, set: { store.spec.spells[index].charge = $0 })).toggleStyle(.checkbox)
-                            TextField("最大充能", text: Binding(get: { spell.maxCharge.map(String.init) ?? "" }, set: { store.spec.spells[index].maxCharge = Int($0.trimmed()) })).frame(width: 60)
-                            TextField("施法次数", text: Binding(get: { spell.castCount.map(String.init) ?? "" }, set: { store.spec.spells[index].castCount = Int($0.trimmed()) })).frame(width: 60)
-                            Toggle("强制已学", isOn: Binding(get: { spell.forcedKnown }, set: { store.spec.spells[index].forcedKnown = $0 })).toggleStyle(.checkbox)
-                            Toggle("法术书中", isOn: Binding(get: { spell.inSpellBook }, set: { store.spec.spells[index].inSpellBook = $0 })).toggleStyle(.checkbox)
-                            Button(role: .destructive) { store.spec.spells.remove(at: index) } label: { Image(systemName: "xmark.circle") }.buttonStyle(.borderless)
-                        }
+                        CooldownSpellRow(store: store, index: index, spell: spell)
                     }
                     .onMove { from, to in if spellFilter.isEmpty { store.spec.spells.move(fromOffsets: from, toOffset: to) } }
                 }
@@ -311,7 +301,7 @@ struct CooldownsEditor: View {
                 }
                 .padding(8)
             }
-            .frame(minWidth: 520)
+            .frame(minWidth: Layout.innerPrimaryMin)
             VStack(spacing: 0) {
                 HStack {
                     Text("物品冷却").font(.headline)
@@ -339,12 +329,65 @@ struct CooldownsEditor: View {
                 }
                 .padding(8)
             }
-            .frame(minWidth: 320)
+            .frame(minWidth: Layout.innerSecondaryMin)
         }
     }
 
     private func matches(_ spell: ClassBlocksStore.SpellEntry, _ filter: String) -> Bool {
         filter.isEmpty || String(spell.spellId).contains(filter) || spell.name.localizedCaseInsensitiveContains(filter)
+    }
+}
+
+/// 技能冷却的一行有 9 列（名称、法术 ID、三个复选框、两个数字框、删除），单行摆不进
+/// `Layout.innerPrimaryMin`。`HSplitView` 既不认 `idealWidth` 也不会自己让位，分隔条初始就停在
+/// 最小宽度上 —— 右边几列被裁掉，用户不拖分隔条就永远够不着。所以这一行自己会折行：
+/// 宽度够就排成一行，不够就把开关折到第二行。
+struct CooldownSpellRow: View {
+    @Bindable var store: ConfigEditorStore
+    let index: Int
+    let spell: ClassBlocksStore.SpellEntry
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) {
+                identity
+                flags
+                deleteButton
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 8) {
+                    identity
+                    Spacer(minLength: 0)
+                    deleteButton
+                }
+                HStack(spacing: 8) {
+                    flags
+                    Spacer(minLength: 0)
+                }
+                .padding(.leading, 36)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var identity: some View {
+        SpellIconView(spellId: spell.spellId, name: spell.name)
+        TextField("名称", text: Binding(get: { spell.name }, set: { store.spec.spells[index].name = $0 })).frame(width: 140)
+        TextField("法术 ID", text: Binding(get: { String(spell.spellId) }, set: { store.spec.spells[index].spellId = Int64($0.trimmed()) ?? 0 })).frame(width: 90)
+    }
+
+    @ViewBuilder
+    private var flags: some View {
+        Toggle("充能", isOn: Binding(get: { spell.charge }, set: { store.spec.spells[index].charge = $0 })).toggleStyle(.checkbox)
+        TextField("最大充能", text: Binding(get: { spell.maxCharge.map(String.init) ?? "" }, set: { store.spec.spells[index].maxCharge = Int($0.trimmed()) })).frame(width: 60)
+        TextField("施法次数", text: Binding(get: { spell.castCount.map(String.init) ?? "" }, set: { store.spec.spells[index].castCount = Int($0.trimmed()) })).frame(width: 60)
+        Toggle("强制已学", isOn: Binding(get: { spell.forcedKnown }, set: { store.spec.spells[index].forcedKnown = $0 })).toggleStyle(.checkbox)
+        Toggle("法术书中", isOn: Binding(get: { spell.inSpellBook }, set: { store.spec.spells[index].inSpellBook = $0 })).toggleStyle(.checkbox)
+    }
+
+    private var deleteButton: some View {
+        Button(role: .destructive) { store.spec.spells.remove(at: index) } label: { Image(systemName: "xmark.circle") }
+            .buttonStyle(.borderless)
     }
 }
 
@@ -446,12 +489,12 @@ struct SpellsListEditor: View {
                 .listStyle(.inset)
                 if let message { Text(message).font(.caption).foregroundStyle(.orange).padding(8) }
             }
-            .frame(minWidth: 460)
+            .frame(minWidth: Layout.innerPrimaryMin)
             DatabaseSearchPane(title: "技能数据库", placeholder: "spellId 或名称", suggestions: model.iconCatalog.spellSuggestions, isItem: false,
                                available: model.iconCatalog.isPackageAvailable) { id, name in
                 message = store.addSpellFromDatabase(spellId: id, name: name)
             }
-            .frame(minWidth: 320)
+            .frame(minWidth: Layout.innerSecondaryMin)
         }
     }
 
@@ -491,12 +534,12 @@ struct ItemsListEditor: View {
                 .listStyle(.inset)
                 if let message { Text(message).font(.caption).foregroundStyle(.orange).padding(8) }
             }
-            .frame(minWidth: 460)
+            .frame(minWidth: Layout.innerPrimaryMin)
             DatabaseSearchPane(title: "物品数据库", placeholder: "itemId 或名称", suggestions: model.iconCatalog.itemSuggestions, isItem: true,
                                available: model.iconCatalog.isItemDatabaseAvailable) { id, name in
                 message = store.addItemFromDatabase(itemId: id, name: name)
             }
-            .frame(minWidth: 320)
+            .frame(minWidth: Layout.innerSecondaryMin)
         }
     }
 

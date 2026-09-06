@@ -66,9 +66,14 @@ enum AppPage: String, CaseIterable, Identifiable {
 struct MainWindow: View {
     @Environment(AppModel.self) private var model
 
+    /// 必须由我们自己持有：交给 SwiftUI 的 `.automatic` 时，窗口一窄它就把侧栏收起来，
+    /// 并把这个状态存进窗口恢复信息里 —— 之后再怎么拉宽、重启都回不来，
+    /// 只剩 ⌃⌘S 一条不显眼的出路。用 @State 固定为每次启动都展开。
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+
     var body: some View {
         @Bindable var model = model
-        return NavigationSplitView {
+        return NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $model.selectedPage) {
                 ForEach(AppPage.groups, id: \.title) { group in
                     Section(group.title) {
@@ -78,10 +83,10 @@ struct MainWindow: View {
                     }
                 }
             }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200, max: 260)
             .safeAreaInset(edge: .bottom) {
                 RuntimeStatusFooter()
             }
+            .navigationSplitViewColumnWidth(min: Layout.sidebarMin, ideal: Layout.sidebarIdeal, max: Layout.sidebarMax)
         } detail: {
             VStack(spacing: 0) {
                 if !model.missingPermissions.isEmpty {

@@ -29,7 +29,7 @@ struct ModuleEditorContent: View {
     var body: some View {
         HSplitView {
             moduleList
-                .frame(minWidth: 200, idealWidth: 240, maxWidth: 320)
+                .frame(minWidth: Layout.moduleListMin, idealWidth: Layout.moduleListIdeal, maxWidth: Layout.moduleListMax)
             VStack(spacing: 0) {
                 if store.hasSelection {
                     header
@@ -54,7 +54,7 @@ struct ModuleEditorContent: View {
                 Divider()
                 footer
             }
-            .frame(minWidth: 640)
+            .frame(minWidth: Layout.moduleEditorMin)
         }
         .alert("模块操作失败", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("好") { store.errorMessage = nil }
@@ -138,7 +138,7 @@ struct ModuleEditorContent: View {
             }
             HStack {
                 TextField("推荐天赋（仅说明，不参与匹配）", text: $store.draft.recommendedTalent).textFieldStyle(.roundedBorder)
-                Text(store.draft.fileURL?.lastPathComponent ?? "尚未保存").font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(maxWidth: 200)
+                Text(store.draft.fileURL?.lastPathComponent ?? "尚未保存").font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle).frame(minWidth: 0, maxWidth: 200)
                 Text("版本 \(store.draft.version.isEmpty ? "未知" : store.draft.version)").font(.caption)
                     .foregroundStyle(store.draft.hasCompatibleVersion ? Color.secondary : Color.red)
                     .help(store.draft.hasCompatibleVersion ? "" : "模块版本与当前版本 \(AppInfo.version) 不一致，不参与选择和运行；保存后升级")
@@ -150,7 +150,13 @@ struct ModuleEditorContent: View {
     private func matchPicker<S: Hashable, C: View>(_ title: String, selection: Binding<S>, @ViewBuilder content: () -> C) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.caption).foregroundStyle(.secondary)
-            Picker("", selection: selection, content: content).labelsHidden().frame(maxWidth: .infinity)
+            // `minWidth: 0` 是关键：只写 `maxWidth` 时，下限取内容固有宽度，而弹出菜单的固有
+            // 宽度等于**最长那一项**（英雄天赋名可以很长），四个选择器加起来就把整个右栏的最小
+            // 宽度顶到 900 pt 以上，窗口一窄 `HSplitView` 装不下就整体左移、压掉侧栏。
+            // 给出显式下限后它们会正常截断。
+            Picker("", selection: selection, content: content)
+                .labelsHidden()
+                .frame(minWidth: 76, maxWidth: .infinity)
         }
     }
 

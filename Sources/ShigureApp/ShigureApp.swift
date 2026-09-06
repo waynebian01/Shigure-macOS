@@ -17,7 +17,7 @@ struct ShigureApp: App {
         Window("Shigure", id: "main") {
             MainWindow()
                 .environment(model)
-                .frame(minWidth: 960, minHeight: 600)
+                .frame(minWidth: Layout.windowMin, minHeight: Layout.windowMinHeight)
         }
         .defaultSize(width: 1320, height: 840)
         .commands {

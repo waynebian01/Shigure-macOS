@@ -10,16 +10,26 @@ struct RulesTab: View {
     @State private var selection: UUID?
     @Environment(\.undoManager) private var undoManager
 
+    /// 列宽表头与数据行共用。固定列合计必须留得下弹性的「条件」列，
+    /// 否则窗口收窄时最右侧的操作列会被裁掉（见 Layout 的宽度预算）。
+    static let columnSpacing: CGFloat = 8
+    static let enabledWidth: CGFloat = 36
+    static let actionsWidth: CGFloat = 88
+    static let conditionMinWidth: CGFloat = 54
+    static let spellWidth: CGFloat = 140
+    static let unitWidth: CGFloat = 104
+    static let macroWidth: CGFloat = 104
+
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 12) {
-                Text("启用").frame(width: 44)
+            HStack(spacing: RulesTab.columnSpacing) {
+                Text("启用").frame(width: RulesTab.enabledWidth)
                 Text("图标").frame(width: 32)
-                Text("技能").frame(width: 150, alignment: .leading)
-                Text("目标").frame(width: 120, alignment: .leading)
-                Text("宏条件").frame(width: 120, alignment: .leading)
-                Text("条件（点击编辑）").frame(maxWidth: .infinity, alignment: .leading)
-                Text("").frame(width: 120)
+                Text("技能").frame(width: RulesTab.spellWidth, alignment: .leading)
+                Text("目标").frame(width: RulesTab.unitWidth, alignment: .leading)
+                Text("宏条件").frame(width: RulesTab.macroWidth, alignment: .leading)
+                Text("条件（点击编辑）").frame(minWidth: RulesTab.conditionMinWidth, maxWidth: .infinity, alignment: .leading)
+                Text("").frame(width: RulesTab.actionsWidth)
             }
             .font(.caption).foregroundStyle(.secondary)
             .padding(.horizontal, 16).padding(.vertical, 4)
@@ -109,9 +119,9 @@ struct RuleRow: View {
     var body: some View {
         let issues = store.issues(for: rule)
         VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 12) {
+            HStack(spacing: RulesTab.columnSpacing) {
                 Toggle("", isOn: Binding(get: { rule.enabled }, set: { store.draft.rules[index].enabled = $0 }))
-                    .labelsHidden().frame(width: 44)
+                    .labelsHidden().frame(width: RulesTab.enabledWidth)
                 Group {
                     if let image = model.iconCatalog.image(named: rule.spell) {
                         Image(nsImage: image).resizable().clipShape(RoundedRectangle(cornerRadius: 4))
@@ -125,17 +135,17 @@ struct RuleRow: View {
                     Text("").tag("")
                     ForEach(store.spellOptions, id: \.self) { Text($0).tag($0) }
                 }
-                .labelsHidden().frame(width: 150)
+                .labelsHidden().frame(width: RulesTab.spellWidth)
                 Picker("", selection: Binding(get: { store.targetTag(rule) }, set: { store.setTarget(ruleIndex: index, tag: $0) })) {
                     ForEach(store.targetOptions(for: rule), id: \.tag) { Text($0.label).tag($0.tag) }
                 }
-                .labelsHidden().frame(width: 120)
+                .labelsHidden().frame(width: RulesTab.unitWidth)
                 Picker("", selection: Binding(get: { MacroConditionText.displayText(rule.macroCondition) }, set: { store.draft.rules[index].macroCondition = $0 })) {
                     ForEach(store.macroConditionOptions(for: rule), id: \.self) { Text($0.isEmpty ? " " : $0).tag($0) }
                 }
-                .labelsHidden().frame(width: 120)
+                .labelsHidden().frame(width: RulesTab.macroWidth)
                 Button(action: onEditCondition) {
-                    Text(conditionDisplay).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
+                    Text(conditionDisplay).lineLimit(2).frame(minWidth: RulesTab.conditionMinWidth, maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(issues.isEmpty ? Color.primary : Color.red)
                 }
                 .buttonStyle(.plain)
@@ -159,7 +169,7 @@ struct RuleRow: View {
                     .menuStyle(.borderlessButton).frame(width: 40)
                     Image(systemName: "line.3.horizontal").foregroundStyle(.tertiary).help("拖动调整顺序")
                 }
-                .frame(width: 120)
+                .frame(width: RulesTab.actionsWidth)
             }
             if !issues.isEmpty {
                 Text(issues.joined(separator: "；") + "。请先添加对应字段。").font(.caption).foregroundStyle(.red).padding(.leading, 44)
