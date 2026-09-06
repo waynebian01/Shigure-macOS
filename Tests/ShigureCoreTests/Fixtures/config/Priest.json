@@ -1,0 +1,1925 @@
+﻿{
+  "keymap": "priest.json",
+  "一键法术": {
+    "1": 8122,
+    "2": 32375,
+    "3": 62618,
+    "4": 421453,
+    "5": 200183,
+    "6": 120517,
+    "7": 64843,
+    "8": 228260,
+    "9": 15286,
+    "10": 21562,
+    "11": 8092,
+    "12": 585,
+    "13": 32379,
+    "14": 589,
+    "15": 47540,
+    "16": 47757,
+    "17": 47758,
+    "18": 88625,
+    "19": 14914,
+    "20": 132157,
+    "21": 34914,
+    "22": 232698,
+    "23": 335467,
+    "24": 15407,
+    "25": 263165,
+    "26": 1227280,
+    "27": 450983,
+    "28": 1242173,
+    "29": 391403,
+    "30": 120644,
+    "31": 2061,
+    "32": 194509,
+    "33": 64863,
+    "34": 596,
+    "35": 1262763,
+    "36": 186263,
+    "37": 472433,
+    "38": 528,
+    "210": 384255,
+    "211": 200749,
+    "212": 28730,
+    "213": 25046,
+    "214": 50613,
+    "215": 69179,
+    "216": 80483,
+    "217": 129597,
+    "218": 155145,
+    "219": 202719,
+    "220": 232633,
+    "221": 20594,
+    "222": 58984,
+    "223": 26297,
+    "224": 20572,
+    "225": 33697,
+    "226": 33702,
+    "227": 20549,
+    "228": 59752,
+    "229": 7744,
+    "230": 20589,
+    "231": 68992,
+    "232": 69070,
+    "233": 69041,
+    "234": 256948,
+    "235": 255647,
+    "236": 274738,
+    "237": 265221,
+    "238": 255654,
+    "239": 255723,
+    "240": 260364,
+    "241": 312411,
+    "242": 291944,
+    "243": 107079,
+    "244": 28880,
+    "245": 59542,
+    "246": 59543,
+    "247": 59544,
+    "248": 59545,
+    "249": 59547,
+    "250": 121093,
+    "251": 287712,
+    "252": 312924,
+    "253": 368970,
+    "254": 357214,
+    "255": 436344
+  },
+  "1": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法目标": {
+      "step": 22,
+      "type": "int",
+      "category": "状态"
+    },
+    "敌人数量": {
+      "step": 23,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 24,
+      "type": "int",
+      "category": "能量"
+    },
+    "延迟": {
+      "step": 25,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "目标类型": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标生命值": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 30,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标驱散类型": {
+      "step": 31,
+      "type": "int",
+      "category": "目标"
+    },
+    "鼠标类型": {
+      "step": 32,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 33,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 34,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "治疗石": {
+      "step": 74,
+      "type": "int",
+      "category": "物品",
+      "itemId": 5512,
+      "isEquipped": false
+    },
+    "鲁莽药水": {
+      "step": 75,
+      "type": "int",
+      "category": "物品",
+      "itemId": 241288,
+      "isEquipped": false
+    },
+    "魔法药水": {
+      "step": 76,
+      "type": "int",
+      "category": "物品",
+      "itemId": 241301,
+      "isEquipped": false
+    },
+    "治疗药水": {
+      "step": 77,
+      "type": "int",
+      "category": "物品",
+      "itemId": 241304,
+      "isEquipped": false
+    },
+    "auras": {
+      "player.450193.value": {
+        "step": 41,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "熵能裂隙",
+        "spellId": 450193,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          450193
+        ]
+      },
+      "player.81700.value": {
+        "step": 42,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "天使长",
+        "spellId": 81700,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          81700
+        ]
+      },
+      "player.198069.value": {
+        "step": 43,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "阴暗面之力",
+        "spellId": 198069,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          198069
+        ]
+      },
+      "player.1253591.value": {
+        "step": 44,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "黑暗主宰",
+        "spellId": 1253591,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1253591
+        ]
+      },
+      "player.1253591.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "黑暗主宰层数",
+        "spellId": 1253591,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          1253591
+        ],
+        "bar": 3
+      },
+      "player.114255.value": {
+        "step": 45,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "圣光涌动",
+        "spellId": 114255,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          114255
+        ]
+      },
+      "player.114255.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "圣光涌动层数",
+        "spellId": 114255,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          114255
+        ],
+        "bar": 4
+      },
+      "player.472433.value": {
+        "step": 46,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "福音",
+        "spellId": 472433,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          472433
+        ]
+      },
+      "player.472433.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "福音层数",
+        "spellId": 472433,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          472433
+        ],
+        "bar": 5
+      },
+      "player.1253725.value": {
+        "step": 47,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "强效惩击",
+        "spellId": 1253725,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1253725
+        ]
+      },
+      "player.1253725.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "强效惩击层数",
+        "spellId": 1253725,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          1253725
+        ],
+        "bar": 6
+      },
+      "player.373183.value": {
+        "step": 48,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "严酷戒律",
+        "spellId": 373183,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          373183
+        ]
+      },
+      "player.373183.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "严酷戒律层数",
+        "spellId": 373183,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          373183
+        ],
+        "bar": 7
+      },
+      "player.390787.value": {
+        "step": 49,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "祸福相依",
+        "spellId": 390787,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          390787
+        ]
+      },
+      "player.390787.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "祸福相依层数",
+        "spellId": 390787,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          390787
+        ],
+        "bar": 8
+      },
+      "target.harmful.589.value": {
+        "step": 50,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "target.helpful.194384.value": {
+        "step": 51,
+        "type": "int",
+        "category": "目标增益",
+        "displayName": "救赎",
+        "spellId": 194384,
+        "scope": "target.helpful",
+        "metric": "value",
+        "spellIds": [
+          194384
+        ]
+      },
+      "target.helpful.17.value": {
+        "step": 52,
+        "type": "int",
+        "category": "目标增益",
+        "displayName": "真言术：盾",
+        "spellId": 17,
+        "scope": "target.helpful",
+        "metric": "value",
+        "spellIds": [
+          17,
+          1253593
+        ]
+      },
+      "focus.harmful.589.value": {
+        "step": 53,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "focus.helpful.194384.value": {
+        "step": 54,
+        "type": "int",
+        "category": "焦点增益",
+        "displayName": "救赎",
+        "spellId": 194384,
+        "scope": "focus.helpful",
+        "metric": "value",
+        "spellIds": [
+          194384
+        ]
+      },
+      "focus.helpful.17.value": {
+        "step": 55,
+        "type": "int",
+        "category": "焦点增益",
+        "displayName": "真言术：盾",
+        "spellId": 17,
+        "scope": "focus.helpful",
+        "metric": "value",
+        "spellIds": [
+          17,
+          1253593
+        ]
+      }
+    },
+    "spells": {
+      "8122.cooldown": {
+        "step": 56,
+        "type": "int",
+        "displayName": "心灵尖啸",
+        "spellId": 8122,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "32375.cooldown": {
+        "step": 57,
+        "type": "int",
+        "displayName": "群体驱散",
+        "spellId": 32375,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "527.cooldown": {
+        "step": 58,
+        "type": "int",
+        "displayName": "纯净术",
+        "spellId": 527,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "19236.cooldown": {
+        "step": 59,
+        "type": "int",
+        "displayName": "绝望祷言",
+        "spellId": 19236,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "232633.cooldown": {
+        "step": 60,
+        "type": "int",
+        "displayName": "奥术洪流",
+        "spellId": 232633,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "47540.cooldown": {
+        "step": 61,
+        "type": "int",
+        "displayName": "苦修",
+        "spellId": 47540,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "47540.chargeCooldown": {
+        "step": 62,
+        "type": "int",
+        "displayName": "苦修充能",
+        "spellId": 47540,
+        "metric": "chargeCooldown",
+        "displayType": "充能"
+      },
+      "47540.count": {
+        "step": "bar",
+        "bar": 1,
+        "type": "int",
+        "displayName": "苦修层数",
+        "spellId": 47540,
+        "metric": "count",
+        "displayType": "充能层数"
+      },
+      "194509.cooldown": {
+        "step": 63,
+        "type": "int",
+        "displayName": "真言术：耀",
+        "spellId": 194509,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "194509.chargeCooldown": {
+        "step": 64,
+        "type": "int",
+        "displayName": "真言术：耀充能",
+        "spellId": 194509,
+        "metric": "chargeCooldown",
+        "displayType": "充能"
+      },
+      "194509.count": {
+        "step": "bar",
+        "bar": 2,
+        "type": "int",
+        "displayName": "真言术：耀层数",
+        "spellId": 194509,
+        "metric": "count",
+        "displayType": "充能层数"
+      },
+      "17.cooldown": {
+        "step": 65,
+        "type": "int",
+        "displayName": "真言术：盾",
+        "spellId": 17,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "62618.cooldown": {
+        "step": 66,
+        "type": "int",
+        "displayName": "真言术：障",
+        "spellId": 62618,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "421453.cooldown": {
+        "step": 67,
+        "type": "int",
+        "displayName": "终极苦修",
+        "spellId": 421453,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "472433.cooldown": {
+        "step": 68,
+        "type": "int",
+        "displayName": "福音",
+        "spellId": 472433,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "8092.cooldown": {
+        "step": 69,
+        "type": "int",
+        "displayName": "心灵震爆",
+        "spellId": 8092,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "32379.cooldown": {
+        "step": 70,
+        "type": "int",
+        "displayName": "暗言术：灭",
+        "spellId": 32379,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "34433.cooldown": {
+        "step": 71,
+        "type": "int",
+        "displayName": "暗影魔",
+        "spellId": 34433,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1235211.cooldown": {
+        "step": 72,
+        "type": "int",
+        "displayName": "暗影分流",
+        "spellId": 1235211,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "586.cooldown": {
+        "step": 73,
+        "type": "int",
+        "displayName": "渐隐术",
+        "spellId": 586,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      }
+    },
+    "group": {
+      "start": 78,
+      "num": 5,
+      "生命值": {
+        "step": 1,
+        "type": "int"
+      },
+      "职责": {
+        "step": 2,
+        "type": "int"
+      },
+      "驱散": {
+        "step": 3,
+        "type": "int"
+      },
+      "auras.194384.value": {
+        "step": 4,
+        "type": "int",
+        "displayName": "救赎",
+        "spellId": 194384,
+        "scope": "group",
+        "metric": "value",
+        "spellIds": [
+          194384
+        ]
+      },
+      "auras.17.value": {
+        "step": 5,
+        "type": "int",
+        "displayName": "真言术：盾",
+        "spellId": 17,
+        "scope": "group",
+        "metric": "value",
+        "spellIds": [
+          17,
+          1253593
+        ]
+      }
+    }
+  },
+  "2": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法目标": {
+      "step": 22,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 23,
+      "type": "int",
+      "category": "能量"
+    },
+    "延迟": {
+      "step": 24,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "爆发开关": {
+      "step": 25,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "目标类型": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标驱散类型": {
+      "step": 30,
+      "type": "int",
+      "category": "目标"
+    },
+    "鼠标类型": {
+      "step": 31,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 32,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 33,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 34,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "首领1施法(倒计时)": {
+      "step": 40,
+      "type": "int",
+      "category": "首领1"
+    },
+    "首领1施法(正计时)": {
+      "step": 41,
+      "type": "int",
+      "category": "首领1"
+    },
+    "首领2施法(倒计时)": {
+      "step": 42,
+      "type": "int",
+      "category": "首领2"
+    },
+    "首领2施法(正计时)": {
+      "step": 43,
+      "type": "int",
+      "category": "首领2"
+    },
+    "治疗药水": {
+      "step": 73,
+      "type": "int",
+      "category": "物品",
+      "itemId": 241304,
+      "isEquipped": false
+    },
+    "auras": {
+      "player.200183.value": {
+        "step": 44,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "神圣化身",
+        "spellId": 200183,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          200183
+        ]
+      },
+      "player.405216.value": {
+        "step": 45,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "神圣镜像",
+        "spellId": 405216,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          405216
+        ]
+      },
+      "player.114255.value": {
+        "step": 46,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "圣光涌动",
+        "spellId": 114255,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          114255
+        ]
+      },
+      "player.114255.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "圣光涌动层数",
+        "spellId": 114255,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          114255
+        ],
+        "bar": 3
+      },
+      "player.1262766.value": {
+        "step": 47,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "祈福",
+        "spellId": 1262766,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1262766
+        ]
+      },
+      "player.1262766.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "祈福层数",
+        "spellId": 1262766,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          1262766
+        ],
+        "bar": 4
+      },
+      "player.194384.value": {
+        "step": 48,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "救赎之魂",
+        "spellId": 194384,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          194384
+        ]
+      },
+      "target.harmful.589.value": {
+        "step": 49,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "target.harmful.14914.value": {
+        "step": 50,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "神圣之火",
+        "spellId": 14914,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          14914
+        ]
+      },
+      "target.helpful.41635.value": {
+        "step": 51,
+        "type": "int",
+        "category": "目标增益",
+        "displayName": "愈合祷言",
+        "spellId": 41635,
+        "scope": "target.helpful",
+        "metric": "value",
+        "spellIds": [
+          41635
+        ]
+      },
+      "target.helpful.139.value": {
+        "step": 52,
+        "type": "int",
+        "category": "目标增益",
+        "displayName": "恢复",
+        "spellId": 139,
+        "scope": "target.helpful",
+        "metric": "value",
+        "spellIds": [
+          139
+        ]
+      },
+      "focus.harmful.589.value": {
+        "step": 53,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "focus.harmful.14914.value": {
+        "step": 54,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "神圣之火",
+        "spellId": 14914,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          14914
+        ]
+      },
+      "focus.helpful.41635.value": {
+        "step": 55,
+        "type": "int",
+        "category": "焦点增益",
+        "displayName": "愈合祷言",
+        "spellId": 41635,
+        "scope": "focus.helpful",
+        "metric": "value",
+        "spellIds": [
+          41635
+        ]
+      },
+      "focus.helpful.139.value": {
+        "step": 56,
+        "type": "int",
+        "category": "焦点增益",
+        "displayName": "恢复",
+        "spellId": 139,
+        "scope": "focus.helpful",
+        "metric": "value",
+        "spellIds": [
+          139
+        ]
+      }
+    },
+    "spells": {
+      "8122.cooldown": {
+        "step": 57,
+        "type": "int",
+        "displayName": "心灵尖啸",
+        "spellId": 8122,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "32375.cooldown": {
+        "step": 58,
+        "type": "int",
+        "displayName": "群体驱散",
+        "spellId": 32375,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "527.cooldown": {
+        "step": 59,
+        "type": "int",
+        "displayName": "纯净术",
+        "spellId": 527,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "19236.cooldown": {
+        "step": 60,
+        "type": "int",
+        "displayName": "绝望祷言",
+        "spellId": 19236,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "232633.cooldown": {
+        "step": 61,
+        "type": "int",
+        "displayName": "奥术洪流",
+        "spellId": 232633,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "33076.cooldown": {
+        "step": 62,
+        "type": "int",
+        "displayName": "愈合祷言",
+        "spellId": 33076,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "33076.chargeCooldown": {
+        "step": 63,
+        "type": "int",
+        "displayName": "愈合祷言充能",
+        "spellId": 33076,
+        "metric": "chargeCooldown",
+        "displayType": "充能"
+      },
+      "33076.count": {
+        "step": "bar",
+        "bar": 1,
+        "type": "int",
+        "displayName": "愈合祷言层数",
+        "spellId": 33076,
+        "metric": "count",
+        "displayType": "充能层数"
+      },
+      "2050.cooldown": {
+        "step": 64,
+        "type": "int",
+        "displayName": "圣言术：静",
+        "spellId": 2050,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "2050.chargeCooldown": {
+        "step": 65,
+        "type": "int",
+        "displayName": "圣言术：静充能",
+        "spellId": 2050,
+        "metric": "chargeCooldown",
+        "displayType": "充能"
+      },
+      "2050.count": {
+        "step": "bar",
+        "bar": 2,
+        "type": "int",
+        "displayName": "圣言术：静层数",
+        "spellId": 2050,
+        "metric": "count",
+        "displayType": "充能层数"
+      },
+      "88625.cooldown": {
+        "step": 66,
+        "type": "int",
+        "displayName": "圣言术：罚",
+        "spellId": 88625,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "200183.cooldown": {
+        "step": 67,
+        "type": "int",
+        "displayName": "神圣化身",
+        "spellId": 200183,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "14914.cooldown": {
+        "step": 68,
+        "type": "int",
+        "displayName": "神圣之火",
+        "spellId": 14914,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "120517.cooldown": {
+        "step": 69,
+        "type": "int",
+        "displayName": "光晕",
+        "spellId": 120517,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "64843.cooldown": {
+        "step": 70,
+        "type": "int",
+        "displayName": "神圣赞美诗",
+        "spellId": 64843,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "586.cooldown": {
+        "step": 71,
+        "type": "int",
+        "displayName": "渐隐术",
+        "spellId": 586,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "528.cooldown": {
+        "step": 72,
+        "type": "int",
+        "displayName": "驱散魔法",
+        "spellId": 528,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      }
+    },
+    "group": {
+      "start": 74,
+      "num": 5,
+      "生命值": {
+        "step": 1,
+        "type": "int"
+      },
+      "职责": {
+        "step": 2,
+        "type": "int"
+      },
+      "驱散": {
+        "step": 3,
+        "type": "int"
+      },
+      "auras.139.value": {
+        "step": 4,
+        "type": "int",
+        "displayName": "恢复",
+        "spellId": 139,
+        "scope": "group",
+        "metric": "value",
+        "spellIds": [
+          139
+        ]
+      },
+      "auras.41635.value": {
+        "step": 5,
+        "type": "int",
+        "displayName": "愈合祷言",
+        "spellId": 41635,
+        "scope": "group",
+        "metric": "value",
+        "spellIds": [
+          41635
+        ]
+      }
+    }
+  },
+  "3": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "敌人数量": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 22,
+      "type": "int",
+      "category": "状态"
+    },
+    "姿态": {
+      "step": 23,
+      "type": "int",
+      "category": "状态"
+    },
+    "狂乱值": {
+      "step": 24,
+      "type": "int",
+      "category": "能量"
+    },
+    "法力值": {
+      "step": 25,
+      "type": "int",
+      "category": "能量"
+    },
+    "爆发开关": {
+      "step": 26,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "输出模式": {
+      "step": 27,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "AOE开关": {
+      "step": 28,
+      "type": "int",
+      "category": "配置开关"
+    },
+    "目标类型": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标距离": {
+      "step": 30,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标生命值": {
+      "step": 31,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 32,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 33,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 34,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 35,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 36,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 37,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 38,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 39,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 40,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 42,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 43,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 44,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 45,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 46,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 47,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 48,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 49,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 50,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "auras": {
+      "player.1242171.value": {
+        "step": 51,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "虚空齐射",
+        "spellId": 1242171,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1242171
+        ]
+      },
+      "player.1242171.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "虚空齐射层数",
+        "spellId": 1242171,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          1242171
+        ],
+        "bar": 1
+      },
+      "player.390978.value": {
+        "step": 52,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "命运多舛",
+        "spellId": 390978,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          390978
+        ]
+      },
+      "player.450193.value": {
+        "step": 53,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "熵能裂隙",
+        "spellId": 450193,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          450193
+        ]
+      },
+      "player.375981.value": {
+        "step": 54,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "暗影洞察",
+        "spellId": 375981,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          375981
+        ]
+      },
+      "player.373276.value": {
+        "step": 55,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "尤格-萨隆的神像",
+        "spellId": 373276,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          373276
+        ]
+      },
+      "player.373276.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "尤格-萨隆的神像层数",
+        "spellId": 373276,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          373276
+        ],
+        "bar": 2
+      },
+      "target.harmful.589.value": {
+        "step": 56,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "target.harmful.34914.value": {
+        "step": 57,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "吸血鬼之触",
+        "spellId": 34914,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          34914
+        ]
+      },
+      "target.harmful.335467.value": {
+        "step": 58,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "暗言术：癫",
+        "spellId": 335467,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          335467
+        ]
+      },
+      "target.harmful.15407.value": {
+        "step": 59,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "精神鞭笞",
+        "spellId": 15407,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          15407
+        ]
+      },
+      "target.harmful.1243069.value": {
+        "step": 60,
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "惊魂幻象",
+        "spellId": 1243069,
+        "scope": "target.harmful",
+        "metric": "value",
+        "spellIds": [
+          1243069
+        ]
+      },
+      "target.harmful.1243069.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "目标减益",
+        "displayName": "惊魂幻象层数",
+        "spellId": 1243069,
+        "scope": "target.harmful",
+        "metric": "apps",
+        "spellIds": [
+          1243069
+        ],
+        "bar": 3
+      },
+      "focus.harmful.589.value": {
+        "step": 61,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "暗言术：痛",
+        "spellId": 589,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          589
+        ]
+      },
+      "focus.harmful.34914.value": {
+        "step": 62,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "吸血鬼之触",
+        "spellId": 34914,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          34914
+        ]
+      },
+      "focus.harmful.335467.value": {
+        "step": 63,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "暗言术：癫",
+        "spellId": 335467,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          335467
+        ]
+      },
+      "focus.harmful.15407.value": {
+        "step": 64,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "精神鞭笞",
+        "spellId": 15407,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          15407
+        ]
+      },
+      "focus.harmful.1243069.value": {
+        "step": 65,
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "惊魂幻象",
+        "spellId": 1243069,
+        "scope": "focus.harmful",
+        "metric": "value",
+        "spellIds": [
+          1243069
+        ]
+      },
+      "focus.harmful.1243069.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "焦点减益",
+        "displayName": "惊魂幻象层数",
+        "spellId": 1243069,
+        "scope": "focus.harmful",
+        "metric": "apps",
+        "spellIds": [
+          1243069
+        ],
+        "bar": 4
+      }
+    },
+    "spells": {
+      "8122.cooldown": {
+        "step": 66,
+        "type": "int",
+        "displayName": "心灵尖啸",
+        "spellId": 8122,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "32375.cooldown": {
+        "step": 67,
+        "type": "int",
+        "displayName": "群体驱散",
+        "spellId": 32375,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "527.cooldown": {
+        "step": 68,
+        "type": "int",
+        "displayName": "纯净术",
+        "spellId": 527,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "19236.cooldown": {
+        "step": 69,
+        "type": "int",
+        "displayName": "绝望祷言",
+        "spellId": 19236,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "232633.cooldown": {
+        "step": 70,
+        "type": "int",
+        "displayName": "奥术洪流",
+        "spellId": 232633,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "8092.cooldown": {
+        "step": 71,
+        "type": "int",
+        "displayName": "心灵震爆",
+        "spellId": 8092,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "32379.cooldown": {
+        "step": 72,
+        "type": "int",
+        "displayName": "暗言术：灭",
+        "spellId": 32379,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "263165.cooldown": {
+        "step": 73,
+        "type": "int",
+        "displayName": "虚空洪流",
+        "spellId": 263165,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "228260.cooldown": {
+        "step": 74,
+        "type": "int",
+        "displayName": "虚空形态",
+        "spellId": 228260,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1227280.cooldown": {
+        "step": 75,
+        "type": "int",
+        "displayName": "触须猛击",
+        "spellId": 1227280,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "15286.cooldown": {
+        "step": 76,
+        "type": "int",
+        "displayName": "吸血鬼的拥抱",
+        "spellId": 15286,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "120644.cooldown": {
+        "step": 77,
+        "type": "int",
+        "displayName": "光晕",
+        "spellId": 120644,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1242173.cooldown": {
+        "step": 78,
+        "type": "int",
+        "displayName": "虚空齐射",
+        "spellId": 1242173,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      }
+    }
+  }
+}

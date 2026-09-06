@@ -1,0 +1,88 @@
+name: Shigure
+options:
+  bundleIdPrefix: club.shigure
+  deploymentTarget:
+    macOS: "15.0"
+  developmentLanguage: zh-Hans
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+packages:
+  ShigureCore:
+    path: .
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+targets:
+  Shigure:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/ShigureApp
+      - path: Resources/Assets.xcassets
+      - path: Resources/Fuyutsui
+        type: folder
+        buildPhase: resources
+      - path: Resources/config
+        type: folder
+        buildPhase: resources
+      - path: Resources/keymap
+        type: folder
+        buildPhase: resources
+      - path: Resources/Icons
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: ShigureCore
+    info:
+      path: Shigure/Info.plist
+      properties:
+        CFBundleName: Shigure
+        CFBundleDisplayName: Shigure
+        CFBundleShortVersionString: "1.2.1"
+        CFBundleVersion: "23"
+        CFBundleIconName: AppIcon
+        LSApplicationCategoryType: public.app-category.utilities
+        LSMinimumSystemVersion: "15.0"
+        NSHumanReadableCopyright: "Copyright © 2026 waynebian01. MIT License."
+        NSPrincipalClass: NSApplication
+        NSSupportsAutomaticTermination: false
+        NSSupportsSuddenTermination: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: club.shigure.Shigure
+        PRODUCT_NAME: Shigure
+        MARKETING_VERSION: "1.2.1"
+        CURRENT_PROJECT_VERSION: "23"
+        GENERATE_INFOPLIST_FILE: NO
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "Apple Development: bian.wayne@gmail.com (9ZLFXJ58BF)"
+        DEVELOPMENT_TEAM: X8NA3636G5
+        PROVISIONING_PROFILE_SPECIFIER: ""
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_EMIT_LOC_STRINGS: YES
+        COMBINE_HIDPI_IMAGES: YES
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+    preBuildScripts:
+      - name: Strip xattrs (iCloud Drive)
+        script: |
+          # iCloud Drive 会给文件加 Finder 扩展属性，codesign 会拒绝；构建前剥离。
+          xattr -cr "${SRCROOT}/Resources" "${SRCROOT}/Sources" 2>/dev/null || true
+        basedOnDependencyAnalysis: false
+    postCompileScripts:
+      - name: Strip xattrs from bundle
+        script: |
+          xattr -cr "${CODESIGNING_FOLDER_PATH}" 2>/dev/null || true
+        basedOnDependencyAnalysis: false
+schemes:
+  Shigure:
+    build:
+      targets:
+        Shigure: all
+    run:
+      config: Debug
+    archive:
+      config: Release

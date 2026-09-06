@@ -1,0 +1,1155 @@
+﻿{
+  "keymap": "warlock.json",
+  "一键法术": {
+    "1": 5782,
+    "2": 6789,
+    "3": 30283,
+    "4": 196277,
+    "5": 265187,
+    "6": 1276467,
+    "7": 1276672,
+    "8": 105174,
+    "9": 104316,
+    "10": 30146,
+    "11": 264178,
+    "12": 686,
+    "13": 691,
+    "14": 688,
+    "15": 1271748,
+    "16": 1271802,
+    "17": 434635,
+    "18": 434506,
+    "19": 20707,
+    "20": 333889,
+    "21": 108416,
+    "22": 264187,
+    "23": 1276452,
+    "24": 132409,
+    "25": 388215,
+    "26": 111400,
+    "27": 710,
+    "28": 334275,
+    "29": 1714,
+    "30": 111771,
+    "31": 385899,
+    "32": 5484,
+    "33": 48018,
+    "34": 48020,
+    "35": 29893,
+    "36": 698,
+    "37": 172,
+    "38": 234153,
+    "39": 205180,
+    "40": 1259790,
+    "41": 1257052,
+    "42": 27243,
+    "43": 980,
+    "44": 48181,
+    "45": 445468,
+    "46": 442726,
+    "47": 1122,
+    "48": 17877,
+    "49": 116858,
+    "50": 5740,
+    "51": 6353,
+    "52": 29722,
+    "53": 17962,
+    "54": 348,
+    "55": 196447,
+    "56": 80240,
+    "57": 1214467,
+    "58": 152108,
+    "59": 198590,
+    "60": 697,
+    "61": 366222,
+    "210": 384255,
+    "211": 200749,
+    "212": 28730,
+    "213": 25046,
+    "214": 50613,
+    "215": 69179,
+    "216": 80483,
+    "217": 129597,
+    "218": 155145,
+    "219": 202719,
+    "220": 232633,
+    "221": 20594,
+    "222": 58984,
+    "223": 26297,
+    "224": 20572,
+    "225": 33697,
+    "226": 33702,
+    "227": 20549,
+    "228": 59752,
+    "229": 7744,
+    "230": 20589,
+    "231": 68992,
+    "232": 69070,
+    "233": 69041,
+    "234": 256948,
+    "235": 255647,
+    "236": 274738,
+    "237": 265221,
+    "238": 255654,
+    "239": 255723,
+    "240": 260364,
+    "241": 312411,
+    "242": 291944,
+    "243": 107079,
+    "244": 28880,
+    "245": 59542,
+    "246": 59543,
+    "247": 59544,
+    "248": 59545,
+    "249": 59547,
+    "250": 121093,
+    "251": 287712,
+    "252": 312924,
+    "253": 368970,
+    "254": 357214,
+    "255": 436344
+  },
+  "1": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 22,
+      "type": "int",
+      "category": "能量"
+    },
+    "灵魂碎片": {
+      "step": 23,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 33,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 34,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 42,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 43,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "spells": {
+      "5782.cooldown": {
+        "step": 44,
+        "type": "int",
+        "displayName": "恐惧",
+        "spellId": 5782,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "6789.cooldown": {
+        "step": 45,
+        "type": "int",
+        "displayName": "死亡缠绕",
+        "spellId": 6789,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "20707.cooldown": {
+        "step": 46,
+        "type": "int",
+        "displayName": "灵魂石",
+        "spellId": 20707,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "30283.cooldown": {
+        "step": 47,
+        "type": "int",
+        "displayName": "暗影之怒",
+        "spellId": 30283,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "333889.cooldown": {
+        "step": 48,
+        "type": "int",
+        "displayName": "邪能统御",
+        "spellId": 333889,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "108416.cooldown": {
+        "step": 49,
+        "type": "int",
+        "displayName": "黑暗契约",
+        "spellId": 108416,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "111771.cooldown": {
+        "step": 50,
+        "type": "int",
+        "displayName": "恶魔传送门",
+        "spellId": 111771,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "127174.cooldown": {
+        "step": 51,
+        "type": "int",
+        "displayName": "虚弱灾厄",
+        "spellId": 127174,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1271802.cooldown": {
+        "step": 52,
+        "type": "int",
+        "displayName": "语言灾厄",
+        "spellId": 1271802,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48018.cooldown": {
+        "step": 53,
+        "type": "int",
+        "displayName": "恶魔法阵",
+        "spellId": 48018,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48020.cooldown": {
+        "step": 54,
+        "type": "int",
+        "displayName": "恶魔法阵：传送",
+        "spellId": 48020,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "205180.cooldown": {
+        "step": 55,
+        "type": "int",
+        "displayName": "召唤黑眼",
+        "spellId": 205180,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48181.cooldown": {
+        "step": 56,
+        "type": "int",
+        "displayName": "鬼影缠身",
+        "spellId": 48181,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1257052.cooldown": {
+        "step": 57,
+        "type": "int",
+        "displayName": "幽冥收割",
+        "spellId": 1257052,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "442726.cooldown": {
+        "step": 58,
+        "type": "int",
+        "displayName": "怨毒",
+        "spellId": 442726,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      }
+    }
+  },
+  "2": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 22,
+      "type": "int",
+      "category": "能量"
+    },
+    "灵魂碎片": {
+      "step": 23,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 33,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 34,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 42,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 43,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "治疗石": {
+      "step": 65,
+      "type": "int",
+      "category": "物品",
+      "itemId": 5512,
+      "isEquipped": false
+    },
+    "治疗药水": {
+      "step": 66,
+      "type": "int",
+      "category": "物品",
+      "itemId": 241304,
+      "isEquipped": false
+    },
+    "spells": {
+      "5782.cooldown": {
+        "step": 44,
+        "type": "int",
+        "displayName": "恐惧",
+        "spellId": 5782,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "6789.cooldown": {
+        "step": 45,
+        "type": "int",
+        "displayName": "死亡缠绕",
+        "spellId": 6789,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "20707.cooldown": {
+        "step": 46,
+        "type": "int",
+        "displayName": "灵魂石",
+        "spellId": 20707,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "30283.cooldown": {
+        "step": 47,
+        "type": "int",
+        "displayName": "暗影之怒",
+        "spellId": 30283,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "333889.cooldown": {
+        "step": 48,
+        "type": "int",
+        "displayName": "邪能统御",
+        "spellId": 333889,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "108416.cooldown": {
+        "step": 49,
+        "type": "int",
+        "displayName": "黑暗契约",
+        "spellId": 108416,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "111771.cooldown": {
+        "step": 50,
+        "type": "int",
+        "displayName": "恶魔传送门",
+        "spellId": 111771,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "127174.cooldown": {
+        "step": 51,
+        "type": "int",
+        "displayName": "虚弱灾厄",
+        "spellId": 127174,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1271802.cooldown": {
+        "step": 52,
+        "type": "int",
+        "displayName": "语言灾厄",
+        "spellId": 1271802,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48018.cooldown": {
+        "step": 53,
+        "type": "int",
+        "displayName": "恶魔法阵",
+        "spellId": 48018,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48020.cooldown": {
+        "step": 54,
+        "type": "int",
+        "displayName": "恶魔法阵：传送",
+        "spellId": 48020,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "196277.cooldown": {
+        "step": 55,
+        "type": "int",
+        "displayName": "内爆",
+        "spellId": 196277,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "196277.count": {
+        "step": "bar",
+        "bar": 1,
+        "type": "int",
+        "displayName": "内爆层数",
+        "spellId": 196277,
+        "metric": "count",
+        "displayType": "施法次数"
+      },
+      "265187.cooldown": {
+        "step": 56,
+        "type": "int",
+        "displayName": "召唤恶魔暴君",
+        "spellId": 265187,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1276467.cooldown": {
+        "step": 57,
+        "type": "int",
+        "displayName": "魔典：邪能破坏者",
+        "spellId": 1276467,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "105174.cooldown": {
+        "step": 58,
+        "type": "int",
+        "displayName": "古尔丹之手",
+        "spellId": 105174,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1276672.cooldown": {
+        "step": 59,
+        "type": "int",
+        "displayName": "召唤末日守卫",
+        "spellId": 1276672,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "104316.cooldown": {
+        "step": 60,
+        "type": "int",
+        "displayName": "召唤恐惧猎犬",
+        "spellId": 104316,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "264187.cooldown": {
+        "step": 61,
+        "type": "int",
+        "displayName": "恶魔之箭",
+        "spellId": 264187,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1276452.cooldown": {
+        "step": 62,
+        "type": "int",
+        "displayName": "魔典：小鬼领主",
+        "spellId": 1276452,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "388215.cooldown": {
+        "step": 63,
+        "type": "int",
+        "displayName": "吞噬魔法",
+        "spellId": 388215,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "30146.cooldown": {
+        "step": 64,
+        "type": "int",
+        "displayName": "召唤恶魔卫士",
+        "spellId": 30146,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      }
+    }
+  },
+  "3": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 22,
+      "type": "int",
+      "category": "能量"
+    },
+    "灵魂碎片": {
+      "step": 23,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 33,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 34,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 42,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 43,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "spells": {
+      "5782.cooldown": {
+        "step": 44,
+        "type": "int",
+        "displayName": "恐惧",
+        "spellId": 5782,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "6789.cooldown": {
+        "step": 45,
+        "type": "int",
+        "displayName": "死亡缠绕",
+        "spellId": 6789,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "20707.cooldown": {
+        "step": 46,
+        "type": "int",
+        "displayName": "灵魂石",
+        "spellId": 20707,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "30283.cooldown": {
+        "step": 47,
+        "type": "int",
+        "displayName": "暗影之怒",
+        "spellId": 30283,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "333889.cooldown": {
+        "step": 48,
+        "type": "int",
+        "displayName": "邪能统御",
+        "spellId": 333889,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "108416.cooldown": {
+        "step": 49,
+        "type": "int",
+        "displayName": "黑暗契约",
+        "spellId": 108416,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "111771.cooldown": {
+        "step": 50,
+        "type": "int",
+        "displayName": "恶魔传送门",
+        "spellId": 111771,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "127174.cooldown": {
+        "step": 51,
+        "type": "int",
+        "displayName": "虚弱灾厄",
+        "spellId": 127174,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1271802.cooldown": {
+        "step": 52,
+        "type": "int",
+        "displayName": "语言灾厄",
+        "spellId": 1271802,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48018.cooldown": {
+        "step": 53,
+        "type": "int",
+        "displayName": "恶魔法阵",
+        "spellId": 48018,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "48020.cooldown": {
+        "step": 54,
+        "type": "int",
+        "displayName": "恶魔法阵：传送",
+        "spellId": 48020,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "1122.cooldown": {
+        "step": 55,
+        "type": "int",
+        "displayName": "召唤地狱火",
+        "spellId": 1122,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "6353.cooldown": {
+        "step": 56,
+        "type": "int",
+        "displayName": "灵魂之火",
+        "spellId": 6353,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "17962.cooldown": {
+        "step": 57,
+        "type": "int",
+        "displayName": "燃烧",
+        "spellId": 17962,
+        "metric": "cooldown",
+        "displayType": "冷却"
+      },
+      "17962.chargeCooldown": {
+        "step": 58,
+        "type": "int",
+        "displayName": "燃烧充能",
+        "spellId": 17962,
+        "metric": "chargeCooldown",
+        "displayType": "充能"
+      }
+    }
+  }
+}

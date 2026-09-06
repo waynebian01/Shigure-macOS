@@ -1,0 +1,10 @@
+.build/
+.swiftpm/
+*.xcodeproj/
+DerivedData/
+xcuserdata/
+.DS_Store
+*.xcuserstate
+
+# xcodegen 生成物
+Shigure.xcodeproj/

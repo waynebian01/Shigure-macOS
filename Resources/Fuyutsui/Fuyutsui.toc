@@ -1,0 +1,60 @@
+## Interface: 120100
+
+## Title: Fuyutsui
+## Version: 1.2.1.23
+## Author: Wayne
+## IconTexture: Interface\AddOns\Fuyutsui\core\Spell_Misc_EmotionHappy.blp
+## OptionalDeps: LibRangeCheck-3.0
+## SavedVariables: FuyutsuiADB
+
+## Category-enUS: Combat
+## Category-deDE: Kampf
+## Category-esES: Combate
+## Category-esMX: Combate
+## Category-frFR: Combat
+## Category-itIT: Combattimento
+## Category-koKR: 전투
+## Category-ptBR: Combate
+## Category-ruRU: Бой
+## Category-zhCN: 战斗
+## Category-zhTW: 戰鬥
+
+## Notes-zhCN: 将信息转化为像素显示在屏幕顶部
+
+## X-Category: Combat
+
+embeds.xml
+Libs/LibRangeCheck-3.0/LibRangeCheck-3.0.lua
+
+core/core.lua
+core/config.lua
+core/curves.lua
+core/block.lua
+core/stateblocks.lua
+core/commands.lua
+core/quickbutton.lua
+core/macro.lua
+core/classmacros.lua
+core/keybinds.lua
+
+class/Warrior.lua
+class/Paladin.lua
+class/Rogue.lua
+class/Hunter.lua
+class/Priest.lua
+class/DeathKnight.lua
+class/Shaman.lua
+class/Mage.lua
+class/Warlock.lua
+class/Monk.lua
+class/Druid.lua
+class/DemonHunter.lua
+class/Evoker.lua
+
+unit/player.lua
+core/spells.lua
+unit/target.lua
+unit/group.lua
+unit/boss.lua
+core/events.lua
+main.lua

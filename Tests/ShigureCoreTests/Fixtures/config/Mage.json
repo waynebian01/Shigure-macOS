@@ -1,0 +1,829 @@
+﻿{
+  "keymap": "mage.json",
+  "一键法术": {
+    "1": 45438,
+    "2": 475,
+    "3": 110960,
+    "4": 157980,
+    "5": 120,
+    "6": 342247,
+    "7": 371817,
+    "8": 80353,
+    "9": 55342,
+    "10": 2139,
+    "11": 1953,
+    "12": 130,
+    "13": 1449,
+    "14": 157997,
+    "15": 212653,
+    "16": 62388,
+    "17": 389713,
+    "18": 110959,
+    "19": 122,
+    "20": 31661,
+    "21": 414664,
+    "22": 30449,
+    "23": 1248829,
+    "24": 190356,
+    "25": 1459,
+    "26": 116,
+    "27": 199786,
+    "28": 30455,
+    "29": 205021,
+    "30": 44614,
+    "31": 84714,
+    "32": 431044,
+    "33": 153595,
+    "34": 235215,
+    "35": 235450,
+    "36": 1241462,
+    "37": 44425,
+    "38": 321507,
+    "39": 5143,
+    "40": 30451,
+    "41": 153626,
+    "42": 365350,
+    "43": 235313,
+    "44": 414658,
+    "45": 190319,
+    "46": 153561,
+    "47": 133,
+    "48": 108853,
+    "49": 11366,
+    "50": 1254851,
+    "51": 118,
+    "52": 468655,
+    "53": 2120,
+    "54": 2948,
+    "55": 190336,
+    "210": 384255,
+    "211": 200749,
+    "212": 28730,
+    "213": 25046,
+    "214": 50613,
+    "215": 69179,
+    "216": 80483,
+    "217": 129597,
+    "218": 155145,
+    "219": 202719,
+    "220": 232633,
+    "221": 20594,
+    "222": 58984,
+    "223": 26297,
+    "224": 20572,
+    "225": 33697,
+    "226": 33702,
+    "227": 20549,
+    "228": 59752,
+    "229": 7744,
+    "230": 20589,
+    "231": 68992,
+    "232": 69070,
+    "233": 69041,
+    "234": 256948,
+    "235": 255647,
+    "236": 274738,
+    "237": 265221,
+    "238": 255654,
+    "239": 255723,
+    "240": 260364,
+    "241": 312411,
+    "242": 291944,
+    "243": 107079,
+    "244": 28880,
+    "245": 59542,
+    "246": 59543,
+    "247": 59544,
+    "248": 59545,
+    "249": 59547,
+    "250": 121093,
+    "251": 287712,
+    "252": 312924,
+    "253": 368970,
+    "254": 357214,
+    "255": 436344
+  },
+  "1": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 21,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 22,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 23,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 28,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 29,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 33,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 34,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "auras": {
+      "player.1242974.value": {
+        "step": 42,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "奥数齐射",
+        "spellId": 1242974,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1242974
+        ]
+      },
+      "player.1242974.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "奥数齐射层数",
+        "spellId": 1242974,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          1242974
+        ],
+        "bar": 1
+      },
+      "player.394195.value": {
+        "step": 43,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "溢流能量",
+        "spellId": 394195,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          394195
+        ]
+      },
+      "player.394195.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "溢流能量层数",
+        "spellId": 394195,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          394195
+        ],
+        "bar": 2
+      },
+      "player.263725.value": {
+        "step": 44,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "节能施法",
+        "spellId": 263725,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          263725
+        ]
+      },
+      "player.263725.apps": {
+        "step": "bar",
+        "type": "int",
+        "category": "玩家",
+        "displayName": "节能施法层数",
+        "spellId": 263725,
+        "scope": "player",
+        "metric": "apps",
+        "spellIds": [
+          263725
+        ],
+        "bar": 3
+      },
+      "player.1277009.value": {
+        "step": 45,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "过载飞弹",
+        "spellId": 1277009,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1277009
+        ]
+      },
+      "player.1223797.value": {
+        "step": 46,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "敏锐直觉",
+        "spellId": 1223797,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          1223797
+        ]
+      },
+      "player.451038.value": {
+        "step": 47,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "奥术之魂",
+        "spellId": 451038,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          451038
+        ]
+      },
+      "player.365362.value": {
+        "step": 48,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "奥术涌动",
+        "spellId": 365362,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          365362
+        ]
+      },
+      "player.235450.value": {
+        "step": 49,
+        "type": "int",
+        "category": "玩家",
+        "displayName": "棱光护体",
+        "spellId": 235450,
+        "scope": "player",
+        "metric": "value",
+        "spellIds": [
+          235450
+        ]
+      }
+    }
+  },
+  "2": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 21,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 22,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 23,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 28,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 29,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 33,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 34,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    }
+  },
+  "3": {
+    "队伍类型": {
+      "step": 4,
+      "type": "int",
+      "category": "状态"
+    },
+    "英雄天赋": {
+      "step": 5,
+      "type": "int",
+      "category": "状态"
+    },
+    "有效性": {
+      "step": 6,
+      "type": "bool",
+      "category": "状态"
+    },
+    "一键辅助": {
+      "step": 7,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入法术": {
+      "step": 8,
+      "type": "int",
+      "category": "状态"
+    },
+    "插入物品": {
+      "step": 9,
+      "type": "int",
+      "category": "状态"
+    },
+    "战斗时间": {
+      "step": 10,
+      "type": "int",
+      "category": "状态"
+    },
+    "移动": {
+      "step": 11,
+      "type": "bool",
+      "category": "状态"
+    },
+    "施法(正计时)": {
+      "step": 12,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法(倒计时)": {
+      "step": 13,
+      "type": "int",
+      "category": "状态"
+    },
+    "引导": {
+      "step": 14,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力": {
+      "step": 15,
+      "type": "int",
+      "category": "状态"
+    },
+    "蓄力层数": {
+      "step": 16,
+      "type": "int",
+      "category": "状态"
+    },
+    "生命值": {
+      "step": 17,
+      "type": "int",
+      "category": "状态"
+    },
+    "队伍人数": {
+      "step": 18,
+      "type": "int",
+      "category": "状态"
+    },
+    "首领战": {
+      "step": 19,
+      "type": "int",
+      "category": "状态"
+    },
+    "难度": {
+      "step": 20,
+      "type": "int",
+      "category": "状态"
+    },
+    "施法技能": {
+      "step": 21,
+      "type": "int",
+      "category": "状态"
+    },
+    "敌人数量": {
+      "step": 22,
+      "type": "int",
+      "category": "状态"
+    },
+    "法力值": {
+      "step": 23,
+      "type": "int",
+      "category": "能量"
+    },
+    "目标类型": {
+      "step": 24,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(倒计时)": {
+      "step": 25,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法(正计时)": {
+      "step": 26,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标施法可打断": {
+      "step": 27,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导": {
+      "step": 28,
+      "type": "int",
+      "category": "目标"
+    },
+    "目标引导可打断": {
+      "step": 29,
+      "type": "int",
+      "category": "目标"
+    },
+    "焦点施法(倒计时)": {
+      "step": 30,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法(正计时)": {
+      "step": 31,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点施法可打断": {
+      "step": 32,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导": {
+      "step": 33,
+      "type": "int",
+      "category": "焦点"
+    },
+    "焦点引导可打断": {
+      "step": 34,
+      "type": "int",
+      "category": "焦点"
+    },
+    "鼠标类型": {
+      "step": 35,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标驱散类型": {
+      "step": 36,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标生命值": {
+      "step": 37,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标距离": {
+      "step": 38,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(倒计时)": {
+      "step": 39,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法(正计时)": {
+      "step": 40,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标施法可打断": {
+      "step": 41,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导": {
+      "step": 42,
+      "type": "int",
+      "category": "鼠标"
+    },
+    "鼠标引导可打断": {
+      "step": 43,
+      "type": "int",
+      "category": "鼠标"
+    }
+  }
+}
