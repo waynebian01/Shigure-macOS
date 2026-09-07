@@ -1,9 +1,9 @@
 import Foundation
 
-/// 读写 Fuyutsui core/classmacros.lua 中的 ClassMacros，保存时只替换 ClassMacros 表字面量。
+/// 读写 Senkoh core/classmacros.lua 中的 ClassMacros，保存时只替换 ClassMacros 表字面量。
 public enum ClassMacrosStore {
-    public static let assignmentName = "Fuyutsui.ClassMacros"
-    public static let macroBodiesAssignmentName = "Fuyutsui.MacroBodies"
+    public static let assignmentName = "Senkoh.ClassMacros"
+    public static let macroBodiesAssignmentName = "Senkoh.MacroBodies"
 
     static let classFileOrder = ["WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT",
                                  "SHAMAN", "MAGE", "WARLOCK", "MONK", "DRUID", "DEMONHUNTER", "EVOKER"]

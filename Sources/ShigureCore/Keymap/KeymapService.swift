@@ -40,7 +40,7 @@ public struct KeymapSelection: KeymapResolver, Sendable {
         currentInsertItems = insertItems
     }
 
-    /// 加载：Fuyutsui class Lua 的 spellsList/itemsList（索引与名称）+ keymap JSON（专精子表整体替换顶层）。
+    /// 加载：Senkoh class Lua 的 spellsList/itemsList（索引与名称）+ keymap JSON（专精子表整体替换顶层）。
     public static func load(paths: AppPaths, config: ConfigService, classId: Int?, specId: Int?) -> KeymapSelection {
         var selection = KeymapSelection(classId: classId, specId: specId,
                                         failed: config.failedSpells(classId: classId),

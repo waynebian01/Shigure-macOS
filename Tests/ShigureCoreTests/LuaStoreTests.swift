@@ -7,7 +7,7 @@ struct LuaStoreTests {
     @Test("解析全部职业 Lua 并识别为现代格式", arguments: ClassNames.allClasses.map(\.id))
     func parsesAllClassFiles(classId: Int) throws {
         let fileName = ClassNames.configFileName(classId)
-        let url = Fixtures.url("Fuyutsui/class/\(fileName).lua")
+        let url = Fixtures.url("Senkoh/class/\(fileName).lua")
         let doc = try ClassBlocksStore.load(url)
         #expect(doc.isModernFormat)
         #expect(!doc.specs.isEmpty)
@@ -16,7 +16,7 @@ struct LuaStoreTests {
 
     @Test("无改动保存只影响 ClassBlocks 表字面量，其余文本逐字节保留")
     func saveKeepsSurroundingText() throws {
-        let url = Fixtures.url("Fuyutsui/class/Priest.lua")
+        let url = Fixtures.url("Senkoh/class/Priest.lua")
         let doc = try ClassBlocksStore.load(url)
         let updated = try ClassBlocksStore.serializeDocument(doc)
         let source = doc.sourceText
@@ -34,7 +34,7 @@ struct LuaStoreTests {
 
     @Test("spellsList 原位改名、删除、新增")
     func spellsListSurgicalEdit() throws {
-        let url = Fixtures.url("Fuyutsui/class/Priest.lua")
+        let url = Fixtures.url("Senkoh/class/Priest.lua")
         var doc = try ClassBlocksStore.load(url)
         let first = doc.spellsList[0]
         doc.spellsList[0].name = "改名测试"
@@ -51,7 +51,7 @@ struct LuaStoreTests {
 
     @Test("ClassMacros 解析与序列化 round-trip")
     func classMacrosRoundTrip() throws {
-        let url = Fixtures.url("Fuyutsui/core/classmacros.lua")
+        let url = Fixtures.url("Senkoh/core/classmacros.lua")
         let doc = try ClassMacrosStore.load(url)
         #expect(doc.classOrder.count == 13)
         let paladin = try #require(doc.macros(forClassKey: "PALADIN"))

@@ -25,7 +25,7 @@ struct AppPathsTests {
             try? fm.removeItem(at: resources)
             try? fm.removeItem(at: root)
         }
-        let bundleAddon = resources.appendingPathComponent("Fuyutsui", isDirectory: true)
+        let bundleAddon = resources.appendingPathComponent("Senkoh", isDirectory: true)
         try write("new macro pool", to: bundleAddon.appendingPathComponent("core/macro.lua"))
         try write("new main", to: bundleAddon.appendingPathComponent("main.lua"))
         try write("brand new file", to: bundleAddon.appendingPathComponent("core/added.lua"))
@@ -33,7 +33,7 @@ struct AppPathsTests {
         try write("bundle priest", to: bundleAddon.appendingPathComponent("class/Priest.lua"))
 
         let paths = AppPaths(root: root)
-        let userAddon = paths.fuyutsuiDirectory
+        let userAddon = paths.senkohDirectory
         try write("old macro pool", to: userAddon.appendingPathComponent("core/macro.lua"))
         try write("new main", to: userAddon.appendingPathComponent("main.lua")) // 已一致，应跳过
         try write("user classmacros", to: userAddon.appendingPathComponent("core/classmacros.lua"))
@@ -61,7 +61,7 @@ struct AppPathsTests {
             try? FileManager.default.removeItem(at: resources)
             try? FileManager.default.removeItem(at: root)
         }
-        try write("x", to: resources.appendingPathComponent("Fuyutsui/main.lua"))
+        try write("x", to: resources.appendingPathComponent("Senkoh/main.lua"))
         let paths = AppPaths(root: root)
         #expect(try paths.upgradeFrameworkFiles(fromBundleResources: resources).isEmpty)
     }

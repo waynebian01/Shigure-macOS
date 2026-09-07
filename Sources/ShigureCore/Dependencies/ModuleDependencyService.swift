@@ -570,7 +570,7 @@ public struct ModuleDependencyService: Sendable {
     }
 
     static func macroIdentity(_ text: String, _ comment: String?, isSpecial: Bool) -> String {
-        let parsed = isSpecial ? FuyutsuiKeymapConverter.parseSpecialMacro(text, comment: comment) : FuyutsuiKeymapConverter.parseStaticMacro(text, comment: comment)
+        let parsed = isSpecial ? SenkohKeymapConverter.parseSpecialMacro(text, comment: comment) : SenkohKeymapConverter.parseStaticMacro(text, comment: comment)
         let spell = parsed.spell.trimmed()
         return spell.isEmpty ? normalizeMacroText(text) : spell
     }

@@ -2,7 +2,7 @@ import AppKit
 import Observation
 import ShigureCore
 
-/// 配置编辑器状态：编辑 Fuyutsui/class/*.lua 的 ClassBlocks / spellsList / itemsList（对应 C# ClassConfigEditorControl）。
+/// 配置编辑器状态：编辑 Senkoh/class/*.lua 的 ClassBlocks / spellsList / itemsList（对应 C# ClassConfigEditorControl）。
 @MainActor
 @Observable
 final class ConfigEditorStore {
@@ -20,7 +20,7 @@ final class ConfigEditorStore {
     var document: ClassBlocksStore.Document?
     private var original: ClassBlocksStore.Document?
     var selectedSpecId: Int?
-    var status = String(localized: "点击刷新以加载 Fuyutsui/class")
+    var status = String(localized: "点击刷新以加载 Senkoh/class")
     var errorMessage: String?
     var infoMessage: String?
     var pendingSwitch: Int?
@@ -56,13 +56,13 @@ final class ConfigEditorStore {
     // MARK: 加载
 
     func refreshClassList() {
-        let dir = model.paths.fuyutsuiClassDirectory
+        let dir = model.paths.senkohClassDirectory
         classFiles = ClassNames.allClasses.compactMap { cls in
             let url = dir.appendingPathComponent("\(ClassNames.configFileName(cls.id)).lua")
             return FileManager.default.fileExists(atPath: url.path) ? ClassFile(classId: cls.id, url: url) : nil
         }
         if classFiles.isEmpty {
-            status = String(localized: "未找到 Fuyutsui/class，请确认数据目录中包含插件源后点击刷新。")
+            status = String(localized: "未找到 Senkoh/class，请确认数据目录中包含插件源后点击刷新。")
         } else {
             status = String(localized: "已加载 \(classFiles.count) 个职业文件")
         }

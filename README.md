@@ -3,7 +3,7 @@
 Shigure 的 macOS 原生实现（Swift + SwiftUI）。功能对齐 Windows 版（WinForms / .NET），
 但界面与交互按 macOS 习惯重做，不是逐行翻译。
 
-工作方式：读取 Fuyutsui 插件绘制在游戏画面顶部的像素条 → 还原游戏状态 →
+工作方式：读取 Senkoh 插件绘制在游戏画面顶部的像素条 → 还原游戏状态 →
 按模块规则决定该按哪个键 → 把按键发送给游戏进程，同时提供配置 / 宏 / 模块编辑器与实时诊断界面。
 
 ## 环境要求
@@ -11,7 +11,7 @@ Shigure 的 macOS 原生实现（Swift + SwiftUI）。功能对齐 Windows 版�
 - macOS 15 或更新（开发验证于 macOS 26）
 - Xcode 26，Swift 6（`Package.swift` 为 swift-tools 6.0，启用 strict concurrency）
 - [xcodegen](https://github.com/yonaskolb/XcodeGen)：`brew install xcodegen`
-- 《魔兽世界》已安装，并已部署 Fuyutsui 插件（应用会在启动时自动同步）
+- 《魔兽世界》已安装，并已部署 Senkoh 插件（应用会在启动时自动同步）
 
 首次使用先把命令行工具链指向 Xcode：
 
@@ -46,7 +46,7 @@ scripts/bootstrap.sh --install # Release 构建并安装到 /Applications
 |---|---|
 | `Sources/ShigureCore/` | 纯逻辑，只依赖 Foundation，可独立 `swift test`：Lua 解析与写回、config/keymap 转换、条件与公式求值、模块选择、单位选择、像素解码、运行时、依赖导入、图标包 |
 | `Sources/ShigureApp/` | SwiftUI + AppKit 应用层：主窗口、菜单栏图标、各编辑器、平台适配（ScreenCaptureKit 截屏、CGEvent 按键、NSWorkspace 定位游戏） |
-| `Resources/` | 内置只读种子数据：`Fuyutsui/`、`config/`、`keymap/`、图标 |
+| `Resources/` | 内置只读种子数据：`Senkoh/`、`config/`、`keymap/`、图标 |
 | `Tests/ShigureCoreTests/` | 语义对齐测试，含从 Windows 版复制的真实 fixture |
 
 平台相关能力都在 `ShigureCore` 里以协议表达（`ScreenScanner`、`KeyOutput`、`TriggerKeyState`、
@@ -57,9 +57,9 @@ scripts/bootstrap.sh --install # Release 构建并安装到 /Applications
 运行期数据在 `~/Library/Application Support/Shigure/`，首次启动从 App 内置资源播种：
 
 ```
-Fuyutsui/     插件源文件（config/keymap 由它生成，也会同步到游戏 AddOns 目录）
-config/       每职业扫描字段定义（由 Fuyutsui/class/*.lua 生成）
-keymap/       每职业按键映射（由 Fuyutsui 宏定义生成）
+Senkoh/     插件源文件（config/keymap 由它生成，也会同步到游戏 AddOns 目录）
+config/       每职业扫描字段定义（由 Senkoh/class/*.lua 生成）
+keymap/       每职业按键映射（由 Senkoh 宏定义生成）
 module/       模块（战斗逻辑规则）
 data/         SpellIcons.shgpack 技能与物品图标包
 settings.json 应用设置

@@ -19,5 +19,8 @@
         "GetUnitName",
         "NUM_CHAT_WINDOWS",
         "RAID_CLASS_COLORS"
+    ],
+    "Lua.diagnostics.disable": [
+        "assign-type-mismatch"
     ]
 }

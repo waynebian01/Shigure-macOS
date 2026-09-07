@@ -33,10 +33,10 @@ enum Fixtures {
         let fm = FileManager.default
         try fm.copyItem(at: url("config"), to: paths.configDirectory)
         try fm.copyItem(at: url("keymap"), to: paths.keymapDirectory)
-        try fm.createDirectory(at: paths.fuyutsuiDirectory, withIntermediateDirectories: true)
-        try fm.copyItem(at: url("Fuyutsui/class"), to: paths.fuyutsuiClassDirectory)
-        try fm.createDirectory(at: paths.fuyutsuiDirectory.appendingPathComponent("core"), withIntermediateDirectories: true)
-        try fm.copyItem(at: url("Fuyutsui/core/classmacros.lua"), to: paths.classMacrosFile)
+        try fm.createDirectory(at: paths.senkohDirectory, withIntermediateDirectories: true)
+        try fm.copyItem(at: url("Senkoh/class"), to: paths.senkohClassDirectory)
+        try fm.createDirectory(at: paths.senkohDirectory.appendingPathComponent("core"), withIntermediateDirectories: true)
+        try fm.copyItem(at: url("Senkoh/core/classmacros.lua"), to: paths.classMacrosFile)
         return paths
     }
 }

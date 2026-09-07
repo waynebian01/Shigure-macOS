@@ -1,6 +1,6 @@
 import Foundation
 
-/// Windows/Fuyutsui 键名 ↔ macOS 虚拟键码（kVK_*，固定 ANSI 布局，不查键盘布局）。
+/// Windows/Senkoh 键名 ↔ macOS 虚拟键码（kVK_*，固定 ANSI 布局，不查键盘布局）。
 /// 修饰符映射：CTRL→Control、ALT→Option、SHIFT→Shift、CMD→Command。
 public enum MacKeyCodes {
     public enum Modifier: String, Sendable, CaseIterable {

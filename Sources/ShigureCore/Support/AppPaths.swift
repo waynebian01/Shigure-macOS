@@ -1,7 +1,7 @@
 import Foundation
 
 /// 用户数据根目录布局（默认 ~/Library/Application Support/Shigure）。
-/// 所有可变数据（Fuyutsui 源、config、keymap、module、data、settings）都在这里；
+/// 所有可变数据（Senkoh 源、config、keymap、module、data、settings）都在这里；
 /// .app 内置资源只作为首次启动的种子。
 public struct AppPaths: Sendable {
     public static let appName = "Shigure"
@@ -17,9 +17,9 @@ public struct AppPaths: Sendable {
         return AppPaths(root: base.appendingPathComponent(appName, isDirectory: true))
     }
 
-    public var fuyutsuiDirectory: URL { root.appendingPathComponent("Fuyutsui", isDirectory: true) }
-    public var fuyutsuiClassDirectory: URL { fuyutsuiDirectory.appendingPathComponent("class", isDirectory: true) }
-    public var classMacrosFile: URL { fuyutsuiDirectory.appendingPathComponent("core/classmacros.lua") }
+    public var senkohDirectory: URL { root.appendingPathComponent("Senkoh", isDirectory: true) }
+    public var senkohClassDirectory: URL { senkohDirectory.appendingPathComponent("class", isDirectory: true) }
+    public var classMacrosFile: URL { senkohDirectory.appendingPathComponent("core/classmacros.lua") }
     public var configDirectory: URL { root.appendingPathComponent("config", isDirectory: true) }
     public var keymapDirectory: URL { root.appendingPathComponent("keymap", isDirectory: true) }
     public var moduleDirectory: URL { root.appendingPathComponent("module", isDirectory: true) }
@@ -32,7 +32,7 @@ public struct AppPaths: Sendable {
     }
 
     public func classLuaFile(classId: Int) -> URL {
-        fuyutsuiClassDirectory.appendingPathComponent("\(ClassNames.configFileName(classId)).lua")
+        senkohClassDirectory.appendingPathComponent("\(ClassNames.configFileName(classId)).lua")
     }
 
     public func ensureDirectories() throws {
@@ -45,7 +45,7 @@ public struct AppPaths: Sendable {
     public func seed(fromBundleResources resources: URL) throws {
         try ensureDirectories()
         let fm = FileManager.default
-        for name in ["Fuyutsui", "config", "keymap"] {
+        for name in ["Senkoh", "config", "keymap"] {
             let target = root.appendingPathComponent(name, isDirectory: true)
             let source = resources.appendingPathComponent(name, isDirectory: true)
             guard !fm.fileExists(atPath: target.path), fm.fileExists(atPath: source.path) else { continue }
@@ -58,15 +58,15 @@ public struct AppPaths: Sendable {
         relativePath == "core/classmacros.lua" || relativePath.hasPrefix("class/")
     }
 
-    /// 每次启动（seed 之后）：把内置 Fuyutsui 框架文件按 SHA-256 升级到用户数据目录。
+    /// 每次启动（seed 之后）：把内置 Senkoh 框架文件按 SHA-256 升级到用户数据目录。
     /// 只覆盖非用户编辑的文件；内置有而用户目录缺失的文件会补齐；用户目录多出的文件不删除。
     /// 返回实际更新的相对路径（升序）。
     public func upgradeFrameworkFiles(fromBundleResources resources: URL) throws -> [String] {
         let fm = FileManager.default
-        let source = resources.appendingPathComponent("Fuyutsui", isDirectory: true)
+        let source = resources.appendingPathComponent("Senkoh", isDirectory: true)
         var isDir: ObjCBool = false
         guard fm.fileExists(atPath: source.path, isDirectory: &isDir), isDir.boolValue,
-              fm.fileExists(atPath: fuyutsuiDirectory.path),
+              fm.fileExists(atPath: senkohDirectory.path),
               let enumerator = fm.enumerator(at: source, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) else { return [] }
         let basePath = source.standardizedFileURL.path
         var updated: [String] = []
@@ -74,8 +74,8 @@ public struct AppPaths: Sendable {
             guard (try? file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true else { continue }
             let relative = String(file.standardizedFileURL.path.dropFirst(basePath.count + 1))
             if Self.isUserEditableAddonFile(relative) { continue }
-            let target = fuyutsuiDirectory.appendingPathComponent(relative)
-            if fm.fileExists(atPath: target.path), try FuyutsuiAddonSync.sha256(file) == FuyutsuiAddonSync.sha256(target) { continue }
+            let target = senkohDirectory.appendingPathComponent(relative)
+            if fm.fileExists(atPath: target.path), try SenkohAddonSync.sha256(file) == SenkohAddonSync.sha256(target) { continue }
             try fm.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
             if fm.fileExists(atPath: target.path) { try fm.removeItem(at: target) }
             try fm.copyItem(at: file, to: target)

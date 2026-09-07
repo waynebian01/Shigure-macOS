@@ -1,6 +1,6 @@
 import Foundation
 
-/// 热键池：12 个修饰符组合 × 46 个主键 = 552 个宏槽位（与 Fuyutsui core/macro.lua 对齐）。
+/// 热键池：12 个修饰符组合 × 46 个主键 = 552 个宏槽位（与 Senkoh core/macro.lua 对齐）。
 public enum KeymapCatalog {
     public static let modifiers: [String] = [
         "CTRL", "ALT", "SHIFT", "CMD",

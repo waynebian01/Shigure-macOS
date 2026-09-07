@@ -481,15 +481,15 @@ final class AppModel {
 
     func regenerateConfigAndKeymap() throws -> ConfigUpdateOutcome {
         var outcome = ConfigUpdateOutcome()
-        let configResult = try FuyutsuiConfigConverter.updateFromClassDirectory(paths.fuyutsuiClassDirectory, configDirectory: paths.configDirectory)
+        let configResult = try SenkohConfigConverter.updateFromClassDirectory(paths.senkohClassDirectory, configDirectory: paths.configDirectory)
         outcome.configFiles = configResult.updatedFiles.count
         outcome.warnings.append(contentsOf: configResult.warnings)
         if FileManager.default.fileExists(atPath: paths.classMacrosFile.path) {
-            let keymapResult = try FuyutsuiKeymapConverter.updateFromClassMacros(paths.classMacrosFile, keymapDirectory: paths.keymapDirectory)
+            let keymapResult = try SenkohKeymapConverter.updateFromClassMacros(paths.classMacrosFile, keymapDirectory: paths.keymapDirectory)
             outcome.keymapFiles = keymapResult.updatedFiles.count
             outcome.warnings.append(contentsOf: keymapResult.warnings)
         } else {
-            log.append(String(localized: "项目 Fuyutsui 中未找到 core/classmacros.lua，已跳过 keymap 更新"))
+            log.append(String(localized: "项目 Senkoh 中未找到 core/classmacros.lua，已跳过 keymap 更新"))
         }
         catalogVersion += 1
         return outcome
@@ -498,13 +498,13 @@ final class AppModel {
     var catalogVersion = 0
 
     func deployAddon(singleFile relativePath: String? = nil) -> AddonSyncResult? {
-        let target = locator.addOnsDirectory().map { $0.appendingPathComponent("Fuyutsui", isDirectory: true) }
+        let target = locator.addOnsDirectory().map { $0.appendingPathComponent("Senkoh", isDirectory: true) }
         do {
             let result: AddonSyncResult
             if let relativePath {
-                result = try FuyutsuiAddonSync.synchronizeFile(sourceRoot: paths.fuyutsuiDirectory, targetRoot: target, relativePath: relativePath)
+                result = try SenkohAddonSync.synchronizeFile(sourceRoot: paths.senkohDirectory, targetRoot: target, relativePath: relativePath)
             } else {
-                result = try FuyutsuiAddonSync.synchronizeAll(sourceRoot: paths.fuyutsuiDirectory, targetRoot: target)
+                result = try SenkohAddonSync.synchronizeAll(sourceRoot: paths.senkohDirectory, targetRoot: target)
             }
             log.append(String(localized: "插件同步: \(localizedAddonSyncSummary(result))"))
             return result
@@ -538,7 +538,7 @@ final class AppModel {
                     self.configStatus = String(localized: "配置已更新；") + issues.joined(separator: String(localized: "；"))
                     self.configStatusIsError = !syncOK
                 }
-                self.log.append(String(localized: "已从项目 Fuyutsui 更新配置: \(outcome.configFiles) 个 config、\(outcome.keymapFiles) 个 keymap"))
+                self.log.append(String(localized: "已从项目 Senkoh 更新配置: \(outcome.configFiles) 个 config、\(outcome.keymapFiles) 个 keymap"))
                 for warning in outcome.warnings.prefix(20) { self.log.append(String(localized: "转换警告: \(warning)")) }
                 self.restartRuntime(reason: String(localized: "配置已更新"))
             case .failure(let error):
@@ -615,7 +615,7 @@ final class AppModel {
                 || ClassNames.allClasses.contains { !FileManager.default.fileExists(atPath: paths.configDirectory.appendingPathComponent("\(ClassNames.configFileName($0.id)).json").path) }
                 || ClassNames.allClasses.contains { !FileManager.default.fileExists(atPath: paths.keymapDirectory.appendingPathComponent("\(ClassNames.configFileName($0.id).lowercased()).json").path) }
             if missing {
-                log.append(String(localized: "检测到 config 或 keymap 缺失或不完整，正在从项目 Fuyutsui 自动生成"))
+                log.append(String(localized: "检测到 config 或 keymap 缺失或不完整，正在从项目 Senkoh 自动生成"))
                 _ = try regenerateConfigAndKeymap()
                 didWork = true
             }

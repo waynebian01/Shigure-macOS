@@ -1,8 +1,8 @@
 import Foundation
 
-/// 将 Fuyutsui core/classmacros.lua 的 ClassMacros 展开为 keymap/*.json
+/// 将 Senkoh core/classmacros.lua 的 ClassMacros 展开为 keymap/*.json
 /// （对齐 core/macro.lua CreateMacro 的槽位与热键池）。
-public enum FuyutsuiKeymapConverter {
+public enum SenkohKeymapConverter {
     public struct UpdateResult: Sendable {
         public let classMacrosPath: URL
         public let updatedFiles: [URL]
@@ -37,8 +37,8 @@ public enum FuyutsuiKeymapConverter {
         }
         try fm.createDirectory(at: keymapDirectory, withIntermediateDirectories: true)
         let lua = try TextFile.read(classMacrosURL)
-        guard let classMacros = LuaLiteParser.extractAssignedTable(lua, "Fuyutsui.ClassMacros") else {
-            throw ConvertError("classmacros.lua 中未找到 Fuyutsui.ClassMacros")
+        guard let classMacros = LuaLiteParser.extractAssignedTable(lua, "Senkoh.ClassMacros") else {
+            throw ConvertError("classmacros.lua 中未找到 Senkoh.ClassMacros")
         }
 
         var updated: [URL] = []
@@ -217,7 +217,7 @@ public enum FuyutsuiKeymapConverter {
         while normalized.hasPrefix("@") { normalized.removeFirst() }
         normalized = normalized.lowercased()
         if normalized.hasPrefix("party"), let idx = Int(normalized.dropFirst(5)), (1...4).contains(idx) {
-            return idx + 1 // Fuyutsui 队伍槽位：player=1，party1..4=2..5
+            return idx + 1 // Senkoh 队伍槽位：player=1，party1..4=2..5
         }
         if normalized.hasPrefix("raid"), let idx = Int(normalized.dropFirst(4)), (1...30).contains(idx) {
             return idx
@@ -337,7 +337,7 @@ public enum FuyutsuiKeymapConverter {
         public static let empty = ExistingSpellNames(fallback: [:], bySpec: [:])
 
         func spellName(specId: Int?, slot: Int) -> String? {
-            if let specId, let names = bySpec[specId], let spell = names[slot], !spell.isBlank, !FuyutsuiKeymapConverter.isWeakSpellName(spell) {
+            if let specId, let names = bySpec[specId], let spell = names[slot], !spell.isBlank, !SenkohKeymapConverter.isWeakSpellName(spell) {
                 return spell
             }
             return fallback[slot]

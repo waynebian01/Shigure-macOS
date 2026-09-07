@@ -114,7 +114,7 @@ public struct LuaParseError: Error, CustomStringConvertible, Sendable {
     public var description: String { message }
 }
 
-/// 轻量 Lua 表字面量解析：足够读取 Fuyutsui ClassBlocks / ClassMacros 声明。
+/// 轻量 Lua 表字面量解析：足够读取 Senkoh ClassBlocks / ClassMacros 声明。
 public enum LuaLiteParser {
     public struct Extracted: Sendable {
         public let table: LuaTable

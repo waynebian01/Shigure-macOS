@@ -2,7 +2,7 @@ import AppKit
 import Observation
 import ShigureCore
 
-/// 宏编辑器状态：编辑 Fuyutsui/core/classmacros.lua 的 ClassMacros（对应 C# ClassMacrosEditorControl）。
+/// 宏编辑器状态：编辑 Senkoh/core/classmacros.lua 的 ClassMacros（对应 C# ClassMacrosEditorControl）。
 @MainActor
 @Observable
 final class MacroEditorStore {
@@ -13,7 +13,7 @@ final class MacroEditorStore {
     private(set) var selectedClassId: Int?
     /// nil = 通用
     var selectedSpecIndex: Int?
-    var status = String(localized: "点击刷新以加载 Fuyutsui/core/classmacros.lua")
+    var status = String(localized: "点击刷新以加载 Senkoh/core/classmacros.lua")
     var errorMessage: String?
     var infoMessage: String?
     var pendingSwitch: Int?

@@ -118,6 +118,13 @@ final class IconCatalogStore {
 
     // MARK: 图标
 
+    /// NSMenu（Picker/Menu 下拉）按 NSImage.size 原样渲染、忽略 SwiftUI 的 frame，
+    /// 因此加载时统一把显示尺寸归一到菜单文字高度；像素数据不变，放大显示不受影响。
+    private static func normalizedForMenu(_ image: NSImage) -> NSImage {
+        image.size = NSSize(width: 16, height: 16)
+        return image
+    }
+
     func image(id: Int64, isItem: Bool) -> NSImage? {
         isItem ? itemImage(id) : spellImage(id)
     }
@@ -129,7 +136,7 @@ final class IconCatalogStore {
         if let cached = spellImages[spellId] { return cached }
         var image: NSImage?
         if let resource = Self.spellIdResources[spellId] { image = loadResource(resource) }
-        if image == nil, let data = reader?.spellIconData(spellId) { image = NSImage(data: data) }
+        if image == nil, let data = reader?.spellIconData(spellId) { image = NSImage(data: data).map(Self.normalizedForMenu) }
         if let image { spellImages[spellId] = image }
         return image
     }
@@ -140,7 +147,7 @@ final class IconCatalogStore {
         if let cached = itemImages[itemId] { return cached }
         var image: NSImage?
         if let resource = Self.spellIdResources[itemId] { image = loadResource(resource) }
-        if image == nil, let data = reader?.itemIconData(itemId) { image = NSImage(data: data) }
+        if image == nil, let data = reader?.itemIconData(itemId) { image = NSImage(data: data).map(Self.normalizedForMenu) }
         if let image { itemImages[itemId] = image }
         return image
     }
@@ -158,7 +165,7 @@ final class IconCatalogStore {
         if let cached = namedImages[fileName] { return cached }
         let base = (fileName as NSString).deletingPathExtension
         let ext = (fileName as NSString).pathExtension
-        guard let url = Bundle.main.url(forResource: base, withExtension: ext, subdirectory: "Icons/Spell"), let image = NSImage(contentsOf: url) else { return nil }
+        guard let url = Bundle.main.url(forResource: base, withExtension: ext, subdirectory: "Icons/Spell"), let image = NSImage(contentsOf: url).map(Self.normalizedForMenu) else { return nil }
         namedImages[fileName] = image
         return image
     }

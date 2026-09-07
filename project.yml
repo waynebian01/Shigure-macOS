@@ -23,7 +23,7 @@ targets:
       - path: Sources/ShigureApp
       - path: Resources/Assets.xcassets
       - path: Resources/Localizable.xcstrings
-      - path: Resources/Fuyutsui
+      - path: Resources/Senkoh
         type: folder
         buildPhase: resources
       - path: Resources/config

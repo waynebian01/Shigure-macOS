@@ -6,9 +6,9 @@ public struct ConvertError: Error, CustomStringConvertible, Sendable {
     public init(_ message: String) { self.message = message }
 }
 
-/// 将 Fuyutsui class/*.lua 的 ClassBlocks 编译为 config/*.json（对齐 LoadPlayerBlocks 占位顺序）。
+/// 将 Senkoh class/*.lua 的 ClassBlocks 编译为 config/*.json（对齐 LoadPlayerBlocks 占位顺序）。
 /// 输出格式与 C# 版逐字节一致（UTF-8 BOM、2 空格缩进、键序）。
-public enum FuyutsuiConfigConverter {
+public enum SenkohConfigConverter {
     public struct UpdateResult: Sendable {
         public let classDirectory: URL
         public let updatedFiles: [URL]
@@ -23,7 +23,7 @@ public enum FuyutsuiConfigConverter {
         let fm = FileManager.default
         var isDir: ObjCBool = false
         guard fm.fileExists(atPath: classDirectory.path, isDirectory: &isDir), isDir.boolValue else {
-            throw ConvertError("找不到 Fuyutsui class 目录: \(classDirectory.path)")
+            throw ConvertError("找不到 Senkoh class 目录: \(classDirectory.path)")
         }
         try fm.createDirectory(at: configDirectory, withIntermediateDirectories: true)
         try ensureCommonConfig(configDirectory)
@@ -59,11 +59,11 @@ public enum FuyutsuiConfigConverter {
     /// 单个职业：Lua 文本 → config JSON 对象（供测试与更新流程共用）。
     public static func compileClass(lua: String, fileName: String, existing: JSONObject) throws -> (JSONObject, [String]) {
         var warnings: [String] = []
-        guard let classBlocks = LuaLiteParser.extractAssignedTable(lua, "Fuyutsui.ClassBlocks") else {
-            throw ConvertError("\(fileName).lua 中未找到 Fuyutsui.ClassBlocks")
+        guard let classBlocks = LuaLiteParser.extractAssignedTable(lua, "Senkoh.ClassBlocks") else {
+            throw ConvertError("\(fileName).lua 中未找到 Senkoh.ClassBlocks")
         }
-        let spellsList = LuaLiteParser.extractAssignedTable(lua, "Fuyutsui.spellsList")
-        let itemsList = LuaLiteParser.extractAssignedTable(lua, "Fuyutsui.itemsList")
+        let spellsList = LuaLiteParser.extractAssignedTable(lua, "Senkoh.spellsList")
+        let itemsList = LuaLiteParser.extractAssignedTable(lua, "Senkoh.itemsList")
 
         var root = JSONObject()
         for key in ["keymap", "一键法术", ModuleSpecialActions.oneKeyItem] {
@@ -75,12 +75,12 @@ public enum FuyutsuiConfigConverter {
         if let spellsList {
             root[ModuleSpecialActions.oneKeySpell] = .object(compileIdMap(spellsList, idKey: "spellId", mapName: "一键法术", listName: "spellsList", warnings: &warnings, label: fileName))
         } else {
-            warnings.append("\(fileName): 未找到 Fuyutsui.spellsList，已保留现有一键法术")
+            warnings.append("\(fileName): 未找到 Senkoh.spellsList，已保留现有一键法术")
         }
         if let itemsList {
             root[ModuleSpecialActions.oneKeyItem] = .object(compileIdMap(itemsList, idKey: "itemId", mapName: ModuleSpecialActions.oneKeyItem, listName: "itemsList", warnings: &warnings, label: fileName))
         } else {
-            warnings.append("\(fileName): 未找到 Fuyutsui.itemsList，已保留现有一键物品")
+            warnings.append("\(fileName): 未找到 Senkoh.itemsList，已保留现有一键物品")
         }
 
         for specId in 1...4 {

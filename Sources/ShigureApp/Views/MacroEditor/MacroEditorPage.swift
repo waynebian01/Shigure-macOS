@@ -169,7 +169,7 @@ struct ArrayMacrosEditor: View {
             .font(.caption).foregroundStyle(.secondary).padding(.horizontal, 16).padding(.top, 6)
             List {
                 ForEach(Array(entries.wrappedValue.enumerated()), id: \.offset) { index, entry in
-                    let parsed = isSpecial ? FuyutsuiKeymapConverter.parseSpecialMacro(entry.text, comment: entry.comment) : FuyutsuiKeymapConverter.parseStaticMacro(entry.text, comment: entry.comment)
+                    let parsed = isSpecial ? SenkohKeymapConverter.parseSpecialMacro(entry.text, comment: entry.comment) : SenkohKeymapConverter.parseStaticMacro(entry.text, comment: entry.comment)
                     HStack(spacing: 8) {
                         Text("\(index + 1)").frame(width: 44).foregroundStyle(.secondary).monospacedDigit()
                         SpellIconView(spellId: nil, name: parsed.spell.isEmpty ? entry.text : parsed.spell)

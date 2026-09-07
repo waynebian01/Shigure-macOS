@@ -166,27 +166,29 @@ struct ConditionEditorSheet: View {
                 if index == 0 || isRuleSetting {
                     Text("").frame(width: 60)
                 } else {
-                    Picker("", selection: Binding(get: { rows[index].orWithPrevious }, set: { rows[index].orWithPrevious = $0 })) {
-                        Text("且").tag(false)
-                        Text("或").tag(true)
-                    }
-                    .labelsHidden().frame(width: 60)
+                    FixedPopUpPicker(
+                        options: [PopUpOption(false, String(localized: "且")), PopUpOption(true, String(localized: "或"))],
+                        selection: Binding(get: { rows[index].orWithPrevious }, set: { rows[index].orWithPrevious = $0 })
+                    )
+                    .frame(width: 60)
                 }
             }
-            Picker("", selection: Binding(get: { rows[index].category }, set: { newValue in
-                rows[index].category = newValue
-                rows[index].classification = classifications(for: newValue).first ?? ""
-                rows[index].field = ""
-                rows[index].value = ""
-                rows[index].op = "=="
-            })) {
-                ForEach(availableCategories, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) }
-            }
-            .labelsHidden().frame(width: 100)
-            Picker("", selection: Binding(get: { rows[index].classification }, set: { rows[index].classification = $0; rows[index].field = "" })) {
-                ForEach(classifications(for: row.category), id: \.self) { Text($0.isEmpty ? String(localized: "未分类") : localizedReferenceText($0)).tag($0) }
-            }
-            .labelsHidden().frame(width: 110)
+            FixedPopUpPicker(
+                options: availableCategories.map { PopUpOption($0, localizedReferenceText($0.rawValue)) },
+                selection: Binding(get: { rows[index].category }, set: { newValue in
+                    rows[index].category = newValue
+                    rows[index].classification = classifications(for: newValue).first ?? ""
+                    rows[index].field = ""
+                    rows[index].value = ""
+                    rows[index].op = "=="
+                })
+            )
+            .frame(width: 100)
+            FixedPopUpPicker(
+                options: classifications(for: row.category).map { PopUpOption($0, $0.isEmpty ? String(localized: "未分类") : localizedReferenceText($0)) },
+                selection: Binding(get: { rows[index].classification }, set: { rows[index].classification = $0; rows[index].field = "" })
+            )
+            .frame(width: 110)
             .disabled(![.state, .aura, .spell].contains(row.category))
             FieldPicker(fields: fieldOptions(for: row), selection: Binding(get: { rows[index].field }, set: { name in
                 rows[index].field = name
@@ -200,10 +202,11 @@ struct ConditionEditorSheet: View {
             if isRuleSetting {
                 Text("=").frame(width: 80)
             } else {
-                Picker("", selection: Binding(get: { rows[index].op }, set: { rows[index].op = $0; if $0 == "in" || $0 == "not in" { rows[index].value = ConditionEditorSheet.normalizeInValue(rows[index].value) } })) {
-                    ForEach(operators(for: field), id: \.self) { Text($0).tag($0) }
-                }
-                .labelsHidden().frame(width: 80)
+                FixedPopUpPicker(
+                    options: operators(for: field).map { PopUpOption($0, $0) },
+                    selection: Binding(get: { rows[index].op }, set: { rows[index].op = $0; if $0 == "in" || $0 == "not in" { rows[index].value = ConditionEditorSheet.normalizeInValue(rows[index].value) } })
+                )
+                .frame(width: 80)
             }
             valueEditor(index: index, row: row, field: field).frame(width: 220)
             Button(role: .destructive) { rows.remove(at: index) } label: { Image(systemName: "xmark.circle") }
@@ -278,20 +281,12 @@ struct ConditionEditorSheet: View {
         } else if let field, ItemIdConditionFields.contains(field.name) {
             IdPicker(options: context.items.map { IdOption(id: $0.itemId, label: "\($0.index). \($0.name) / \($0.itemId)", index: $0.index) }, selection: binding, missingFormat: String(localized: "itemId %@（不存在）"), iconProvider: { model.iconCatalog.itemImage($0) })
         } else if let field, field.name == "首领战" {
-            Picker("", selection: binding) {
-                Text("0 → 非首领战 / -").tag("0")
-                ForEach(ReferenceData.bossOptions) { Text($0.display).tag(String($0.number)) }
-                if Int(row.value) == nil || (Int(row.value)! != 0 && !ReferenceData.bossOptions.contains { String($0.number) == row.value }) {
-                    Text(row.value.isEmpty ? "" : String(localized: "\(row.value)（未知）")).tag(row.value)
-                }
-            }
-            .labelsHidden()
+            FixedPopUpPicker(options: bossOptions(current: row.value), selection: binding)
         } else if let field, !field.isCustom, field.type == .bool || field.name == ShigureConditionFields.continueLogic {
-            Picker("", selection: Binding(get: { Self.isFalseText(rows[index].value) ? "false" : "true" }, set: { rows[index].value = $0 })) {
-                Text("是 (true)").tag("true")
-                Text("否 (false)").tag("false")
-            }
-            .labelsHidden()
+            FixedPopUpPicker(
+                options: [PopUpOption("true", String(localized: "是 (true)")), PopUpOption("false", String(localized: "否 (false)"))],
+                selection: Binding(get: { Self.isFalseText(rows[index].value) ? "false" : "true" }, set: { rows[index].value = $0 })
+            )
         } else {
             HStack(spacing: 4) {
                 TextField(String(localized: row.op == "in" || row.op == "not in" ? "1, 2, 3" : "值"), text: binding)
@@ -300,6 +295,15 @@ struct ConditionEditorSheet: View {
                 }
             }
         }
+    }
+
+    private func bossOptions(current: String) -> [PopUpOption<String>] {
+        var options = [PopUpOption("0", String(localized: "0 → 非首领战 / -"))]
+        options += ReferenceData.bossOptions.map { PopUpOption(String($0.number), $0.display) }
+        if Int(current) == nil || (Int(current)! != 0 && !ReferenceData.bossOptions.contains { String($0.number) == current }) {
+            options.append(PopUpOption(current, current.isEmpty ? "" : String(localized: "\(current)（未知）")))
+        }
+        return options
     }
 
     // MARK: 子条件
@@ -443,6 +447,81 @@ struct ConditionEditorSheet: View {
     }
 }
 
+// MARK: - 固定宽度下拉（NSPopUpButton）
+
+/// macOS 的 SwiftUI Picker 按最长菜单项自适应宽度、忽略 frame 提议的宽度，
+/// 同一列的下拉因此参差不齐；直接包 NSPopUpButton 让控件吃满列宽。
+struct PopUpOption<Tag: Hashable> {
+    let tag: Tag
+    let title: String
+    var image: NSImage?
+    var titleColor: NSColor?
+
+    init(_ tag: Tag, _ title: String, image: NSImage? = nil, titleColor: NSColor? = nil) {
+        self.tag = tag
+        self.title = title
+        self.image = image
+        self.titleColor = titleColor
+    }
+}
+
+struct FixedPopUpPicker<Tag: Hashable>: NSViewRepresentable {
+    let options: [PopUpOption<Tag>]
+    @Binding var selection: Tag
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    func makeNSView(context: Context) -> NSPopUpButton {
+        let button = NSPopUpButton(frame: .zero, pullsDown: false)
+        button.target = context.coordinator
+        button.action = #selector(Coordinator.selectionChanged(_:))
+        (button.cell as? NSPopUpButtonCell)?.lineBreakMode = .byTruncatingTail
+        return button
+    }
+
+    func updateNSView(_ button: NSPopUpButton, context: Context) {
+        context.coordinator.parent = self
+        let signature = options.map { option in
+            "\(option.tag)|\(option.title)|\(option.image.map { ObjectIdentifier($0).hashValue } ?? 0)|\(option.titleColor != nil)"
+        }
+        if context.coordinator.signature != signature {
+            context.coordinator.signature = signature
+            let menu = NSMenu()
+            for option in options {
+                let item = NSMenuItem(title: option.title, action: nil, keyEquivalent: "")
+                item.image = option.image
+                if let color = option.titleColor {
+                    item.attributedTitle = NSAttributedString(string: option.title, attributes: [.foregroundColor: color, .font: NSFont.menuFont(ofSize: 0)])
+                }
+                menu.addItem(item)
+            }
+            button.menu = menu
+        }
+        button.selectItem(at: options.firstIndex { $0.tag == selection } ?? -1)
+        button.isEnabled = context.environment.isEnabled
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSPopUpButton, context: Context) -> CGSize? {
+        let intrinsic = nsView.intrinsicContentSize
+        if let width = proposal.width, width.isFinite { return CGSize(width: width, height: intrinsic.height) }
+        return intrinsic
+    }
+
+    @MainActor
+    final class Coordinator: NSObject {
+        var parent: FixedPopUpPicker
+        var signature: [String] = []
+
+        init(_ parent: FixedPopUpPicker) { self.parent = parent }
+
+        @objc func selectionChanged(_ sender: NSPopUpButton) {
+            let index = sender.indexOfSelectedItem
+            guard parent.options.indices.contains(index) else { return }
+            parent.selection = parent.options[index].tag
+        }
+    }
+}
+
 // MARK: - 字段选择器（带图标）
 
 struct FieldPicker: View {
@@ -452,21 +531,16 @@ struct FieldPicker: View {
     let iconProvider: (String) -> NSImage?
 
     var body: some View {
-        Picker("", selection: $selection) {
-            Text("").tag("")
-            ForEach(fields) { field in
-                Label {
-                    Text(field.displayName)
-                } icon: {
-                    if let image = iconProvider(field.displayName.components(separatedBy: " / ").first ?? field.displayName) {
-                        Image(nsImage: image).resizable().frame(width: 16, height: 16)
-                    }
-                }
-                .tag(field.name)
-            }
-            if let customName { Text("\(customName) (自定义)").tag(customName) }
+        FixedPopUpPicker(options: popupOptions, selection: $selection)
+    }
+
+    private var popupOptions: [PopUpOption<String>] {
+        var options: [PopUpOption<String>] = [PopUpOption("", "")]
+        options += fields.map { field in
+            PopUpOption(field.name, field.displayName, image: iconProvider(field.displayName.components(separatedBy: " / ").first ?? field.displayName))
         }
-        .labelsHidden()
+        if let customName { options.append(PopUpOption(customName, String(localized: "\(customName) (自定义)"))) }
+        return options
     }
 }
 
@@ -484,19 +558,14 @@ struct IdPicker: View {
     let iconProvider: (Int64) -> NSImage?
 
     var body: some View {
-        let exists = options.contains { String($0.id) == selection.trimmed() }
-        Picker("", selection: $selection) {
-            ForEach(options) { option in
-                Label {
-                    Text(option.label)
-                } icon: {
-                    if let image = iconProvider(option.id) { Image(nsImage: image).resizable().frame(width: 16, height: 16) }
-                }
-                .tag(String(option.id))
-            }
-            if !exists { Text(String(format: missingFormat, selection)).tag(selection) }
+        FixedPopUpPicker(options: popupOptions, selection: $selection)
+    }
+
+    private var popupOptions: [PopUpOption<String>] {
+        var popup = options.map { PopUpOption(String($0.id), $0.label, image: iconProvider($0.id)) }
+        if !options.contains(where: { String($0.id) == selection.trimmed() }) {
+            popup.append(PopUpOption(selection, String(format: missingFormat, selection), titleColor: .systemRed))
         }
-        .labelsHidden()
-        .foregroundStyle(exists ? Color.primary : Color.red)
+        return popup
     }
 }

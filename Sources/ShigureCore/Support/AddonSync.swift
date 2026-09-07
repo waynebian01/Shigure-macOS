@@ -22,7 +22,7 @@ public enum WowAddonLocator {
     }
 
     public static func addonRoot(bundleURL: URL) -> URL {
-        findAddOnsDirectory(bundleURL: bundleURL).appendingPathComponent("Fuyutsui", isDirectory: true)
+        findAddOnsDirectory(bundleURL: bundleURL).appendingPathComponent("Senkoh", isDirectory: true)
     }
 }
 
@@ -45,13 +45,13 @@ public struct AddonSyncResult: Sendable {
     }
 }
 
-/// 项目内 Fuyutsui/ 是唯一权威源：按 SHA-256 单向部署到游戏 AddOns（不删除目标额外文件）。
-public enum FuyutsuiAddonSync {
+/// 项目内 Senkoh/ 是唯一权威源：按 SHA-256 单向部署到游戏 AddOns（不删除目标额外文件）。
+public enum SenkohAddonSync {
     public static func synchronizeAll(sourceRoot: URL, targetRoot: URL?) throws -> AddonSyncResult {
         let fm = FileManager.default
         var isDir: ObjCBool = false
         guard fm.fileExists(atPath: sourceRoot.path, isDirectory: &isDir), isDir.boolValue else {
-            throw LuaStoreError("找不到内置 Fuyutsui 目录: \(sourceRoot.path)")
+            throw LuaStoreError("找不到内置 Senkoh 目录: \(sourceRoot.path)")
         }
         guard let targetRoot else {
             return AddonSyncResult(sourceRoot: sourceRoot, targetRoot: nil, copiedFiles: [], skippedFiles: [], failures: [], skippedReason: "未找到目标游戏进程, 已跳过游戏插件同步。")

@@ -3,7 +3,7 @@ import CoreGraphics
 import ScreenCaptureKit
 import ShigureCore
 
-/// 用 ScreenCaptureKit 截取游戏窗口顶部区域并解码 Fuyutsui 像素协议（对应 C# PixelScanner）。
+/// 用 ScreenCaptureKit 截取游戏窗口顶部区域并解码 Senkoh 像素协议（对应 C# PixelScanner）。
 /// - 只截取窗口顶部若干点高（含标题栏），按物理像素采样，sRGB 不做色彩管理；
 /// - 窗口被遮挡也能截到（desktopIndependentWindow）；
 /// - 需要「屏幕录制」权限。

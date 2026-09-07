@@ -6,12 +6,12 @@ public struct LuaStoreError: Error, CustomStringConvertible, Sendable {
     public init(_ message: String) { self.message = message }
 }
 
-/// 读写 Fuyutsui class/*.lua 中的 ClassBlocks（states/auras/spells/items/group），
+/// 读写 Senkoh class/*.lua 中的 ClassBlocks（states/auras/spells/items/group），
 /// 同时读写 spellsList 与 itemsList；保存时替换 ClassBlocks 表字面量，并原位更新列表条目。
 public enum ClassBlocksStore {
-    public static let assignmentName = "Fuyutsui.ClassBlocks"
-    public static let spellsListAssignmentName = "Fuyutsui.spellsList"
-    public static let itemsListAssignmentName = "Fuyutsui.itemsList"
+    public static let assignmentName = "Senkoh.ClassBlocks"
+    public static let spellsListAssignmentName = "Senkoh.spellsList"
+    public static let itemsListAssignmentName = "Senkoh.itemsList"
     static let stateCategories = ClassStateCatalog.topCategories
 
     public struct AuraEntry: Sendable, Equatable {

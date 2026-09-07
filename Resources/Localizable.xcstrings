@@ -157,6 +157,7 @@
       }
     },
     "#" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -468,6 +469,7 @@
       }
     },
     "ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -957,6 +959,9 @@
         }
       }
     },
+    "从工具栏启动运行会话后，这里会显示实时状态。" : {
+
+    },
     "任一(%@)" : {
       "localizations" : {
         "en" : {
@@ -1189,6 +1194,9 @@
         }
       }
     },
+    "充能层数" : {
+
+    },
     "充能法术连续占 2 格：冷却 → 充能冷却" : {
       "localizations" : {
         "en" : {
@@ -1373,6 +1381,7 @@
       }
     },
     "冷却、充能与次数" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2108,6 +2117,7 @@
       }
     },
     "基础字段与当前模块" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2515,18 +2525,18 @@
         }
       }
     },
-    "已从项目 Fuyutsui 更新配置: %lld 个 config、%lld 个 keymap" : {
+    "已从项目 Senkoh 更新配置: %lld 个 config、%lld 个 keymap" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Updated from the project Fuyutsui: %lld config files, %lld keymap files"
+            "value" : "Updated from the project Senkoh: %lld config files, %lld keymap files"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "已从项目 Fuyutsui 更新配置: %1$lld 个 config、%2$lld 个 keymap"
+            "value" : "已从项目 Senkoh 更新配置: %1$lld 个 config、%2$lld 个 keymap"
           }
         }
       }
@@ -2788,6 +2798,9 @@
           }
         }
       }
+    },
+    "已连接游戏，等待首帧状态数据。" : {
+
     },
     "带任一光环" : {
       "extractionState" : "stale",
@@ -3846,6 +3859,7 @@
       }
     },
     "时间与层数" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3884,6 +3898,9 @@
           }
         }
       }
+    },
+    "暂无数据" : {
+
     },
     "暂无符合筛选的模块" : {
       "localizations" : {
@@ -4007,12 +4024,12 @@
         }
       }
     },
-    "未找到 Fuyutsui/class，请确认数据目录中包含插件源后点击刷新。" : {
+    "未找到 Senkoh/class，请确认数据目录中包含插件源后点击刷新。" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fuyutsui/class not found. Make sure the add-on source is in the data directory, then click Refresh."
+            "value" : "Senkoh/class not found. Make sure the add-on source is in the data directory, then click Refresh."
           }
         }
       }
@@ -4119,7 +4136,6 @@
       }
     },
     "未运行" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4241,12 +4257,12 @@
         }
       }
     },
-    "来自当前职业 Lua 的 Fuyutsui.itemsList" : {
+    "来自当前职业 Lua 的 Senkoh.itemsList" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fuyutsui.itemsList from the current class Lua"
+            "value" : "Senkoh.itemsList from the current class Lua"
           }
         }
       }
@@ -4282,12 +4298,12 @@
         }
       }
     },
-    "检测到 config 或 keymap 缺失或不完整，正在从项目 Fuyutsui 自动生成" : {
+    "检测到 config 或 keymap 缺失或不完整，正在从项目 Senkoh 自动生成" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The config or keymap is missing or incomplete; regenerating them from the project Fuyutsui"
+            "value" : "The config or keymap is missing or incomplete; regenerating them from the project Senkoh"
           }
         }
       }
@@ -4477,6 +4493,7 @@
       }
     },
     "模块运行时计算值" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5143,22 +5160,22 @@
         }
       }
     },
-    "点击刷新以加载 Fuyutsui/class" : {
+    "点击刷新以加载 Senkoh/class" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click Refresh to load Fuyutsui/class"
+            "value" : "Click Refresh to load Senkoh/class"
           }
         }
       }
     },
-    "点击刷新以加载 Fuyutsui/core/classmacros.lua" : {
+    "点击刷新以加载 Senkoh/core/classmacros.lua" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click Refresh to load Fuyutsui/core/classmacros.lua"
+            "value" : "Click Refresh to load Senkoh/core/classmacros.lua"
           }
         }
       }
@@ -5673,7 +5690,6 @@
       }
     },
     "等待游戏状态" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -7043,12 +7059,12 @@
         }
       }
     },
-    "项目 Fuyutsui 中未找到 core/classmacros.lua，已跳过 keymap 更新" : {
+    "项目 Senkoh 中未找到 core/classmacros.lua，已跳过 keymap 更新" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "core/classmacros.lua was not found in the project Fuyutsui; the keymap update was skipped"
+            "value" : "core/classmacros.lua was not found in the project Senkoh; the keymap update was skipped"
           }
         }
       }

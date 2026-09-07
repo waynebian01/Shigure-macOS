@@ -72,7 +72,7 @@ struct AboutPage: View {
                             row("数据目录", model.paths.root.path)
                             row("模块目录", model.paths.moduleDirectory.path)
                             row("配置目录", model.paths.configDirectory.path)
-                            row("插件源", model.paths.fuyutsuiDirectory.path)
+                            row("插件源", model.paths.senkohDirectory.path)
                             row("游戏插件目录", model.addOnsDirectory?.path ?? String(localized: "未检测到游戏"))
                         }
                         HStack {

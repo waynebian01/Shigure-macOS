@@ -38,7 +38,7 @@ public struct PixelBuffer: Sendable {
     }
 }
 
-/// Fuyutsui 像素协议解码（纯函数，与截屏实现解耦）。
+/// Senkoh 像素协议解码（纯函数，与截屏实现解耦）。
 public enum PixelDecoder {
     public static let topRowBlockCount = 510
     public static let topRowFirstSchemeMax = 255

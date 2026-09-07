@@ -6,6 +6,7 @@ import ShigureCore
 struct StatusRow: Identifiable, Hashable {
     let id: String
     let category: String
+    let unit: String
     let name: String
     let spellId: String
     let type: String
@@ -19,24 +20,32 @@ struct StatusPage: View {
 
     var body: some View {
         let s = model.snapshot
-        HStack(alignment: .top, spacing: 12) {
-            StatusListCard(title: "状态", subtitle: "基础字段与当前模块", rows: stateRows(s), columns: [.category, .name, .value])
-            StatusListCard(title: "光环", subtitle: "时间与层数", rows: auraRows(s), columns: [.name, .spellId, .type, .value])
-            StatusListCard(title: "技能", subtitle: "冷却、充能与次数", rows: spellRows(s), columns: [.name, .spellId, .type, .value])
-            StatusListCard(title: "动态单位", subtitle: "模块运行时计算值", rows: dynamicRows(s), columns: [.type, .name, .value])
+        if s.state == nil {
+            ContentUnavailableView {
+                Label(model.isRunning ? "等待游戏状态" : "未运行", systemImage: "waveform.path.ecg")
+            } description: {
+                Text(model.isRunning ? "已连接游戏，等待首帧状态数据。" : "从工具栏启动运行会话后，这里会显示实时状态。")
+            }
+        } else {
+            List {
+                StatusSection(title: "状态", rows: stateRows(s), columns: [.category, .name, .value])
+                StatusSection(title: "光环", rows: auraRows(s), columns: [.category, .unit, .name, .spellId, .value])
+                StatusSection(title: "技能", rows: spellRows(s), columns: [.category, .name, .spellId, .value])
+                StatusSection(title: "动态单位", rows: dynamicRows(s), columns: [.category, .name, .value])
+            }
+            .listStyle(.inset(alternatesRowBackgrounds: true))
         }
-        .padding(12)
     }
 
     private func stateRows(_ s: RenderSnapshot) -> [StatusRow] {
         guard let state = s.state else { return [] }
         var rows: [StatusRow] = []
         if let module = s.moduleName {
-            rows.append(StatusRow(id: "匹配模块", category: "模块", name: "匹配模块", spellId: "", type: "", value: module, iconId: 0, isItem: false))
+            rows.append(StatusRow(id: "匹配模块", category: "模块", unit: "", name: "匹配模块", spellId: "", type: "", value: module, iconId: 0, isItem: false))
         }
         for key in state.valueOrder where !state.itemIds.keys.contains(key) {
             let value = state.values[key] ?? nil
-            rows.append(StatusRow(id: key, category: ClassStateCatalog.classifyField(key), name: key, spellId: "", type: "", value: value?.displayText ?? "-", iconId: 0, isItem: false))
+            rows.append(StatusRow(id: key, category: ClassStateCatalog.classifyField(key), unit: "", name: key, spellId: "", type: "", value: value?.displayText ?? "-", iconId: 0, isItem: false))
         }
         return rows
     }
@@ -47,7 +56,7 @@ struct StatusPage: View {
             guard let parsed = SpellFieldKey.parseAura("auras." + key) else { return nil }
             let name = model.iconCatalog.spellName(parsed.spellId) ?? String(localized: "未知法术")
             let type = String(localized: parsed.metric == SpellFieldKey.auraApplications ? "层数" : "时间")
-            return StatusRow(id: key, category: parsed.scope, name: "\(name) · \(parsed.scope)", spellId: String(parsed.spellId), type: type,
+            return StatusRow(id: key, category: type, unit: parsed.scope, name: name, spellId: String(parsed.spellId), type: type,
                              value: (state.auras[key] ?? nil)?.displayText ?? "-", iconId: parsed.spellId, isItem: false)
         }
     }
@@ -64,65 +73,91 @@ struct StatusPage: View {
             } else {
                 switch parsed.metric {
                 case SpellFieldKey.spellChargeCooldown: type = String(localized: "充能")
-                case SpellFieldKey.spellCount: type = String(localized: "层数")
+                case SpellFieldKey.spellCount: type = String(localized: "充能层数")
                 default: type = String(localized: "冷却")
                 }
             }
-            rows.append(StatusRow(id: key, category: "技能", name: name, spellId: String(parsed.spellId), type: type,
+            rows.append(StatusRow(id: key, category: type, unit: "", name: name, spellId: String(parsed.spellId), type: type,
                                   value: (state.spells[key] ?? nil)?.displayText ?? "-", iconId: parsed.spellId, isItem: false))
         }
         for (field, itemId) in state.itemIds.sorted(by: { $0.key < $1.key }) {
-            rows.append(StatusRow(id: "item:\(field)", category: "物品", name: field, spellId: String(itemId), type: String(localized: "冷却"),
+            rows.append(StatusRow(id: "item:\(field)", category: "物品", unit: "", name: field, spellId: String(itemId), type: String(localized: "冷却"),
                                   value: (state.values[field] ?? nil)?.displayText ?? "-", iconId: itemId, isItem: true))
         }
         return rows
     }
 
     private func dynamicRows(_ s: RenderSnapshot) -> [StatusRow] {
-        s.dynamicValues.map { StatusRow(id: $0.id, category: $0.kind, name: $0.name, spellId: "", type: $0.kind, value: $0.value, iconId: 0, isItem: false) }
+        s.dynamicValues.map {
+            let category = String(localized: $0.kind == "单位" ? "动态单位" : "动态数值")
+            return StatusRow(id: $0.id, category: category, unit: "", name: $0.name, spellId: "", type: $0.kind, value: $0.value, iconId: 0, isItem: false)
+        }
     }
 }
 
-enum StatusColumn { case category, name, spellId, type, value }
+enum StatusColumn { case category, unit, name, spellId, type, value }
 
-struct StatusListCard: View {
+struct StatusSection: View {
     @Environment(AppModel.self) private var model
     let title: LocalizedStringResource
-    let subtitle: LocalizedStringResource
     let rows: [StatusRow]
     let columns: [StatusColumn]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(title).font(.headline)
-                Text("\(rows.count) 项").font(.caption).padding(.horizontal, 6).padding(.vertical, 2)
-                    .background(Color.accentColor.opacity(0.15), in: Capsule())
-                Spacer()
-            }
-            Text(subtitle).font(.caption).foregroundStyle(.secondary)
-            Table(rows) {
-                TableColumn("#") { row in
-                    if row.iconId > 0, let image = model.iconCatalog.image(id: row.iconId, isItem: row.isItem) {
-                        Image(nsImage: image).resizable().frame(width: 18, height: 18).clipShape(RoundedRectangle(cornerRadius: 3))
-                    } else {
-                        Circle().fill(CategoryAccent.color(row.category)).frame(width: 8, height: 8)
+        Section {
+            if rows.isEmpty {
+                Text("暂无数据").foregroundStyle(.secondary)
+            } else {
+                ForEach(rows) { row in
+                    LabeledContent {
+                        Text(row.value)
+                            .monospacedDigit()
+                            .textSelection(.enabled)
+                    } label: {
+                        HStack(spacing: 8) {
+                            rowIcon(row)
+                            if columns.contains(.category) {
+                                Text(localizedReferenceText(row.category))
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                                    .frame(width: 72, alignment: .leading)
+                            }
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(localizedReferenceText(row.name))
+                                if let detail = detailText(row) {
+                                    Text(detail).font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
                     }
-                }.width(28)
-                if columns.contains(.category) { TableColumn("分类") { Text(localizedReferenceText($0.category)) }.width(min: 50, ideal: 60) }
-                if columns.contains(.type) { TableColumn("类型") { Text(localizedReferenceText($0.type)) }.width(min: 44, ideal: 56) }
-                TableColumn("名称") { Text(localizedReferenceText($0.name)) }
-                if columns.contains(.spellId) { TableColumn("ID", value: \.spellId).width(min: 60, ideal: 76) }
-                TableColumn("值", value: \.value).width(min: 44, ideal: 70)
-            }
-            .overlay {
-                if rows.isEmpty {
-                    Text(String(localized: model.isRunning ? "等待游戏状态" : "未运行")).foregroundStyle(.secondary)
+                    .padding(.vertical, 1)
                 }
             }
+        } header: {
+            HStack {
+                Text(title)
+                Spacer()
+                Text("\(rows.count) 项").font(.caption).monospacedDigit().foregroundStyle(.secondary)
+            }
         }
-        .padding(10)
-        .background(.background.secondary, in: RoundedRectangle(cornerRadius: 10))
+    }
+
+    @ViewBuilder
+    private func rowIcon(_ row: StatusRow) -> some View {
+        if row.iconId > 0, let image = model.iconCatalog.image(id: row.iconId, isItem: row.isItem) {
+            Image(nsImage: image).resizable().frame(width: 20, height: 20).clipShape(RoundedRectangle(cornerRadius: 4))
+        } else {
+            Circle().fill(CategoryAccent.color(row.category)).frame(width: 8, height: 8)
+                .frame(width: 20, height: 20)
+        }
+    }
+
+    private func detailText(_ row: StatusRow) -> String? {
+        var parts: [String] = []
+        if columns.contains(.unit), !row.unit.isEmpty { parts.append(localizedReferenceText(row.unit)) }
+        if columns.contains(.type), !row.type.isEmpty { parts.append(localizedReferenceText(row.type)) }
+        if columns.contains(.spellId), !row.spellId.isEmpty { parts.append("ID \(row.spellId)") }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 }
 

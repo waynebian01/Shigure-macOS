@@ -517,7 +517,7 @@ struct ItemsListEditor: View {
                     Text("物品列表").font(.headline)
                     TextField("itemId、索引或名称", text: $filter).textFieldStyle(.roundedBorder).frame(maxWidth: 220)
                     Spacer()
-                    Text("来自当前职业 Lua 的 Fuyutsui.itemsList").font(.caption).foregroundStyle(.secondary)
+                    Text("来自当前职业 Lua 的 Senkoh.itemsList").font(.caption).foregroundStyle(.secondary)
                 }
                 .padding(8)
                 List {
