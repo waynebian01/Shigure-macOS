@@ -46,7 +46,7 @@ local function createMacro(name, key, macro)
     end
     SetOverrideBindingClick(bindingOwner, true, key, name, "LeftButton")
     btn:SetAttribute("macrotext", macro)
-    print(name, key, macro)
+    -- print(name, key, macro)
 end
 
 -- 解析法术名/宏体：优先查 MacroBodies；以 / 开头则原样使用；否则加 /cast
