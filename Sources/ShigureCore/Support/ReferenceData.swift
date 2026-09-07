@@ -59,6 +59,22 @@ public enum ReferenceData {
         ])
     ]
 
+    /// 按当前赛季与第一赛季整理的首领分组。
+    public static let seasonBossGroups: [BossGroup] = {
+        let dungeons = bossGroups.flatMap(\.dungeons)
+        let current = dungeons
+            .filter { currentSeasonDungeonNames.contains($0.name) }
+            .sorted {
+                (currentSeasonDungeonNames.firstIndex(of: $0.name) ?? .max)
+                    < (currentSeasonDungeonNames.firstIndex(of: $1.name) ?? .max)
+            }
+        let first = dungeons.filter { !currentSeasonDungeonNames.contains($0.name) }
+        return [
+            BossGroup(title: "当前赛季", dungeons: current),
+            BossGroup(title: "第一赛季", dungeons: first)
+        ]
+    }()
+
     public struct BossOption: Sendable, Identifiable, Hashable {
         public let number: Int
         public let dungeon: String

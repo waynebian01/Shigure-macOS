@@ -3,61 +3,54 @@ import ShigureCore
 
 struct BossNumbersPage: View {
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                ForEach(ReferenceData.bossGroups) { group in
-                    if !group.title.isEmpty {
-                        Text(localizedReferenceText(group.title)).font(.title3.bold()).padding(.top, 8)
-                    } else {
-                        Text("当前赛季").font(.title3.bold())
-                    }
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 12)], alignment: .leading, spacing: 12) {
-                        ForEach(group.dungeons) { dungeon in
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(dungeon.name).font(.headline).foregroundStyle(Color.accentColor)
-                                Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 4) {
-                                    GridRow {
-                                        Text("序号").foregroundStyle(.secondary)
-                                        Text("名称").foregroundStyle(.secondary)
-                                        Text("编号").foregroundStyle(.secondary)
-                                    }.font(.caption)
-                                    ForEach(dungeon.bosses) { boss in
-                                        GridRow {
-                                            Text("\(boss.sequence)")
-                                            Text(boss.name)
-                                            Text("\(boss.number)").foregroundStyle(Color.accentColor).monospacedDigit()
-                                        }
-                                    }
+        List {
+            ForEach(ReferenceData.seasonBossGroups) { group in
+                Section(localizedReferenceText(group.title)) {
+                    ForEach(group.dungeons) { dungeon in
+                        DisclosureGroup {
+                            ForEach(dungeon.bosses) { boss in
+                                HStack {
+                                    Text("\(boss.sequence)").foregroundStyle(.secondary).frame(width: 28, alignment: .trailing)
+                                    Text(boss.name)
+                                    Spacer().frame(width: 12)
+                                    Text("\(boss.number)")
+                                        .foregroundStyle(.tint)
+                                        .monospacedDigit()
+                                        .frame(width: 36, alignment: .leading)
                                 }
+                                .padding(.vertical, 2)
                             }
-                            .padding(10)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(.background.secondary, in: RoundedRectangle(cornerRadius: 10))
+                        } label: {
+                            Label(dungeon.name, systemImage: "list.number")
                         }
                     }
                 }
             }
-            .padding(16)
         }
+        .listStyle(.inset(alternatesRowBackgrounds: true))
     }
 }
 
 struct CommonFieldsPage: View {
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 380), spacing: 12)], alignment: .leading, spacing: 12) {
-                ForEach(ReferenceData.commonFieldCards, id: \.title) { card in
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(localizedReferenceText(card.title)).font(.headline).foregroundStyle(Color.accentColor)
-                        Text(card.names.joined(separator: "  ·  ")).textSelection(.enabled)
+        List {
+            ForEach(ReferenceData.commonFieldCards, id: \.title) { card in
+                Section(localizedReferenceText(card.title)) {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible(), alignment: .leading),
+                        GridItem(.flexible(), alignment: .leading)
+                    ], alignment: .leading, spacing: 0) {
+                        ForEach(card.names, id: \.self) { name in
+                            Text(name)
+                                .textSelection(.enabled)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.vertical, 6)
+                        }
                     }
-                    .padding(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.background.secondary, in: RoundedRectangle(cornerRadius: 10))
                 }
             }
-            .padding(16)
         }
+        .listStyle(.inset(alternatesRowBackgrounds: true))
     }
 }
 
