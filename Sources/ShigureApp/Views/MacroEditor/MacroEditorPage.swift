@@ -9,7 +9,10 @@ struct MacroEditorPage: View {
         Group {
             if let store { MacroEditorContent(store: store) } else { ProgressView() }
         }
-        .onAppear { if store == nil { store = MacroEditorStore(model: model) } }
+        .task {
+            guard store == nil else { return }
+            store = MacroEditorStore(model: model)
+        }
     }
 }
 
@@ -46,6 +49,7 @@ struct MacroEditorContent: View {
                     }
                 } else {
                     ContentUnavailableView("未加载 classmacros.lua", systemImage: "command", description: Text(store.status))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 Divider()
                 HStack {
@@ -108,7 +112,7 @@ struct DynamicMacrosEditor: View {
     var body: some View {
         HSplitView {
             List(selection: selection) {
-                Text("通用").tag(DynamicSelection.common)
+                Text(String(localized: "通用") + "（" + String(store.macros.dynamicCommon.count) + "）").tag(DynamicSelection.common)
                 ForEach(store.specIndexes, id: \.self) { index in
                     Text(store.specTitle(index) + "（" + String(store.macros.dynamicBySpec[index]?.count ?? 0) + "）").tag(DynamicSelection.spec(index))
                 }
@@ -124,7 +128,7 @@ struct DynamicMacrosEditor: View {
                     ForEach(Array(store.currentDynamic.enumerated()), id: \.offset) { index, name in
                         HStack(spacing: 8) {
                             SpellIconView(spellId: nil, name: name)
-                            TextField("法术名", text: Binding(get: { name }, set: { store.currentDynamic[index] = $0 }))
+                            TextField("法术名", text: Binding(get: { name }, set: { store.currentDynamic[index] = $0 })).textFieldStyle(.roundedBorder)
                             Button(role: .destructive) { store.currentDynamic.remove(at: index) } label: { Image(systemName: "xmark.circle") }.buttonStyle(.borderless).frame(width: 30)
                         }
                     }
@@ -174,18 +178,22 @@ struct ArrayMacrosEditor: View {
                         Text("\(index + 1)").frame(width: 44).foregroundStyle(.secondary).monospacedDigit()
                         SpellIconView(spellId: nil, name: parsed.spell.isEmpty ? entry.text : parsed.spell)
                         if isSpecial {
-                            TextField("技能名", text: Binding(get: { entry.comment ?? "" }, set: { entries.wrappedValue[index].comment = $0.isBlank ? nil : $0 })).frame(width: 160)
+                            TextField("技能名", text: Binding(get: { entry.comment ?? "" }, set: { entries.wrappedValue[index].comment = $0.isBlank ? nil : $0 })).textFieldStyle(.roundedBorder).frame(width: 160)
                         } else {
                             Text(localizedReferenceText(ReservedUnit.displayText(parsed.unit))).frame(width: 60, alignment: .leading).foregroundStyle(.secondary)
                             Text(parsed.condition).frame(width: 120, alignment: .leading).foregroundStyle(.secondary).lineLimit(1)
                             Text(parsed.spell).frame(width: 140, alignment: .leading).lineLimit(1)
                         }
                         Button { editing = index } label: {
-                            Text(entry.text.replacingOccurrences(of: "\n", with: "\\n")).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
+                            Text(entry.text.isEmpty ? String(localized: "点击编辑宏…") : entry.text.replacingOccurrences(of: "\n", with: "\\n"))
+                                .foregroundStyle(entry.text.isEmpty ? AnyShapeStyle(.tertiary) : AnyShapeStyle(.primary))
+                                .lineLimit(1)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain).help("点击编辑完整宏")
                         if !isSpecial {
-                            TextField("注释", text: Binding(get: { entry.comment ?? "" }, set: { entries.wrappedValue[index].comment = $0.isBlank ? nil : $0 })).frame(width: 140)
+                            TextField("注释", text: Binding(get: { entry.comment ?? "" }, set: { entries.wrappedValue[index].comment = $0.isBlank ? nil : $0 })).textFieldStyle(.roundedBorder).frame(width: 140)
                         }
                         Button(role: .destructive) { entries.wrappedValue.remove(at: index) } label: { Image(systemName: "xmark.circle") }.buttonStyle(.borderless).frame(width: 30)
                     }

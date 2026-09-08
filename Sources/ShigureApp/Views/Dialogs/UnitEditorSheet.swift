@@ -56,47 +56,81 @@ struct UnitEditorSheet: View {
             Divider()
             Form {
                 Section {
-                    Picker("类别", selection: $category) { ForEach(Category.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
-                        .disabled(originalId != nil)
-                    if category == .unit {
-                        Picker("选择器", selection: $unitKind) { ForEach(Self.unitSelectors, id: \.kind) { Text(localizedReferenceText($0.title)).tag($0.kind) } }
-                    } else {
-                        Picker("选择器", selection: $countKind) { ForEach(Self.countSelectors, id: \.kind) { Text(localizedReferenceText($0.title)).tag($0.kind) } }
+                    LabeledContent("类别") {
+                        FixedPopUpPicker(options: Category.allCases.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $category)
+                            .frame(width: 240)
+                            .disabled(originalId != nil)
                     }
-                    TextField("名称", text: $name)
+                    if category == .unit {
+                        LabeledContent("选择器") {
+                            FixedPopUpPicker(options: Self.unitSelectors.map { PopUpOption($0.kind, localizedReferenceText($0.title)) }, selection: $unitKind)
+                                .frame(width: 240)
+                        }
+                    } else {
+                        LabeledContent("选择器") {
+                            FixedPopUpPicker(options: Self.countSelectors.map { PopUpOption($0.kind, localizedReferenceText($0.title)) }, selection: $countKind)
+                                .frame(width: 240)
+                        }
+                    }
+                    TextField("名称", text: $name).textFieldStyle(.roundedBorder)
                     if category == .unit, resolvedUnitKind == .lowestHealth {
-                        TextField("值名称（可选）", text: $healthName)
+                        TextField("值名称（可选）", text: $healthName).textFieldStyle(.roundedBorder)
                         Text("把该单位生命值暴露为同名数值条件字段（如 最低血量 < 50）").font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 Section("参数") {
                     if showsThreshold {
-                        Picker("阈值类型", selection: $dynamicThreshold) { Text("固定阈值").tag(false); Text("动态阈值").tag(true) }
+                        LabeledContent("阈值类型") {
+                            FixedPopUpPicker(options: [PopUpOption(false, String(localized: "固定阈值")), PopUpOption(true, String(localized: "动态阈值"))], selection: $dynamicThreshold)
+                                .frame(width: 240)
+                        }
                         if dynamicThreshold {
-                            Picker("动态阈值", selection: $thresholdField) {
-                                Text("").tag("")
-                                ForEach(thresholdFields, id: \.self) { Text($0).tag($0) }
+                            LabeledContent("动态阈值") {
+                                FixedPopUpPicker(options: [PopUpOption("", "")] + thresholdFields.map { PopUpOption($0, $0) }, selection: $thresholdField)
+                                    .frame(width: 240)
                             }
                         } else {
-                            Stepper(value: $threshold, in: (isHealingAbsorb ? 0 : 1)...1000) { Text("\(isHealingAbsorb ? "治疗吸收阈值 (>)" : "血量阈值 (<)"): \(threshold)") }
+                            LabeledContent {
+                                HStack(spacing: 4) {
+                                    TextField("", value: $threshold, format: .number)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(width: 80)
+                                        .onChange(of: threshold) { _, value in
+                                            threshold = min(max(value, thresholdRange.lowerBound), thresholdRange.upperBound)
+                                        }
+                                    Stepper("", value: $threshold, in: thresholdRange).labelsHidden()
+                                }
+                            } label: {
+                                Text(isHealingAbsorb ? String(localized: "治疗吸收阈值 (>)") : String(localized: "血量阈值 (<)"))
+                            }
                         }
                     }
                     if category == .unit, unitKind == .lowestHealth || unitKind == .highestHealingAbsorb {
-                        Picker("光环筛选", selection: $auraFilter) { ForEach(AuraFilter.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
+                        LabeledContent("光环筛选") {
+                            FixedPopUpPicker(options: AuraFilter.allCases.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $auraFilter)
+                                .frame(width: 240)
+                        }
                     }
                     if category == .unit, unitKind == .lowestHealth {
-                        Picker("职责筛选", selection: $roleFilter) { ForEach(RoleFilter.allCases, id: \.self) { Text(localizedReferenceText($0.rawValue)).tag($0) } }
+                        LabeledContent("职责筛选") {
+                            FixedPopUpPicker(options: RoleFilter.allCases.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $roleFilter)
+                                .frame(width: 240)
+                        }
                     }
                     if showsRole {
-                        Picker("职责", selection: $role) { Text("坦克 (1)").tag(1); Text("治疗 (2)").tag(2); Text("输出 (3)").tag(3) }
+                        LabeledContent("职责") {
+                            FixedPopUpPicker(options: [PopUpOption(1, String(localized: "坦克 (1)")), PopUpOption(2, String(localized: "治疗 (2)")), PopUpOption(3, String(localized: "输出 (3)"))], selection: $role)
+                                .frame(width: 240)
+                        }
                     }
                     if category == .unit, unitKind == .unitWithRole || unitKind == .unitWithRoleWithoutAura {
                         Toggle("取逆序最后一个匹配单位", isOn: $reverse)
                     }
                     if needsSingleAura {
-                        Picker("光环", selection: $aura) {
-                            Text("").tag(Int64(0))
-                            ForEach(auraFields) { Text($0.displayName).tag(auraId($0)) }
+                        LabeledContent("光环") {
+                            FixedPopUpPicker(options: [PopUpOption(Int64(0), "")] + auraFields.map { PopUpOption(auraId($0), $0.displayName) }, selection: $aura)
+                                .frame(width: 240)
                         }
                     }
                     if needsAuraList {
@@ -111,7 +145,10 @@ struct UnitEditorSheet: View {
                         Stepper(value: $auraCount, in: 0...100) { Text("光环值: \(auraCount)") }
                     }
                     if category == .unit, unitKind == .unitWithDispelType {
-                        Picker("驱散类型", selection: $dispelType) { Text("1: 魔法").tag(1); Text("2: 诅咒").tag(2); Text("3: 疾病").tag(3); Text("4: 中毒").tag(4) }
+                        LabeledContent("驱散类型") {
+                            FixedPopUpPicker(options: [PopUpOption(1, String(localized: "1: 魔法")), PopUpOption(2, String(localized: "2: 诅咒")), PopUpOption(3, String(localized: "3: 疾病")), PopUpOption(4, String(localized: "4: 中毒"))], selection: $dispelType)
+                                .frame(width: 240)
+                        }
                     }
                 }
                 Section {
@@ -139,6 +176,8 @@ struct UnitEditorSheet: View {
     }
 
     private var isHealingAbsorb: Bool { category == .unit ? unitKind == .highestHealingAbsorb : countKind.isHealingAbsorbKind }
+
+    private var thresholdRange: ClosedRange<Int> { (isHealingAbsorb ? 0 : 1)...1000 }
 
     private var showsThreshold: Bool {
         if category == .count { return countKind != .unitsWithAura }

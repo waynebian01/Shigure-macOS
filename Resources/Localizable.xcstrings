@@ -253,6 +253,7 @@
       }
     },
     "%@: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4752,6 +4753,9 @@
         }
       }
     },
+    "治疗吸收阈值 (>)" : {
+
+    },
     "法师" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5209,6 +5213,9 @@
           }
         }
       }
+    },
+    "点击编辑宏…" : {
+
     },
     "点击编辑条件（当前：%@）" : {
       "localizations" : {
@@ -5998,6 +6005,9 @@
         }
       }
     },
+    "自动运行" : {
+
+    },
     "自动选择" : {
       "localizations" : {
         "en" : {
@@ -6146,6 +6156,9 @@
           }
         }
       }
+    },
+    "血量阈值 (<)" : {
+
     },
     "装备中" : {
       "localizations" : {

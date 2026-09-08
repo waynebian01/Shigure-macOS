@@ -26,6 +26,7 @@ struct StatusPage: View {
             } description: {
                 Text(model.isRunning ? "已连接游戏，等待首帧状态数据。" : "从工具栏启动运行会话后，这里会显示实时状态。")
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             List {
                 StatusSection(title: "状态", rows: stateRows(s), columns: [.category, .name, .value])

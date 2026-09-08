@@ -23,13 +23,21 @@ struct ConfigEditorContent: View {
             classList.frame(minWidth: Layout.listMin, idealWidth: Layout.listIdeal, maxWidth: Layout.listMax)
             VStack(spacing: 0) {
                 if store.document != nil {
-                    HStack {
-                        Picker("专精", selection: $store.selectedSpecId) {
+                    HStack(spacing: 12) {
+                        Text("专精").foregroundStyle(.secondary)
+                        HStack(spacing: 8) {
                             ForEach(store.specIds, id: \.self) { id in
-                                Text("\(store.specName(id)) (\(id))").tag(Int?.some(id))
+                                SpecButton(
+                                    specId: id,
+                                    specName: store.specName(id),
+                                    classId: store.selectedClassId ?? 0,
+                                    isSelected: store.selectedSpecId == id,
+                                    iconCatalog: model.iconCatalog
+                                ) {
+                                    store.selectedSpecId = id
+                                }
                             }
                         }
-                        .frame(maxWidth: 320)
                         Spacer()
                         Picker("", selection: $tab) {
                             Text("状态").tag(0); Text("光环").tag(1); Text("冷却").tag(2)
@@ -41,6 +49,7 @@ struct ConfigEditorContent: View {
                     Divider()
                     if !store.isModern {
                         ContentUnavailableView("旧版稀疏索引格式", systemImage: "exclamationmark.triangle", description: Text("请先把该职业 Lua 迁移到 states/auras/spells/items/group 结构后再编辑。"))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
                         switch tab {
                         case 0: StatesEditor(store: store)
@@ -53,6 +62,7 @@ struct ConfigEditorContent: View {
                     }
                 } else {
                     ContentUnavailableView("请选择职业", systemImage: "slider.horizontal.3", description: Text(store.status))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 Divider()
                 footer
@@ -301,21 +311,21 @@ struct CooldownsEditor: View {
                 }
                 .padding(8)
             }
-            .frame(minWidth: Layout.innerPrimaryMin)
+            .frame(minWidth: Layout.innerPrimaryMin, idealWidth: 700)
             VStack(spacing: 0) {
                 HStack {
                     Text("物品冷却").font(.headline)
                     TextField("itemId 或名称", text: $itemFilter).textFieldStyle(.roundedBorder).frame(maxWidth: 180)
                     Spacer()
+                    Text("名称可改为业务别名；图标始终按 itemId 匹配。").font(.caption).foregroundStyle(.secondary)
                 }
                 .padding(8)
-                Text("名称可改为业务别名；图标始终按 itemId 匹配。").font(.caption).foregroundStyle(.secondary)
                 List {
                     ForEach(Array(store.spec.items.enumerated()).filter { itemFilter.isEmpty || String($0.element.itemId ?? 0).contains(itemFilter) || $0.element.name.localizedCaseInsensitiveContains(itemFilter) }, id: \.offset) { index, item in
                         HStack(spacing: 8) {
                             SpellIconView(spellId: item.itemId, name: item.name, isItem: true)
-                            TextField("itemId", text: Binding(get: { item.itemId.map(String.init) ?? "" }, set: { store.spec.items[index].itemId = Int64($0.trimmed()) })).frame(width: 90)
-                            TextField("名称", text: Binding(get: { item.name }, set: { store.spec.items[index].name = $0 }))
+                            TextField("itemId", text: Binding(get: { item.itemId.map(String.init) ?? "" }, set: { store.spec.items[index].itemId = Int64($0.trimmed()) })).textFieldStyle(.roundedBorder).frame(width: 90)
+                            TextField("名称", text: Binding(get: { item.name }, set: { store.spec.items[index].name = $0 })).textFieldStyle(.roundedBorder)
                             Toggle("装备中", isOn: Binding(get: { item.isEquipped }, set: { store.spec.items[index].isEquipped = $0 })).toggleStyle(.checkbox)
                             Button(role: .destructive) { store.spec.items.remove(at: index) } label: { Image(systemName: "xmark.circle") }.buttonStyle(.borderless)
                         }
@@ -329,7 +339,7 @@ struct CooldownsEditor: View {
                 }
                 .padding(8)
             }
-            .frame(minWidth: Layout.innerSecondaryMin)
+            .frame(minWidth: Layout.innerSecondaryMin, idealWidth: 400)
         }
     }
 
@@ -348,41 +358,56 @@ struct CooldownSpellRow: View {
     let spell: ClassBlocksStore.SpellEntry
 
     var body: some View {
-        ViewThatFits(in: .horizontal) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
                 identity
-                flags
+                firstLineToggles
+                Spacer(minLength: 0)
+            }
+            HStack(spacing: 8) {
+                secondLineControls
+                Spacer(minLength: 0)
                 deleteButton
             }
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 8) {
-                    identity
-                    Spacer(minLength: 0)
-                    deleteButton
-                }
-                HStack(spacing: 8) {
-                    flags
-                    Spacer(minLength: 0)
-                }
-                .padding(.leading, 36)
-            }
+            .padding(.leading, 36)
         }
     }
 
     @ViewBuilder
     private var identity: some View {
         SpellIconView(spellId: spell.spellId, name: spell.name)
-        TextField("名称", text: Binding(get: { spell.name }, set: { store.spec.spells[index].name = $0 })).frame(width: 140)
-        TextField("法术 ID", text: Binding(get: { String(spell.spellId) }, set: { store.spec.spells[index].spellId = Int64($0.trimmed()) ?? 0 })).frame(width: 90)
+        TextField("名称", text: Binding(get: { spell.name }, set: { store.spec.spells[index].name = $0 }))
+            .textFieldStyle(.roundedBorder)
+            .frame(width: 100)
+        TextField("法术 ID", text: Binding(get: { String(spell.spellId) }, set: { store.spec.spells[index].spellId = Int64($0.trimmed()) ?? 0 }))
+            .textFieldStyle(.roundedBorder)
+            .frame(width: 72)
     }
 
     @ViewBuilder
-    private var flags: some View {
-        Toggle("充能", isOn: Binding(get: { spell.charge }, set: { store.spec.spells[index].charge = $0 })).toggleStyle(.checkbox)
-        TextField("最大充能", text: Binding(get: { spell.maxCharge.map(String.init) ?? "" }, set: { store.spec.spells[index].maxCharge = Int($0.trimmed()) })).frame(width: 60)
-        TextField("施法次数", text: Binding(get: { spell.castCount.map(String.init) ?? "" }, set: { store.spec.spells[index].castCount = Int($0.trimmed()) })).frame(width: 60)
-        Toggle("强制已学", isOn: Binding(get: { spell.forcedKnown }, set: { store.spec.spells[index].forcedKnown = $0 })).toggleStyle(.checkbox)
-        Toggle("法术书中", isOn: Binding(get: { spell.inSpellBook }, set: { store.spec.spells[index].inSpellBook = $0 })).toggleStyle(.checkbox)
+    private var firstLineToggles: some View {
+        Toggle("强制已学", isOn: Binding(get: { spell.forcedKnown }, set: { store.spec.spells[index].forcedKnown = $0 }))
+            .toggleStyle(.checkbox)
+        Toggle("法术书中", isOn: Binding(get: { spell.inSpellBook }, set: { store.spec.spells[index].inSpellBook = $0 }))
+            .toggleStyle(.checkbox)
+    }
+
+    @ViewBuilder
+    private var secondLineControls: some View {
+        Toggle("充能", isOn: Binding(get: { spell.charge }, set: { store.spec.spells[index].charge = $0 }))
+            .toggleStyle(.checkbox)
+        HStack(spacing: 4) {
+            Text("最大充能").font(.caption).foregroundStyle(.secondary)
+            TextField("", text: Binding(get: { spell.maxCharge.map(String.init) ?? "" }, set: { store.spec.spells[index].maxCharge = Int($0.trimmed()) }))
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 60)
+        }
+        HStack(spacing: 4) {
+            Text("施法次数").font(.caption).foregroundStyle(.secondary)
+            TextField("", text: Binding(get: { spell.castCount.map(String.init) ?? "" }, set: { store.spec.spells[index].castCount = Int($0.trimmed()) }))
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 60)
+        }
     }
 
     private var deleteButton: some View {
@@ -442,6 +467,9 @@ struct GroupEditor: View {
                     Text("偏移为成员内相对格位；保存时按偏移排序").font(.caption).foregroundStyle(.secondary)
                 }
                 .padding(8)
+            } else {
+                // 未启用时没有下方列表这样的贪婪视图，整页会收缩变矮；用 Spacer 占满剩余高度。
+                Spacer(minLength: 0)
             }
         }
     }
@@ -570,6 +598,7 @@ struct DatabaseSearchPane: View {
             .padding(8)
             if !available {
                 ContentUnavailableView("数据库不可用", systemImage: "externaldrive.badge.xmark", description: Text("请在「通用 → 下载数据包」安装完整数据包"))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List(results, id: \.id) { entry in
                     HStack(spacing: 8) {
@@ -605,5 +634,41 @@ struct DatabaseSearchPane: View {
             }
         }
         .onAppear { results = Array(suggestions.prefix(200)) }
+    }
+}
+
+// MARK: - 专精按钮
+
+struct SpecButton: View {
+    let specId: Int
+    let specName: String
+    let classId: Int
+    let isSelected: Bool
+    let iconCatalog: IconCatalogStore
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 4) {
+                if let image = iconCatalog.specImage(classId: classId, specId: specId) {
+                    Image(nsImage: image)
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                }
+                Text(specName)
+                    .font(.system(size: 13))
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(isSelected ? Color.accentColor : Color.clear)
+            .foregroundStyle(isSelected ? .white : .primary)
+            .cornerRadius(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(isSelected ? Color.clear : Color.secondary.opacity(0.3), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
     }
 }

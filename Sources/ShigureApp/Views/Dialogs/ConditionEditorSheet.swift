@@ -289,7 +289,7 @@ struct ConditionEditorSheet: View {
             )
         } else {
             HStack(spacing: 4) {
-                TextField(String(localized: row.op == "in" || row.op == "not in" ? "1, 2, 3" : "值"), text: binding)
+                TextField(String(localized: row.op == "in" || row.op == "not in" ? "1, 2, 3" : "值"), text: binding).textFieldStyle(.roundedBorder)
                 if let field, field.name.contains("施法") || field.name.contains("引导"), let n = Int(row.value) {
                     Text(String(localized: "约\(String(format: "%.1f", Double(n) / 10))秒")).font(.caption2).foregroundStyle(.secondary)
                 }
@@ -447,81 +447,6 @@ struct ConditionEditorSheet: View {
     }
 }
 
-// MARK: - 固定宽度下拉（NSPopUpButton）
-
-/// macOS 的 SwiftUI Picker 按最长菜单项自适应宽度、忽略 frame 提议的宽度，
-/// 同一列的下拉因此参差不齐；直接包 NSPopUpButton 让控件吃满列宽。
-struct PopUpOption<Tag: Hashable> {
-    let tag: Tag
-    let title: String
-    var image: NSImage?
-    var titleColor: NSColor?
-
-    init(_ tag: Tag, _ title: String, image: NSImage? = nil, titleColor: NSColor? = nil) {
-        self.tag = tag
-        self.title = title
-        self.image = image
-        self.titleColor = titleColor
-    }
-}
-
-struct FixedPopUpPicker<Tag: Hashable>: NSViewRepresentable {
-    let options: [PopUpOption<Tag>]
-    @Binding var selection: Tag
-
-    func makeCoordinator() -> Coordinator { Coordinator(self) }
-
-    func makeNSView(context: Context) -> NSPopUpButton {
-        let button = NSPopUpButton(frame: .zero, pullsDown: false)
-        button.target = context.coordinator
-        button.action = #selector(Coordinator.selectionChanged(_:))
-        (button.cell as? NSPopUpButtonCell)?.lineBreakMode = .byTruncatingTail
-        return button
-    }
-
-    func updateNSView(_ button: NSPopUpButton, context: Context) {
-        context.coordinator.parent = self
-        let signature = options.map { option in
-            "\(option.tag)|\(option.title)|\(option.image.map { ObjectIdentifier($0).hashValue } ?? 0)|\(option.titleColor != nil)"
-        }
-        if context.coordinator.signature != signature {
-            context.coordinator.signature = signature
-            let menu = NSMenu()
-            for option in options {
-                let item = NSMenuItem(title: option.title, action: nil, keyEquivalent: "")
-                item.image = option.image
-                if let color = option.titleColor {
-                    item.attributedTitle = NSAttributedString(string: option.title, attributes: [.foregroundColor: color, .font: NSFont.menuFont(ofSize: 0)])
-                }
-                menu.addItem(item)
-            }
-            button.menu = menu
-        }
-        button.selectItem(at: options.firstIndex { $0.tag == selection } ?? -1)
-        button.isEnabled = context.environment.isEnabled
-    }
-
-    func sizeThatFits(_ proposal: ProposedViewSize, nsView: NSPopUpButton, context: Context) -> CGSize? {
-        let intrinsic = nsView.intrinsicContentSize
-        if let width = proposal.width, width.isFinite { return CGSize(width: width, height: intrinsic.height) }
-        return intrinsic
-    }
-
-    @MainActor
-    final class Coordinator: NSObject {
-        var parent: FixedPopUpPicker
-        var signature: [String] = []
-
-        init(_ parent: FixedPopUpPicker) { self.parent = parent }
-
-        @objc func selectionChanged(_ sender: NSPopUpButton) {
-            let index = sender.indexOfSelectedItem
-            guard parent.options.indices.contains(index) else { return }
-            parent.selection = parent.options[index].tag
-        }
-    }
-}
-
 // MARK: - 字段选择器（带图标）
 
 struct FieldPicker: View {
@@ -537,7 +462,11 @@ struct FieldPicker: View {
     private var popupOptions: [PopUpOption<String>] {
         var options: [PopUpOption<String>] = [PopUpOption("", "")]
         options += fields.map { field in
-            PopUpOption(field.name, field.displayName, image: iconProvider(field.displayName.components(separatedBy: " / ").first ?? field.displayName))
+            // 仅冷却/光环字段显示图标；状态等字段名可能撞上技能名，不配图标。
+            let image = [.spell, .aura].contains(field.category)
+                ? iconProvider(field.displayName.components(separatedBy: " / ").first ?? field.displayName)
+                : nil
+            return PopUpOption(field.name, field.displayName, image: image)
         }
         if let customName { options.append(PopUpOption(customName, String(localized: "\(customName) (自定义)"))) }
         return options

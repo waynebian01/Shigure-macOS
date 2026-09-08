@@ -13,6 +13,7 @@ struct UnitsTab: View {
         VStack(spacing: 0) {
             if store.draft.units.isEmpty && store.draft.counts.isEmpty {
                 ContentUnavailableView("暂无动态单位 / 数量", systemImage: "person.crop.circle.badge.questionmark", description: Text("点击下方「添加」创建"))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
                     ForEach(store.draft.units) { unit in
@@ -156,20 +157,16 @@ struct AdjustmentsTab: View {
         return VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 10) {
                 Toggle("", isOn: Binding(get: { adjustment.enabled }, set: { store.draft.valueAdjustments[index].enabled = $0 })).labelsHidden()
-                Picker("", selection: Binding(get: { category }, set: { newCategory in
+                FixedPopUpPicker(options: Self.typeOptions.map { PopUpOption($0, $0.rawValue) }, selection: Binding(get: { category }, set: { newCategory in
                     if !fields.contains(where: { $0.name == adjustment.field && $0.category == newCategory }) { store.draft.valueAdjustments[index].field = "" }
                     store.draft.valueAdjustments[index].condition += "" // 触发刷新
-                })) {
-                    ForEach(Self.typeOptions, id: \.self) { Text($0.rawValue).tag($0) }
-                }
-                .labelsHidden().frame(width: 110)
-                Picker("", selection: Binding(get: { adjustment.field }, set: { store.draft.valueAdjustments[index].field = $0; store.invalidateValidation() })) {
-                    Text("").tag("")
-                    ForEach(fields.filter { $0.category == category }) { Text($0.displayName).tag($0.name) }
-                    if !adjustment.field.isEmpty, !fields.contains(where: { $0.name == adjustment.field }) { Text(adjustment.field).tag(adjustment.field) }
-                }
-                .labelsHidden().frame(width: 240)
+                }))
+                .frame(width: 110)
+                FixedPopUpPicker(options: adjustmentFieldOptions(field: adjustment.field, category: category, fields: fields),
+                                 selection: Binding(get: { adjustment.field }, set: { store.draft.valueAdjustments[index].field = $0; store.invalidateValidation() }))
+                .frame(width: 240)
                 TextField("调整", value: Binding(get: { adjustment.delta }, set: { store.draft.valueAdjustments[index].delta = $0 }), format: .number)
+                    .textFieldStyle(.roundedBorder)
                     .frame(width: 70)
                 Button {
                     conditionAdjustmentId = adjustment.id
@@ -191,6 +188,7 @@ struct AdjustmentsTab: View {
             HStack(spacing: 10) {
                 Toggle("", isOn: Binding(get: { adjustment.enabled }, set: { store.draft.valueAdjustments[index].enabled = $0 })).labelsHidden()
                 TextField("数值名称", text: Binding(get: { adjustment.field }, set: { store.draft.valueAdjustments[index].field = $0; store.invalidateValidation() }))
+                    .textFieldStyle(.roundedBorder)
                     .frame(width: 180)
                 Button { formulaAdjustmentId = adjustment.id } label: {
                     Text(adjustment.formula.isBlank ? String(localized: "点击编辑公式") : adjustment.formula).font(.system(.body, design: .monospaced)).lineLimit(2)
@@ -202,6 +200,13 @@ struct AdjustmentsTab: View {
             if !issues.isEmpty { Text(issues.joined(separator: String(localized: "；"))).font(.caption).foregroundStyle(.red) }
         }
         .listRowBackground(issues.isEmpty ? nil : Color.red.opacity(0.08))
+    }
+
+    private func adjustmentFieldOptions(field: String, category: ConditionFieldCategory, fields: [ConditionField]) -> [PopUpOption<String>] {
+        var options = [PopUpOption("", "")]
+        options += fields.filter { $0.category == category }.map { PopUpOption($0.name, $0.displayName) }
+        if !field.isEmpty, !fields.contains(where: { $0.name == field }) { options.append(PopUpOption(field, field)) }
+        return options
     }
 
     private func resolveCategory(_ field: String, fields: [ConditionField]) -> ConditionFieldCategory {

@@ -4,6 +4,8 @@ import ShigureCore
 struct ModuleEditorPage: View {
     @Environment(AppModel.self) private var model
     @State private var store: ModuleEditorStore?
+    @State private var lastModuleVersion: Int = 0
+    @State private var lastCatalogVersion: Int = 0
 
     var body: some View {
         Group {
@@ -13,18 +15,30 @@ struct ModuleEditorPage: View {
                 ProgressView()
             }
         }
-        .onAppear {
-            if store == nil { store = model.moduleEditor() }
+        .task {
+            guard store == nil else { return }
+            store = model.moduleEditor()
+            store?.synchronize()
+            lastModuleVersion = model.moduleReloadVersion
+            lastCatalogVersion = model.catalogVersion
+        }
+        .onChange(of: model.moduleReloadVersion) { _, newValue in
+            guard newValue != lastModuleVersion else { return }
+            lastModuleVersion = newValue
             store?.synchronize()
         }
-        .onChange(of: model.moduleReloadVersion) { _, _ in store?.synchronize() }
-        .onChange(of: model.catalogVersion) { _, _ in store?.synchronize() }
+        .onChange(of: model.catalogVersion) { _, newValue in
+            guard newValue != lastCatalogVersion else { return }
+            lastCatalogVersion = newValue
+            store?.synchronize()
+        }
     }
 }
 
 struct ModuleEditorContent: View {
     @Environment(AppModel.self) private var model
     @Bindable var store: ModuleEditorStore
+    @State private var cachedMatchTexts: [String: String] = [:]
 
     var body: some View {
         HSplitView {
@@ -50,6 +64,7 @@ struct ModuleEditorContent: View {
                     }
                 } else {
                     ContentUnavailableView("请在左侧选择模块", systemImage: "square.stack.3d.up", description: Text("或点击「新建」创建一个模块"))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 Divider()
                 footer
@@ -66,13 +81,21 @@ struct ModuleEditorContent: View {
             Button("删除", role: .destructive) { store.confirmDelete() }
             Button("取消", role: .cancel) { store.pendingDeleteName = nil }
         } message: { Text("模块文件将从模块目录中删除，此操作不可撤销。") }
+        .task(id: store.modules.map(\.id)) {
+            // 当模块列表变化时，重新计算所有匹配文本缓存
+            var newCache: [String: String] = [:]
+            for module in store.modules {
+                newCache[module.id] = matchText(module)
+            }
+            cachedMatchTexts = newCache
+        }
     }
 
     private var moduleList: some View {
         VStack(spacing: 0) {
             List(selection: Binding(get: { store.selectedId }, set: { if let id = $0 { store.select(id) } })) {
                 ForEach(store.modules) { module in
-                    ModuleListRow(module: module, store: store, matchText: matchText(module))
+                    ModuleListRow(module: module, store: store, matchText: cachedMatchTexts[module.id] ?? "")
                 }
             }
             .listStyle(.inset)
@@ -96,11 +119,9 @@ struct ModuleEditorContent: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                TextField("名称", text: $store.draft.name).textFieldStyle(.roundedBorder)
-                TextField("作者", text: $store.draft.author).textFieldStyle(.roundedBorder)
-            }
             HStack(spacing: 8) {
+                TextField("名称", text: $store.draft.name).textFieldStyle(.roundedBorder).frame(minWidth: 100)
+                TextField("作者", text: $store.draft.author).textFieldStyle(.roundedBorder).frame(minWidth: 80)
                 matchPicker("职业", selection: Binding(get: { store.draft.match.classId }, set: { store.setClass($0) })) {
                     Text("任意 (*)").tag(Int?.none)
                     ForEach(ClassNames.allClasses) { Text("\($0.name) (\($0.id))").tag(Int?.some($0.id)) }
@@ -139,8 +160,8 @@ struct ModuleEditorContent: View {
     }
 
     private func matchPicker<S: Hashable, C: View>(_ title: LocalizedStringResource, selection: Binding<S>, @ViewBuilder content: () -> C) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.caption).foregroundStyle(.secondary)
+        HStack(spacing: 6) {
+            Text(title).foregroundStyle(.secondary).fixedSize()
             // `minWidth: 0` 是关键：只写 `maxWidth` 时，下限取内容固有宽度，而弹出菜单的固有
             // 宽度等于**最长那一项**（英雄天赋名可以很长），四个选择器加起来就把整个右栏的最小
             // 宽度顶到 900 pt 以上，窗口一窄 `HSplitView` 装不下就整体左移、压掉侧栏。
