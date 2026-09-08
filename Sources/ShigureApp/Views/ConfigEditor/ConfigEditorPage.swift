@@ -298,7 +298,9 @@ struct CooldownsEditor: View {
                 }
                 .padding(8)
                 List {
-                    ForEach(Array(store.spec.spells.enumerated()).filter { matches($0.element, spellFilter) }, id: \.element.spellId) { index, spell in
+                    // 用行下标做 id：spellId 是编辑对象，用它做 id 会在每次输入时改变行身份，
+                    // 导致 SwiftUI 重建整行、输入框失去焦点（新建行的 spellId 都是 0 时还会重复）。
+                    ForEach(Array(store.spec.spells.enumerated()).filter { matches($0.element, spellFilter) }, id: \.offset) { index, spell in
                         CooldownSpellRow(store: store, index: index, spell: spell)
                     }
                     .onMove { from, to in if spellFilter.isEmpty { store.spec.spells.move(fromOffsets: from, toOffset: to) } }
@@ -356,6 +358,7 @@ struct CooldownSpellRow: View {
     @Bindable var store: ConfigEditorStore
     let index: Int
     let spell: ClassBlocksStore.SpellEntry
+    @State private var spellIdText: String = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -371,6 +374,9 @@ struct CooldownSpellRow: View {
             }
             .padding(.leading, 36)
         }
+        .onAppear {
+            spellIdText = String(spell.spellId)
+        }
     }
 
     @ViewBuilder
@@ -379,9 +385,25 @@ struct CooldownSpellRow: View {
         TextField("名称", text: Binding(get: { spell.name }, set: { store.spec.spells[index].name = $0 }))
             .textFieldStyle(.roundedBorder)
             .frame(width: 100)
-        TextField("法术 ID", text: Binding(get: { String(spell.spellId) }, set: { store.spec.spells[index].spellId = Int64($0.trimmed()) ?? 0 }))
+        TextField("法术 ID", text: $spellIdText)
             .textFieldStyle(.roundedBorder)
             .frame(width: 72)
+            .onChange(of: spellIdText) { _, newValue in
+                if let id = Int64(newValue.trimmed()) {
+                    store.spec.spells[index].spellId = id
+                }
+            }
+            .onChange(of: spell.spellId) { _, newValue in
+                // 外部变化（刷新/放弃修改）时回写；与输入同步时值相同，不会互相触发。
+                if spellIdText != String(newValue) { spellIdText = String(newValue) }
+            }
+            .onSubmit {
+                if let id = Int64(spellIdText.trimmed()) {
+                    store.spec.spells[index].spellId = id
+                } else {
+                    spellIdText = String(spell.spellId)
+                }
+            }
     }
 
     @ViewBuilder
@@ -504,7 +526,7 @@ struct SpellsListEditor: View {
                 }
                 .padding(8)
                 List {
-                    ForEach(Array((store.document?.spellsList ?? []).enumerated()).filter { visible($0.element) }, id: \.element.spellId) { index, entry in
+                    ForEach(Array((store.document?.spellsList ?? []).enumerated()).filter { visible($0.element) }, id: \.offset) { index, entry in
                         HStack(spacing: 8) {
                             SpellIconView(spellId: entry.spellId, name: entry.name)
                             TextField("法术 ID", text: Binding(get: { String(entry.spellId) }, set: { store.document?.spellsList[index].spellId = Int64($0.trimmed()) ?? 0 })).frame(width: 100)
@@ -549,7 +571,7 @@ struct ItemsListEditor: View {
                 }
                 .padding(8)
                 List {
-                    ForEach(Array((store.document?.itemsList ?? []).enumerated()).filter { visible($0.element) }, id: \.element.itemId) { index, entry in
+                    ForEach(Array((store.document?.itemsList ?? []).enumerated()).filter { visible($0.element) }, id: \.offset) { index, entry in
                         HStack(spacing: 8) {
                             SpellIconView(spellId: entry.itemId, name: entry.name, isItem: true)
                             TextField("itemId", text: Binding(get: { String(entry.itemId) }, set: { store.document?.itemsList[index].itemId = Int64($0.trimmed()) ?? 0 })).frame(width: 100)

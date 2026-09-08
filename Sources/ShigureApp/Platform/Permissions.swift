@@ -32,4 +32,16 @@ enum Permissions {
             NSWorkspace.shared.open(url)
         }
     }
+
+    /// 重启应用：屏幕录制/输入监控在进程运行中途授权时，采集/监听管线要求重启才生效。
+    /// 延迟 0.5s 再 `open -n`，确保旧进程已退出，新实例不会被当作重复激活吞掉。
+    @MainActor
+    static func relaunchApp() {
+        let bundlePath = Bundle.main.bundlePath
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/bin/sh")
+        task.arguments = ["-c", "sleep 0.5; /usr/bin/open -n \"\(bundlePath)\""]
+        try? task.run()
+        NSApp.terminate(nil)
+    }
 }

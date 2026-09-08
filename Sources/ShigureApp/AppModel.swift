@@ -58,6 +58,17 @@ final class AppModel {
     private(set) var hasAccessibility = Permissions.accessibility
     private(set) var hasInputMonitoring = Permissions.inputMonitoring
 
+    /// 权限向导 sheet 的呈现状态。
+    var isPermissionWizardPresented = false
+    /// 用户手动关过一次后，本会话内不再自动弹出。
+    @ObservationIgnored private var wizardDismissedThisSession = false
+    /// 启动时刻权限快照：屏幕录制/输入监控在会话中途才授予时，采集/监听管线需重启进程才生效。
+    @ObservationIgnored private let launchScreenRecording = Permissions.screenRecording
+    @ObservationIgnored private let launchInputMonitoring = Permissions.inputMonitoring
+
+    var screenRecordingNeedsRestart: Bool { hasScreenRecording && !launchScreenRecording }
+    var inputMonitoringNeedsRestart: Bool { hasInputMonitoring && !launchInputMonitoring }
+
     // MARK: 游戏
     private(set) var gameTarget: GameTarget?
     private(set) var addOnsDirectory: URL?
@@ -288,6 +299,25 @@ final class AppModel {
         if !hasScreenRecording { list.append(String(localized: "屏幕录制")) }
         if !hasAccessibility { list.append(String(localized: "辅助功能")) }
         return list
+    }
+
+    /// 启动时调用：任一必需权限缺失就弹出向导；本会话被手动关过则不再打扰。
+    func presentPermissionWizardIfNeeded() {
+        guard !wizardDismissedThisSession else { return }
+        refreshPermissions()
+        if !hasScreenRecording || !hasAccessibility {
+            isPermissionWizardPresented = true
+        }
+    }
+
+    /// 用户主动唤起（横幅按钮等），无视本会话抑制标志。
+    func presentPermissionWizard() {
+        isPermissionWizardPresented = true
+    }
+
+    func dismissPermissionWizard() {
+        isPermissionWizardPresented = false
+        wizardDismissedThisSession = true
     }
 
     // MARK: 运行时控制

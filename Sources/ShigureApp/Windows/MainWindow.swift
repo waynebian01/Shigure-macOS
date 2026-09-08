@@ -105,6 +105,16 @@ struct MainWindow: View {
                 RuntimeToolbar()
             }
         }
+        .sheet(isPresented: Binding(
+            get: { model.isPermissionWizardPresented },
+            // 关闭必须经过 dismissPermissionWizard()，Esc/交互式关闭才会置本会话抑制标志。
+            set: { presented in
+                if presented { model.presentPermissionWizard() } else { model.dismissPermissionWizard() }
+            }
+        )) {
+            PermissionWizardSheet()
+        }
+        .task { model.presentPermissionWizardIfNeeded() }
     }
 
     @ViewBuilder
@@ -181,18 +191,7 @@ struct PermissionBanner: View {
             Text("缺少权限：\(model.missingPermissions.joined(separator: "、"))。读取游戏画面需要「屏幕录制」，发送按键需要「辅助功能」。")
                 .font(.callout)
             Spacer()
-            if !model.hasScreenRecording {
-                Button("屏幕录制…") {
-                    Permissions.requestScreenRecording()
-                    Permissions.openSystemSettings(.screenRecording)
-                }
-            }
-            if !model.hasAccessibility {
-                Button("辅助功能…") {
-                    Permissions.requestAccessibility()
-                    Permissions.openSystemSettings(.accessibility)
-                }
-            }
+            Button("打开权限向导…") { model.presentPermissionWizard() }
             Button("重新检查") { model.refreshPermissions() }
         }
         .padding(10)
