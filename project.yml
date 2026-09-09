@@ -53,6 +53,14 @@ targets:
         NSPrincipalClass: NSApplication
         NSSupportsAutomaticTermination: false
         NSSupportsSuddenTermination: false
+        # SwiftUI draggable/Transferable 的自定义 UTType 必须在此声明，否则拖拽不会启动。
+        UTExportedTypeDeclarations:
+          - UTTypeIdentifier: club.shigure.module-rule
+            UTTypeDescription: Shigure 模块规则
+            UTTypeConformsTo: [public.data]
+          - UTTypeIdentifier: club.shigure.condition-drag
+            UTTypeDescription: Shigure 条件
+            UTTypeConformsTo: [public.data]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: club.shigure.Shigure

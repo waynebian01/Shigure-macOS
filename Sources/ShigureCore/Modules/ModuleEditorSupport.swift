@@ -27,10 +27,14 @@ public struct ModuleEditorSupport: Sendable {
             }
         }
         for count in module.counts where !count.name.isBlank {
-            add(ConditionField(name: count.name, displayName: "人数: \(count.name)", type: .int, category: .dynamicValue))
+            let label = count.kind.isAverageHealthKind ? "平均血量" : "人数"
+            add(ConditionField(name: count.name, displayName: "\(label): \(count.name)", type: .int, category: .dynamicValue))
         }
         for name in adjustmentTargetFields(module: module) {
-            add(ConditionField(name: name, displayName: "\(name) (动态数值)", type: .int, category: .dynamicValue))
+            // 检查该动态数值是否为布尔表达式
+            let isBool = module.valueAdjustments.first { $0.field == name && FormulaEvaluator.isBooleanExpression($0.formula) } != nil
+            let fieldType: ConditionFieldType = isBool ? .bool : .int
+            add(ConditionField(name: name, displayName: "\(name) (动态数值)", type: fieldType, category: .dynamicValue))
         }
         return fields
     }
@@ -52,7 +56,7 @@ public struct ModuleEditorSupport: Sendable {
             }
         }
         for unit in module.units { if let h = unit.healthName, !h.isBlank { add(h, "\(h) (生命值)", .dynamicUnit) } }
-        for count in module.counts where !count.name.isBlank { add(count.name, "人数: \(count.name)", .dynamicValue) }
+        for count in module.counts where !count.name.isBlank { add(count.name, "\(count.kind.isAverageHealthKind ? "平均血量" : "人数"): \(count.name)", .dynamicValue) }
         for name in adjustmentTargetFields(module: module) { add(name, "\(name) (动态数值)", .dynamicValue) }
         return fields
     }

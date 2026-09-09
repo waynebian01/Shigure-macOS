@@ -1,6 +1,6 @@
 import Foundation
 
-/// 公式动态数值求值：`+ - * /`、括号、一元正负、int/round/floor/ceil/min/max。
+/// 公式动态数值求值：`+ - * /`、括号、一元正负、int/round/floor/ceil/min/max、比较运算符。
 public enum FormulaEvaluator {
     public struct FormulaError: Error, CustomStringConvertible, Sendable {
         public let message: String
@@ -21,6 +21,44 @@ public enum FormulaEvaluator {
         } catch {
             return .failure(FormulaError(message: "\(error)"))
         }
+    }
+
+    /// 判断公式是否为布尔表达式（包含顶层比较运算符）。
+    public static func isBooleanExpression(_ expression: String?) -> Bool {
+        let normalized = normalizeExpression(expression)
+        if normalized.isBlank { return false }
+
+        var depth = 0
+        var i = 0
+        let chars = Array(normalized)
+
+        while i < chars.count {
+            let c = chars[i]
+            let openParen: Character = "("
+            let closeParen: Character = ")"
+            let gt: Character = ">"
+            let lt: Character = "<"
+            let eq: Character = "="
+            let exclaim: Character = "!"
+
+            if c == openParen { depth += 1 }
+            else if c == closeParen { depth -= 1 }
+            else if depth == 0 {
+                if i + 1 < chars.count {
+                    let next = chars[i + 1]
+                    if (c == eq && next == eq) || (c == exclaim && next == eq) ||
+                       (c == gt && next == eq) || (c == lt && next == eq) {
+                        return true
+                    }
+                }
+                if (c == gt || c == lt) && (i + 1 >= chars.count || chars[i + 1] != eq) {
+                    return true
+                }
+            }
+            i += 1
+        }
+
+        return false
     }
 
     /// 去掉 `#` 注释；若含 `名称 = 表达式`，只保留表达式。
@@ -61,13 +99,42 @@ public enum FormulaEvaluator {
         var current: Character { isEnd ? "\0" : text[position] }
 
         mutating func parse() throws -> Double {
-            let value = try parseExpression()
+            let value = try parseComparison()
             skipWhitespace()
-            if !isEnd { throw error("无法识别“\(current)”。") }
+            if !isEnd { throw error("无法识别\"\(current)\"。") }
             return value
         }
 
-        mutating func parseExpression() throws -> Double {
+        mutating func parseComparison() throws -> Double {
+            let left = try parseAdditive()
+            skipWhitespace()
+
+            if matchString("==") {
+                let right = try parseAdditive()
+                return left == right ? 1.0 : 0.0
+            } else if matchString("!=") {
+                let right = try parseAdditive()
+                return left != right ? 1.0 : 0.0
+            } else if matchString(">=") {
+                let right = try parseAdditive()
+                return left >= right ? 1.0 : 0.0
+            } else if matchString("<=") {
+                let right = try parseAdditive()
+                return left <= right ? 1.0 : 0.0
+            } else if current == ">" && !peekEquals() {
+                position += 1
+                let right = try parseAdditive()
+                return left > right ? 1.0 : 0.0
+            } else if current == "<" && !peekEquals() {
+                position += 1
+                let right = try parseAdditive()
+                return left < right ? 1.0 : 0.0
+            }
+
+            return left
+        }
+
+        mutating func parseAdditive() throws -> Double {
             var value = try parseTerm()
             while true {
                 skipWhitespace()
@@ -103,7 +170,7 @@ public enum FormulaEvaluator {
         mutating func parsePrimary() throws -> Double {
             skipWhitespace()
             if match("(") {
-                let value = try parseExpression()
+                let value = try parseComparison()
                 try require(")")
                 return value
             }
@@ -121,7 +188,7 @@ public enum FormulaEvaluator {
             skipWhitespace()
             if !match(")") {
                 while true {
-                    args.append(try parseExpression())
+                    args.append(try parseComparison())
                     skipWhitespace()
                     if match(")") { break }
                     try require(",")
@@ -134,7 +201,7 @@ public enum FormulaEvaluator {
             case "ceil" where args.count == 1: return args[0].rounded(.up)
             case "min" where !args.isEmpty: return args.min()!
             case "max" where !args.isEmpty: return args.max()!
-            default: throw error("不支持函数“\(name)”。")
+            default: throw error("不支持函数\"\(name)\"。")
             }
         }
 
@@ -142,7 +209,7 @@ public enum FormulaEvaluator {
             let start = position
             while current.isASCIIDigit || current == "." { position += 1 }
             let text = String(self.text[start..<position])
-            guard let number = InvariantNumber.parseDouble(text) else { throw error("数字“\(text)”无效。") }
+            guard let number = InvariantNumber.parseDouble(text) else { throw error("数字\"\(text)\"无效。") }
             return number
         }
 
@@ -154,18 +221,34 @@ public enum FormulaEvaluator {
 
         func resolveField(_ name: String) throws -> Double {
             if let value = ConditionEvaluator.resolveDouble(state, name) { return value }
-            throw error("无法读取数值“\(name)”。")
+            throw error("无法读取数值\"\(name)\"。")
         }
 
         mutating func require(_ expected: Character) throws {
             skipWhitespace()
-            if !match(expected) { throw error("缺少“\(expected)”。") }
+            if !match(expected) { throw error("缺少\"\(expected)\"。") }
         }
 
         mutating func match(_ expected: Character) -> Bool {
             guard current == expected else { return false }
             position += 1
             return true
+        }
+
+        mutating func matchString(_ expected: String) -> Bool {
+            let chars = Array(expected)
+            guard position + chars.count <= text.count else { return false }
+            for i in 0..<chars.count {
+                if text[position + i] != chars[i] { return false }
+            }
+            position += chars.count
+            return true
+        }
+
+        func peekEquals() -> Bool {
+            let equalsChar: Character = "="
+            guard position + 1 < text.count else { return false }
+            return text[position + 1] == equalsChar
         }
 
         mutating func skipWhitespace() {

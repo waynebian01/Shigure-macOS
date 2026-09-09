@@ -74,9 +74,11 @@ public enum UnitSelector {
         let group = state.group
         let threshold = resolveThreshold(count.healthThreshold, count.healthThresholdField, state, count.kind.isHealingAbsorbKind ? 0 : defaultThreshold)
         if count.kind.requiresAura {
-            guard let id = count.auraSpellId, groupContainsAuraField(group, id) else { return 0 }
+            // 平均血量类在无数据时视为满血，避免误触发 "< 阈值" 条件。
+            guard let id = count.auraSpellId, groupContainsAuraField(group, id) else { return count.kind.isAverageHealthKind ? 100 : 0 }
         }
         let aura = count.auraSpellId
+        let role = { (data: Member) in matchesRoleFilter(data, count.roleFilter, count.role) }
         switch count.kind {
         case .unitsBelowHealth:
             return countUnits(group) { belowThreshold($0, threshold) }
@@ -97,6 +99,14 @@ public enum UnitSelector {
         case .unitsWithAuraAboveHealingAbsorb:
             guard let aura else { return 0 }
             return countUnits(group) { hasAura($0, aura) && aboveHealingAbsorbThreshold($0, threshold) }
+        case .averageHealth:
+            return averageHealth(group, role)
+        case .averageHealthWithAura:
+            guard let aura else { return 100 }
+            return averageHealth(group) { role($0) && hasAura($0, aura) }
+        case .averageHealthWithoutAura:
+            guard let aura else { return 100 }
+            return averageHealth(group) { role($0) && !hasAura($0, aura) }
         }
     }
 
@@ -167,6 +177,20 @@ public enum UnitSelector {
             }
         }
         return bestUnit
+    }
+
+    /// 平均血量：只统计 生命值 > 0 的成员；无可统计成员时视为满血 100。
+    private static func averageHealth(_ group: [String: Member], _ predicate: (Member) -> Bool) -> Int {
+        var total = 0
+        var members = 0
+        for i in 1...30 {
+            guard let data = group[String(i)], roleNotZero(data), predicate(data) else { continue }
+            guard let pct = tryInt(field(data, "生命值")), pct > 0 else { continue }
+            total += pct
+            members += 1
+        }
+        guard members > 0 else { return 100 }
+        return Int((Double(total) / Double(members)).rounded())
     }
 
     private static func countUnits(_ group: [String: Member], _ predicate: (Member) -> Bool) -> Int {
@@ -285,6 +309,9 @@ public enum UnitSummary {
         case .unitsAboveHealingAbsorb: return "治疗吸收>\(threshold) 的人数"
         case .unitsWithoutAuraAboveHealingAbsorb: return "不带[\(aura)]且治疗吸收>\(threshold) 的人数"
         case .unitsWithAuraAboveHealingAbsorb: return "带[\(aura)]且治疗吸收>\(threshold) 的人数"
+        case .averageHealth: return describeRoleFilter(count) + "平均血量"
+        case .averageHealthWithAura: return describeRoleFilter(count) + "带[\(aura)]的平均血量"
+        case .averageHealthWithoutAura: return describeRoleFilter(count) + "不带[\(aura)]的平均血量"
         }
     }
 
@@ -301,6 +328,12 @@ public enum UnitSummary {
     static func describeRoleFilter(_ unit: ModuleUnit) -> String {
         guard unit.kind.isLowestHealthKind, let filter = unit.roleFilter else { return "" }
         let role = unit.role.map(String.init) ?? ""
+        return filter == .include ? "职责=\(role)且" : "职责!=\(role)且"
+    }
+
+    static func describeRoleFilter(_ count: ModuleCountField) -> String {
+        guard count.kind.isAverageHealthKind, let filter = count.roleFilter else { return "" }
+        let role = count.role.map(String.init) ?? ""
         return filter == .include ? "职责=\(role)且" : "职责!=\(role)且"
     }
 }

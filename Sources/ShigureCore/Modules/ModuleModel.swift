@@ -67,6 +67,9 @@ public enum CountKind: String, Sendable, CaseIterable, Codable {
     case unitsAboveHealingAbsorb = "UnitsAboveHealingAbsorb"
     case unitsWithoutAuraAboveHealingAbsorb = "UnitsWithoutAuraAboveHealingAbsorb"
     case unitsWithAuraAboveHealingAbsorb = "UnitsWithAuraAboveHealingAbsorb"
+    case averageHealth = "AverageHealth"
+    case averageHealthWithAura = "AverageHealthWithAura"
+    case averageHealthWithoutAura = "AverageHealthWithoutAura"
 
     public var isHealingAbsorbKind: Bool {
         switch self {
@@ -75,9 +78,16 @@ public enum CountKind: String, Sendable, CaseIterable, Codable {
         }
     }
 
+    public var isAverageHealthKind: Bool {
+        switch self {
+        case .averageHealth, .averageHealthWithAura, .averageHealthWithoutAura: return true
+        default: return false
+        }
+    }
+
     public var requiresAura: Bool {
         switch self {
-        case .unitsBelowHealth, .unitsAboveHealingAbsorb: return false
+        case .unitsBelowHealth, .unitsAboveHealingAbsorb, .averageHealth: return false
         default: return true
         }
     }
@@ -121,12 +131,16 @@ public struct ModuleCountField: Sendable, Equatable, Identifiable {
     public var healthThresholdField: String?
     public var auraSpellId: Int64?
     public var auraName: String?
+    /// 仅平均血量类使用。
+    public var roleFilter: UnitRoleFilterKind?
+    public var role: Int?
 
     public init() {}
 
     public static func == (lhs: ModuleCountField, rhs: ModuleCountField) -> Bool {
         lhs.name == rhs.name && lhs.kind == rhs.kind && lhs.healthThreshold == rhs.healthThreshold
             && lhs.healthThresholdField == rhs.healthThresholdField && lhs.auraSpellId == rhs.auraSpellId && lhs.auraName == rhs.auraName
+            && lhs.roleFilter == rhs.roleFilter && lhs.role == rhs.role
     }
 }
 

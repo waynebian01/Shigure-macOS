@@ -160,6 +160,21 @@ function Senkoh:UpdateBlockLayout(usedCount)
 end
 
 --[[============================================================================
+    调试标记：UIParent TOPLEFT 白色纵向线条（向上延伸）
+============================================================================]]
+
+local debugTopLeftLine = CreateFrame("Frame", "SenkohDebugTopLeftLine", UIParent)
+local screenHeight = GetScreenHeight()
+local lineHeight = screenHeight * 0.2
+debugTopLeftLine:SetPoint("BOTTOMLEFT", UIParent, "TOPLEFT", 0, 0)
+debugTopLeftLine:SetSize(2, lineHeight)
+debugTopLeftLine:SetFrameStrata("TOOLTIP")
+debugTopLeftLine:SetFrameLevel(8000)
+local debugLineTex = debugTopLeftLine:CreateTexture(nil, "OVERLAY")
+debugLineTex:SetAllPoints(debugTopLeftLine)
+debugLineTex:SetColorTexture(1, 1, 1, 1)
+
+--[[============================================================================
     横向计数条布局（计数条 + AuraContainer 层数条共用）
     排布：计数条 → 光环层数条 → BAR_END_COLOR（终点色块始终在最后）
     单条占用：背景单元 [-1..max] + 预留终点位 + 间隔 → 步进 max+3

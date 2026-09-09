@@ -7,7 +7,7 @@ struct UnitEditorSheet: View {
     @Bindable var store: ModuleEditorStore
     let target: UnitEditorTarget
 
-    enum Category: String, CaseIterable { case unit = "单位 (可作目标)", count = "数量 (仅条件)" }
+    enum Category: String, CaseIterable { case unit = "单位 (可作目标)", count = "数量 (仅条件)", value = "数值 (仅条件)" }
     enum AuraFilter: String, CaseIterable { case none = "不筛选光环", anyWith = "带任一光环", anyWithout = "不带任一光环", without = "不带某光环", with = "带某光环", countEquals = "某光环值等于" }
     enum RoleFilter: String, CaseIterable { case none = "不筛选职责", include = "包含某职责", exclude = "不含某职责" }
 
@@ -25,10 +25,17 @@ struct UnitEditorSheet: View {
         .init(kind: .unitsWithoutAuraAboveHealingAbsorb, title: "治疗吸收 - 大于阈值不带某光环"), .init(kind: .unitsWithAuraAboveHealingAbsorb, title: "治疗吸收 - 大于阈值带某光环"),
         .init(kind: .unitsWithAura, title: "光环 - 带某光环")
     ]
+    /// 数值类别：结果是一个数（与人数无关），仅用于条件。
+    static let valueSelectors: [CountSelector] = [
+        .init(kind: .averageHealth, title: "平均血量")
+    ]
+    /// 平均血量只支持 带/不带 单个光环的筛选。
+    static let valueAuraFilters: [AuraFilter] = [.none, .with, .without]
 
     @State private var category: Category = .unit
     @State private var unitKind: UnitSelectorKind = .lowestHealth
     @State private var countKind: CountKind = .unitsBelowHealth
+    @State private var valueKind: CountKind = .averageHealth
     @State private var name = ""
     @State private var healthName = ""
     @State private var dynamicThreshold = false
@@ -66,9 +73,14 @@ struct UnitEditorSheet: View {
                             FixedPopUpPicker(options: Self.unitSelectors.map { PopUpOption($0.kind, localizedReferenceText($0.title)) }, selection: $unitKind)
                                 .frame(width: 240)
                         }
-                    } else {
+                    } else if category == .count {
                         LabeledContent("选择器") {
                             FixedPopUpPicker(options: Self.countSelectors.map { PopUpOption($0.kind, localizedReferenceText($0.title)) }, selection: $countKind)
+                                .frame(width: 240)
+                        }
+                    } else {
+                        LabeledContent("选择器") {
+                            FixedPopUpPicker(options: Self.valueSelectors.map { PopUpOption($0.kind, localizedReferenceText($0.title)) }, selection: $valueKind)
                                 .frame(width: 240)
                         }
                     }
@@ -113,6 +125,16 @@ struct UnitEditorSheet: View {
                         }
                     }
                     if category == .unit, unitKind == .lowestHealth {
+                        LabeledContent("职责筛选") {
+                            FixedPopUpPicker(options: RoleFilter.allCases.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $roleFilter)
+                                .frame(width: 240)
+                        }
+                    }
+                    if category == .value, valueKind == .averageHealth {
+                        LabeledContent("光环筛选") {
+                            FixedPopUpPicker(options: Self.valueAuraFilters.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $auraFilter)
+                                .frame(width: 240)
+                        }
                         LabeledContent("职责筛选") {
                             FixedPopUpPicker(options: RoleFilter.allCases.map { PopUpOption($0, localizedReferenceText($0.rawValue)) }, selection: $roleFilter)
                                 .frame(width: 240)
@@ -180,12 +202,29 @@ struct UnitEditorSheet: View {
     private var thresholdRange: ClosedRange<Int> { (isHealingAbsorb ? 0 : 1)...1000 }
 
     private var showsThreshold: Bool {
-        if category == .count { return countKind != .unitsWithAura }
-        return unitKind == .lowestHealth || unitKind == .highestHealingAbsorb
+        switch category {
+        case .count: return countKind != .unitsWithAura
+        case .value: return false
+        case .unit: return unitKind == .lowestHealth || unitKind == .highestHealingAbsorb
+        }
     }
 
     private var showsRole: Bool {
-        category == .unit && (unitKind == .unitWithRole || unitKind == .unitWithRoleWithoutAura || (unitKind == .lowestHealth && roleFilter != .none))
+        switch category {
+        case .count: return false
+        case .value: return valueKind == .averageHealth && roleFilter != .none
+        case .unit: return unitKind == .unitWithRole || unitKind == .unitWithRoleWithoutAura || (unitKind == .lowestHealth && roleFilter != .none)
+        }
+    }
+
+    private var resolvedCountKind: CountKind {
+        let base = category == .value ? valueKind : countKind
+        guard base == .averageHealth else { return base }
+        switch auraFilter {
+        case .with: return .averageHealthWithAura
+        case .without: return .averageHealthWithoutAura
+        default: return .averageHealth
+        }
     }
 
     private var resolvedUnitKind: UnitSelectorKind {
@@ -203,7 +242,7 @@ struct UnitEditorSheet: View {
 
     private var needsAuraList: Bool { category == .unit && resolvedUnitKind.usesAuraList }
     private var needsSingleAura: Bool {
-        if category == .count { return countKind.requiresAura }
+        if category != .unit { return resolvedCountKind.requiresAura }
         return resolvedUnitKind.requiresAura && !resolvedUnitKind.usesAuraList
     }
 
@@ -235,8 +274,12 @@ struct UnitEditorSheet: View {
         var count = ModuleCountField()
         if let originalId { count.id = originalId }
         count.name = name.trimmed()
-        count.kind = countKind
-        if countKind.requiresAura { count.auraSpellId = aura > 0 ? aura : nil }
+        count.kind = resolvedCountKind
+        if resolvedCountKind.requiresAura { count.auraSpellId = aura > 0 ? aura : nil }
+        if category == .value, valueKind == .averageHealth {
+            count.roleFilter = roleFilter == .none ? nil : (roleFilter == .include ? .include : .exclude)
+            count.role = roleFilter == .none ? nil : role
+        }
         if showsThreshold {
             if dynamicThreshold { count.healthThresholdField = thresholdField.isBlank ? nil : thresholdField } else { count.healthThreshold = threshold }
         }
@@ -305,10 +348,17 @@ struct UnitEditorSheet: View {
             dynamicThreshold = !(unit.healthThresholdField.isNilOrBlank)
             thresholdField = unit.healthThresholdField ?? ""
         case .count(let count):
-            category = .count
+            category = count.kind.isAverageHealthKind ? .value : .count
             if store.draft.counts.contains(where: { $0.id == count.id }) { originalId = count.id; originalName = count.name }
             name = count.name
-            countKind = count.kind
+            if count.kind.isAverageHealthKind { valueKind = .averageHealth } else { countKind = count.kind }
+            switch count.kind {
+            case .averageHealthWithAura: auraFilter = .with
+            case .averageHealthWithoutAura: auraFilter = .without
+            default: auraFilter = .none
+            }
+            if let filter = count.roleFilter { roleFilter = filter == .include ? .include : .exclude }
+            role = count.role ?? 1
             aura = count.auraSpellId ?? 0
             threshold = count.healthThreshold ?? (count.kind.isHealingAbsorbKind ? 0 : 100)
             dynamicThreshold = !(count.healthThresholdField.isNilOrBlank)

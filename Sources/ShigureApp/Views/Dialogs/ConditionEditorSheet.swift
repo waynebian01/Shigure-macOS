@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import ShigureCore
 
 /// 条件编辑器上下文：字段目录 + 技能/物品选项。
@@ -71,6 +72,11 @@ struct ConditionEditorSheet: View {
     @State private var editingSub: SubConditionTarget?
     @State private var warning: String?
     @State private var pendingConfirm: ConditionEditorResult?
+    /// 拖拽只允许在同一个弹窗实例内进行（子条件编辑器是嵌套的同类弹窗）。
+    @State private var sheetId = UUID()
+    @State private var dropTargetRowId: UUID?
+    @State private var dropTargetSubIndex: Int?
+    @State private var subListTargeted = false
 
     static let allOperators = ["==", "!=", ">", ">=", "<", "<=", "in", "not in"]
     static let spellOperators = ["==", "!="]
@@ -98,6 +104,10 @@ struct ConditionEditorSheet: View {
                 }
                 .padding(12)
             }
+            .dropDestination(for: ConditionDrag.self) { items, _ in
+                guard let drag = items.first else { return false }
+                return handleMainDrop(drag, rowIndex: nil)
+            } isTargeted: { _ in }
             if context.allowSubConditions {
                 Divider()
                 subConditionsSection
@@ -151,7 +161,7 @@ struct ConditionEditorSheet: View {
             Text("字段").frame(maxWidth: .infinity, alignment: .leading)
             Text("判断").frame(width: 80, alignment: .leading)
             Text("值").frame(width: 220, alignment: .leading)
-            Text("").frame(width: 30)
+            Text("").frame(width: 62)
         }
         .font(.caption).foregroundStyle(.secondary)
     }
@@ -211,8 +221,23 @@ struct ConditionEditorSheet: View {
             valueEditor(index: index, row: row, field: field).frame(width: 220)
             Button(role: .destructive) { rows.remove(at: index) } label: { Image(systemName: "xmark.circle") }
                 .buttonStyle(.borderless).frame(width: 30)
+            Image(systemName: "line.3.horizontal")
+                .foregroundStyle(.tertiary)
+                .frame(width: 24, height: 22)
+                .contentShape(Rectangle())
+                .help("拖动可排序；拖到子条件列表可转为子条件")
+                .draggable(ConditionDrag(sheetId: sheetId, kind: .row, rowId: row.id, subIndex: nil))
         }
         .padding(.vertical, 2)
+        .overlay(alignment: .bottom) {
+            if dropTargetRowId == row.id { Rectangle().fill(Color.accentColor).frame(height: 2) }
+        }
+        .dropDestination(for: ConditionDrag.self) { items, _ in
+            guard let drag = items.first else { return false }
+            return handleMainDrop(drag, rowIndex: index)
+        } isTargeted: { targeted in
+            if targeted { dropTargetRowId = row.id } else if dropTargetRowId == row.id { dropTargetRowId = nil }
+        }
     }
 
     private var availableCategories: [ConditionFieldCategory] {
@@ -311,24 +336,107 @@ struct ConditionEditorSheet: View {
     private var subConditionsSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("子条件 (满足任一即可, 与主条件为「且」关系)").font(.headline)
-            List {
-                ForEach(Array(subConditions.enumerated()), id: \.offset) { index, sub in
-                    Text(sub).lineLimit(2)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(Array(subConditions.enumerated()), id: \.offset) { index, sub in
+                        HStack(spacing: 8) {
+                            Text(sub).lineLimit(2)
+                            Spacer()
+                            Image(systemName: "line.3.horizontal")
+                                .foregroundStyle(.tertiary)
+                                .frame(width: 24, height: 22)
+                                .contentShape(Rectangle())
+                                .help("拖动可排序；拖到上方条件列表可转为主条件")
+                                .draggable(ConditionDrag(sheetId: sheetId, kind: .sub, rowId: nil, subIndex: index))
+                        }
+                        .padding(.horizontal, 8).padding(.vertical, 5)
                         .contentShape(Rectangle())
                         .onTapGesture(count: 2) { editingSub = SubConditionTarget(index: index) }
                         .contextMenu {
                             Button("编辑") { editingSub = SubConditionTarget(index: index) }
                             Button("删除", role: .destructive) { subConditions.remove(at: index) }
                         }
+                        .overlay(alignment: .bottom) {
+                            if dropTargetSubIndex == index { Rectangle().fill(Color.accentColor).frame(height: 2) }
+                        }
+                        .dropDestination(for: ConditionDrag.self) { items, _ in
+                            guard let drag = items.first else { return false }
+                            return handleSubDrop(drag, subIndex: index)
+                        } isTargeted: { targeted in
+                            if targeted { dropTargetSubIndex = index } else if dropTargetSubIndex == index { dropTargetSubIndex = nil }
+                        }
+                        Divider()
+                    }
+                    if subConditions.isEmpty {
+                        Text("尚无子条件。可从上方拖入条件行。").font(.caption).foregroundStyle(.secondary).padding(8)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .frame(maxWidth: .infinity)
             .frame(height: 110)
+            .background(RoundedRectangle(cornerRadius: 6).fill(Color(nsColor: .textBackgroundColor).opacity(0.4)))
+            .overlay {
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(subListTargeted ? Color.accentColor : Color.secondary.opacity(0.25), lineWidth: subListTargeted ? 1.5 : 1)
+            }
+            .dropDestination(for: ConditionDrag.self) { items, _ in
+                guard let drag = items.first else { return false }
+                return handleSubDrop(drag, subIndex: nil)
+            } isTargeted: { subListTargeted = $0 }
             HStack {
                 Button("添加子条件") { editingSub = SubConditionTarget(index: nil) }
-                Text("双击编辑，右键删除").font(.caption).foregroundStyle(.secondary)
+                Text("双击编辑，右键删除；拖动可排序，也可与主条件互相拖动").font(.caption).foregroundStyle(.secondary)
             }
         }
         .padding(12)
+    }
+
+    // MARK: 拖拽
+
+    /// 拖到主条件列表：同列表排序，或把子条件解析成条件行插入。rowIndex 为 nil 表示追加到末尾。
+    private func handleMainDrop(_ drag: ConditionDrag, rowIndex: Int?) -> Bool {
+        guard drag.sheetId == sheetId else { return false }
+        switch drag.kind {
+        case .row:
+            guard let rowId = drag.rowId, let source = rows.firstIndex(where: { $0.id == rowId }) else { return false }
+            let target = rowIndex ?? rows.count - 1
+            guard source != target, rows.indices.contains(target) else { return false }
+            rows.move(fromOffsets: IndexSet(integer: source), toOffset: source < target ? target + 1 : target)
+            return true
+        case .sub:
+            guard let subIndex = drag.subIndex, subConditions.indices.contains(subIndex) else { return false }
+            let newRows = draftRows(from: subConditions[subIndex])
+            guard !newRows.isEmpty else { return false }
+            subConditions.remove(at: subIndex)
+            let insert = rowIndex.map { min($0 + 1, rows.count) } ?? rows.count
+            rows.insert(contentsOf: newRows, at: insert)
+            return true
+        }
+    }
+
+    /// 拖到子条件列表：同列表排序，或把条件行转成子条件表达式。subIndex 为 nil 表示追加到末尾。
+    private func handleSubDrop(_ drag: ConditionDrag, subIndex targetIndex: Int?) -> Bool {
+        guard drag.sheetId == sheetId, context.allowSubConditions else { return false }
+        switch drag.kind {
+        case .sub:
+            guard let source = drag.subIndex, subConditions.indices.contains(source) else { return false }
+            let target = targetIndex ?? subConditions.count - 1
+            guard source != target, subConditions.indices.contains(target) else { return false }
+            subConditions.move(fromOffsets: IndexSet(integer: source), toOffset: source < target ? target + 1 : target)
+            return true
+        case .row:
+            guard let rowId = drag.rowId, let source = rows.firstIndex(where: { $0.id == rowId }) else { return false }
+            let row = rows[source]
+            // 规则设置（延迟/继续逻辑）不是条件，不能变成子条件。
+            guard row.category != .shigure else { return false }
+            let text = ConditionExpression.build([ConditionTerm(field: row.field, op: row.op, value: row.value)])
+            guard !text.isBlank else { return false }
+            rows.remove(at: source)
+            let insert = targetIndex.map { min($0 + 1, subConditions.count) } ?? subConditions.count
+            subConditions.insert(text, at: insert)
+            return true
+        }
     }
 
     struct SubConditionTarget: Identifiable {
@@ -405,9 +513,9 @@ struct ConditionEditorSheet: View {
         dismiss()
     }
 
-    private func seed() {
-        var seeded: [ConditionRowDraft] = []
-        for term in ConditionExpression.parse(initial.condition) {
+    /// 把条件表达式解析成可视化条件行（seed 与「子条件拖入主条件」共用）。
+    private func draftRows(from condition: String) -> [ConditionRowDraft] {
+        ConditionExpression.parse(condition).map { term in
             let field = context.field(named: term.field)
             var row = ConditionRowDraft(orWithPrevious: term.orWithPrevious)
             row.category = field?.category ?? .state
@@ -415,8 +523,12 @@ struct ConditionEditorSheet: View {
             row.field = field?.name ?? term.field
             row.op = term.op.trimmed().lowercased().collapsingWhitespace()
             row.value = (row.op == "in" || row.op == "not in") ? Self.normalizeInValue(term.value) : term.value
-            seeded.append(row)
+            return row
         }
+    }
+
+    private func seed() {
+        var seeded = draftRows(from: initial.condition)
         if context.allowRuleSettings {
             if let d = initial.delayMs, d > 0 { seeded.append(ruleSettingRow(ShigureConditionFields.delay, String(d))) }
             if let d = initial.logicDelayMs, d > 0 { seeded.append(ruleSettingRow(ShigureConditionFields.logicDelay, String(d))) }
@@ -444,6 +556,19 @@ struct ConditionEditorSheet: View {
         var t = text.trimmed()
         if t.hasPrefix("(") && t.hasSuffix(")") { t = String(t.dropFirst().dropLast()).trimmed() }
         return t
+    }
+}
+
+/// 条件拖拽负载：主条件行（rowId）或子条件（subIndex）。
+private struct ConditionDrag: Codable, Transferable {
+    enum Kind: String, Codable { case row, sub }
+    let sheetId: UUID
+    let kind: Kind
+    let rowId: UUID?
+    let subIndex: Int?
+
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: UTType(exportedAs: "club.shigure.condition-drag"))
     }
 }
 

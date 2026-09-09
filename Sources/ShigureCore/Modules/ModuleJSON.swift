@@ -83,6 +83,8 @@ public enum ModuleJSON {
         c.healthThresholdField = string(o["HealthThresholdField"])
         c.auraSpellId = JSONHelpers.getLong(o["AuraSpellId"])
         c.auraName = string(o["AuraName"])
+        c.roleFilter = string(o["RoleFilter"]).flatMap(UnitRoleFilterKind.init(rawValue:))
+        c.role = JSONHelpers.getInt(o["Role"])
         return c
     }
 
@@ -276,6 +278,8 @@ public enum ModuleJSON {
         if let v = c.healthThresholdField { o["HealthThresholdField"] = .string(v) }
         if let v = c.auraSpellId { o["AuraSpellId"] = .int(v) }
         if let v = c.auraName { o["AuraName"] = .string(v) }
+        if let v = c.roleFilter { o["RoleFilter"] = .string(v.rawValue) }
+        if let v = c.role { o["Role"] = .int(Int64(v)) }
         return o
     }
 

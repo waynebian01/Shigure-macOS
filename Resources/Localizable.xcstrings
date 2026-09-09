@@ -1768,6 +1768,7 @@
       }
     },
     "双击编辑，右键删除" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1776,6 +1777,9 @@
           }
         }
       }
+    },
+    "双击编辑，右键删除；拖动可排序，也可与主条件互相拖动" : {
+
     },
     "双击编辑；右键删除" : {
       "localizations" : {
@@ -2543,6 +2547,9 @@
         }
       }
     },
+    "尚无子条件。可从上方拖入条件行。" : {
+
+    },
     "尚无条件（始终命中）。点击「添加条件」。" : {
       "localizations" : {
         "en" : {
@@ -2995,6 +3002,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "General"
+          }
+        }
+      }
+    },
+    "平均血量" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average health"
           }
         }
       }
@@ -3558,6 +3576,12 @@
         }
       }
     },
+    "拖动可排序；拖到上方条件列表可转为主条件" : {
+
+    },
+    "拖动可排序；拖到子条件列表可转为子条件" : {
+
+    },
     "拖动调整顺序" : {
       "localizations" : {
         "en" : {
@@ -3789,6 +3813,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Subtlety"
+          }
+        }
+      }
+    },
+    "数值 (仅条件)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value (conditions only)"
           }
         }
       }

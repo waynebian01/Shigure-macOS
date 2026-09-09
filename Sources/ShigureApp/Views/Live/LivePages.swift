@@ -189,9 +189,12 @@ struct PartyPage: View {
     struct Row: Identifiable { let id: Int; let unit: String; let summary: String }
 
     var body: some View {
-        Table(rows) {
-            TableColumn("单位", value: \.unit).width(min: 60, ideal: 80)
-            TableColumn("摘要", value: \.summary)
+        GeometryReader { geo in
+            let unitWidth = Swift.max(60, geo.size.width * 0.25)
+            Table(rows) {
+                TableColumn("单位", value: \.unit).width(min: 60, ideal: unitWidth, max: unitWidth)
+                TableColumn("摘要", value: \.summary)
+            }
         }
         .padding(12)
     }
@@ -226,9 +229,12 @@ struct LogicPage: View {
     var body: some View {
         let info = model.snapshot.unitInfo
         let rows = info.keys.sorted().map { Row(id: $0, value: info[$0]?.displayText ?? "-") }
-        Table(rows.isEmpty ? [Row(id: String(localized: "逻辑信息"), value: String(localized: "无推荐目标"))] : rows) {
-            TableColumn("名称") { Text(localizedReferenceText($0.id)) }.width(min: 100, ideal: 160)
-            TableColumn("值", value: \.value)
+        GeometryReader { geo in
+            let nameWidth = Swift.max(100, geo.size.width * 0.25)
+            Table(rows.isEmpty ? [Row(id: String(localized: "逻辑信息"), value: String(localized: "无推荐目标"))] : rows) {
+                TableColumn("名称") { Text(localizedReferenceText($0.id)) }.width(min: 100, ideal: nameWidth, max: nameWidth)
+                TableColumn("值", value: \.value)
+            }
         }
         .padding(12)
     }
